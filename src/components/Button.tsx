@@ -1,8 +1,6 @@
 "use client"
 import React, { ReactNode, ButtonHTMLAttributes } from "react";
-import { twMerge } from "tailwind-merge";
 import { cva, VariantProps } from "class-variance-authority";
-import { clsx } from "clsx";
 import { cn } from "@/lib/styles/utils";
 
 const buttonVariants = cva(
@@ -34,7 +32,6 @@ type ButtonProps = { children: ReactNode } &
 
 export const Button: React.FC<ButtonProps> = (props) => {
     const { children, className, size, variant, pending, ...rest } = props;
-    console.log({ buttonVariants: buttonVariants({ variant, size, className }) })
     return (
         <button
             className={cn(buttonVariants({ variant, size, className }), {

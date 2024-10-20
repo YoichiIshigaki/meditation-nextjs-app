@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  </head>
+  <body>
+    <main>
+      <h2>SpeechRecognitionAPI</h2>
+      <button type="button" class="start">音声認識開始</button>
+      <button type="button" class="stop">終了</button>
+      <div class="output"></div>
+    </main>
+    <script>
+      if (
+        "SpeechRecognition" in window ||
+        "webkitSpeechRecognition" in window
+      ) {
+        console.log("ユーザのブラウザは音声合成に対応しています。");
+      } else {
+        console.log("ユーザのブラウザは音声合成に対応していません。");
+      }
+      const recognition = new webkitSpeechRecognition();
+      console.log("recognition = ", recognition);
+      recognition.lang = "ja";
+      recognition.continuous = true;
+      recognition.onresult = ({ results }) => {
+        const output = document.querySelector(".output");
+        console.log(results);
+        output.textContent = results[0][0].transcript;
+      };
+
+      const startButton = document.querySelector(".start");
+      startButton.addEventListener("click", () => {
+        console.log("start");
+        recognition.start();
+      });
+      const stopButton = document.querySelector(".stop");
+      stopButton.addEventListener("click", () => {
+        console.log("stop");
+        recognition.stop();
+      });
+    </script>
+  </body>
+</html>

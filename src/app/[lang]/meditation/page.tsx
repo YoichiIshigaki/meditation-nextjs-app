@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { cn } from "@/lib/styles/utils";
+import { TranslateText } from "@/components";
+import { element } from "prop-types";
 
-type PageProps = { data: any };
-export default function Page(props: PageProps) {
-  console.log("data = ", JSON.stringify(props, null, 2));
+type PageProps = { params: { lang: string } };
+export default function Page(_props: PageProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userName, _setUserName] = useState("john");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,24 +13,27 @@ export default function Page(props: PageProps) {
   const [breathe, setBreathe] = useState<"breathe" | "stop" | "exhale">(
     "breathe"
   );
-  // if(!data){
-  //   return <div className="animate-spin w-6 h-6 text-purple-400"></div>
-  // }
 
   const breatheMap = {
-    breathe: { message: "吸って!", className: "animate-grow" },
-    stop: { message: "止めて!", className: "scale-[1.2]" },
-    exhale: { message: "吐いて!", className: "animate-shrink" },
+    breathe: {
+      message: "meditation:breathe.breathe",
+      className: "animate-grow",
+    },
+    stop: { message: "meditation:breathe.stop", className: "scale-[1.2]" },
+    exhale: {
+      message: "meditation:breathe.exhale",
+      className: "animate-shrink",
+    },
   };
 
-  const getGreeting = () => {
+  const getGreeting = (): string => {
     const nowHour = new Date().getHours();
     if (nowHour > 4 && nowHour < 11) {
-      return "おはよう";
+      return "meditation:greeting.good_morning";
     } else if (nowHour > 11 && nowHour < 18) {
-      return "こんにちは";
+      return "meditation:greeting.good_afternoon";
     }
-    return "こんばんわ";
+    return "meditation:greeting.good_evening";
   };
 
   const breatheTime = (breatheCycleTime / 5) * 2; // 3s
@@ -74,15 +78,16 @@ export default function Page(props: PageProps) {
         >
           <div
             data-testid="circle"
-            className="h-full w-full bg-[#010f1c] absolute top-0 left-0 rounded-full"
+            className="h-full w-full bg-[#010f1c] absolute top-0 left-0 rounded-full "
           ></div>
-          <p className="text-2lx text-white z-10">
-            {getGreeting()} {userName}
+          <p className="text-2lx text-white z-10 mr-2">
+            <TranslateText translateKey={getGreeting()} element={null} />
+            {userName}
           </p>
-          <p className="text-white text-xl z-10">
-            {breatheMap[breathe].message}
-          </p>
-
+          <TranslateText
+            className="text-white text-xl z-10"
+            translateKey={breatheMap[breathe].message}
+          />
           <div
             data-testid="pointer-container"
             className="w-[20px] h-[190px] absolute top-[-40px] left-[140px] origin-bottom animate-pointer"

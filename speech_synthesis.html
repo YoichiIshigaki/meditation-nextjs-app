@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <h2>SpeechSynthesisAPI</h2>
+      <div>
+        <input
+          class="text"
+          style="width: 400px;"
+          value="入力したテキストを音声で読み上げます"
+        />
+      </div>
+      <div style="margin-top: 10px;">
+        <label style="display: block;">Voice:</label>
+        <select id="voice"></select>
+      </div>
+      <div>
+        <label style="display: block; margin-top: 10px;">Pitch:</label>
+        <input
+          type="range"
+          class="pitch"
+          min="0"
+          max="2"
+          step="0.5"
+          value="1"
+        />
+      </div>
+      <div>
+        <label style="display: block;">Rate:</label>
+        <input
+          type="range"
+          class="rate"
+          min="0.5"
+          max="2"
+          value="1"
+          step="0.1"
+        />
+      </div>
+      <div>
+        <label style="display: block;">Volume:</label>
+        <input
+          type="range"
+          class="volume"
+          min="0"
+          max="1"
+          value="1"
+          step="0.1"
+        />
+      </div>
+      <div style="margin-top: 10px;">
+        <button type="button" class="speak">speak()</button>
+        <button type="button" class="pause">pause()</button>
+        <button type="button" class="resume">resume()</button>
+        <button type="button" class="cancel">cancel()</button>
+      </div>
+    </main>
+    <script>
+      const utterance = new SpeechSynthesisUtterance();
+      const speakButton = document.querySelector(".speak");
+      speakButton.addEventListener("click", () => {
+        utterance.text = document.querySelector(".text").value;
+        utterance.pitch = document.querySelector(".pitch").value;
+        utterance.rate = document.querySelector(".rate").value;
+        utterance.volume = document.querySelector(".volume").value;
+        speechSynthesis.speak(utterance);
+      });
+      const pauseButton = document.querySelector(".pause");
+      pauseButton.addEventListener("click", () => {
+        speechSynthesis.pause();
+      });
+      const resumeButton = document.querySelector(".resume");
+      resumeButton.addEventListener("click", () => {
+        speechSynthesis.resume();
+      });
+      const cancelButton = document.querySelector(".cancel");
+      cancelButton.addEventListener("click", () => {
+        speechSynthesis.cancel();
+      });
+      if (window.speechSynthesis) {
+        let voices = [];
+        function setVoices() {
+          if (voices.length) return;
+          voices = speechSynthesis.getVoices();
+          if (!voices.length) return;
+          voices
+            .filter((v) => v.lang.startsWith("ja"))
+            .forEach((v) => {
+              let opt = document.createElement("option");
+              opt.text = v.name;
+              opt.voice = v;
+              voice.appendChild(opt);
+            });
+        }
+        speechSynthesis.addEventListener("voiceschanged", setVoices);
+        setVoices();
+      }
+    </script>
+  </body>
+</html>
