@@ -1,7 +1,7 @@
 "use client"
 import React, { ReactNode, ButtonHTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/styles/utils";
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
     "rounded-md shadow text-lg text-white font-medium border transition-all duration-500",

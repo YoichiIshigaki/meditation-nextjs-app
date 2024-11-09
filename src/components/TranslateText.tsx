@@ -3,6 +3,7 @@
 import React from "react";
 import { useLanguage, useTranslation } from "@/i18n/client";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const availableElement = ["p", "h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
 type TranslateText = {

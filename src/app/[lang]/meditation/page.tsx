@@ -1,10 +1,24 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
-import { cn } from "@/lib/styles/utils";
-import { TranslateText } from "@/components";
-import { element } from "prop-types";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { cn } from "@/lib/utils";
+import { Button, CustomText, TranslateText } from "@/components";
+import { Video } from "@/components/Video";
+import { Audio, AudioHandlers } from "@/components/Audio";
+import { Slider } from "@/components/ui/slider";
 
 type PageProps = { params: { lang: string } };
+
+const getGreeting = (): string => {
+  const nowHour = new Date().getHours();
+  if (nowHour > 4 && nowHour < 11) {
+    return "meditation:greeting.good_morning";
+  } else if (nowHour > 11 && nowHour < 18) {
+    return "meditation:greeting.good_afternoon";
+  }
+  return "meditation:greeting.good_evening";
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Page(_props: PageProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userName, _setUserName] = useState("john");
@@ -13,27 +27,26 @@ export default function Page(_props: PageProps) {
   const [breathe, setBreathe] = useState<"breathe" | "stop" | "exhale">(
     "breathe"
   );
+  const [playSoundStatus, setPlaySoundStatus] = useState<
+    "play" | "pause" | "stop"
+  >("stop");
 
   const breatheMap = {
     breathe: {
       message: "meditation:breathe.breathe",
-      className: "animate-grow",
+      className: "scale-[1.0]",
+      // className: "animate-grow",
     },
-    stop: { message: "meditation:breathe.stop", className: "scale-[1.2]" },
+    stop: {
+      message: "meditation:breathe.stop",
+      className: "scale-[1.0]",
+      // className: "scale-[1.2]"
+    },
     exhale: {
       message: "meditation:breathe.exhale",
-      className: "animate-shrink",
+      className: "scale-[1.0]",
+      // className: "animate-shrink",
     },
-  };
-
-  const getGreeting = (): string => {
-    const nowHour = new Date().getHours();
-    if (nowHour > 4 && nowHour < 11) {
-      return "meditation:greeting.good_morning";
-    } else if (nowHour > 11 && nowHour < 18) {
-      return "meditation:greeting.good_afternoon";
-    }
-    return "meditation:greeting.good_evening";
   };
 
   const breatheTime = (breatheCycleTime / 5) * 2; // 3s
@@ -43,14 +56,14 @@ export default function Page(_props: PageProps) {
     new Promise((resolve) => setTimeout(resolve, ms));
 
   const breatheAnimation = useCallback(async () => {
-    console.log("breathe");
+    // console.log("breathe");
 
     setBreathe("breathe");
     await sleep(breatheTime);
-    console.log("stop");
+    // console.log("stop");
     setBreathe("stop");
     await sleep(holdTime);
-    console.log("exhale");
+    // console.log("exhale");
     setBreathe("exhale");
   }, [setBreathe, breatheTime, holdTime]);
 
@@ -58,6 +71,18 @@ export default function Page(_props: PageProps) {
     () => setInterval(breatheAnimation, breatheCycleTime),
     [breatheCycleTime, breatheAnimation]
   );
+
+  const audioRef = useRef<AudioHandlers | null>(null);
+
+  const onPlay = () => {
+    audioRef.current?.play?.();
+  } 
+  const onStop = () => {
+    audioRef.current?.stop?.();
+  } 
+  const onPause = () => {
+    audioRef.current?.pause?.();
+  } 
 
   useEffect(() => {
     const execBreathAnimationInterval = breathAnimationInterval();
@@ -67,42 +92,66 @@ export default function Page(_props: PageProps) {
   }, [breathAnimationInterval]);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center text-center p-0 h-screen w-screen font-meditation bg-sea bg-cover bg-no-repeat bg-center">
-      <div className="h-screen w-screen container flex items-center justify-center m-auto relative scale-100 bg-opacity-80">
-        <div
-          data-testid="container"
-          className={cn(
-            "h-[300px] w-[300px] m-auto flex relative scale-100 items-center justify-center",
-            breatheMap[breathe].className
-          )}
-        >
+    <>
+      <div className="grid grid-rows-[20px_1fr_20px] items-center text-center p-0 h-screen w-screen font-meditation bg-sea bg-cover bg-no-repeat bg-center">
+        <div className="h-screen w-screen container flex items-center justify-center m-auto relative scale-100 bg-opacity-80">
           <div
-            data-testid="circle"
-            className="h-full w-full bg-[#010f1c] absolute top-0 left-0 rounded-full "
-          ></div>
-          <p className="text-2lx text-white z-10 mr-2">
-            <TranslateText translateKey={getGreeting()} element={null} />
-            {userName}
-          </p>
-          <TranslateText
-            className="text-white text-xl z-10"
-            translateKey={breatheMap[breathe].message}
-          />
-          <div
-            data-testid="pointer-container"
-            className="w-[20px] h-[190px] absolute top-[-40px] left-[140px] origin-bottom animate-pointer"
+            data-testid="container"
+            className={cn(
+              "h-[300px] w-[300px] m-auto flex relative scale-100 items-center justify-center",
+              breatheMap[breathe].className
+            )}
           >
             <div
-              data-testid="pointer"
-              className="w-[20px] h-[20px] bg-white rounded-full"
+              data-testid="circle"
+              className="h-full w-full bg-[#010f1c] absolute top-0 left-0 rounded-full "
+            ></div>
+            <p className="text-2lx text-white z-10 mr-2">
+              <TranslateText translateKey={getGreeting()} element={null} />
+              {userName}
+            </p>
+            <TranslateText
+              className="text-white text-xl z-10"
+              translateKey={breatheMap[breathe].message}
+            />
+            <div
+              data-testid="pointer-container"
+              className="w-[20px] h-[190px] absolute top-[-40px] left-[140px] origin-bottom animate-pointer"
+            >
+              <div
+                data-testid="pointer"
+                className="w-[20px] h-[20px] bg-white rounded-full"
+              ></div>
+            </div>
+            <div
+              data-testid="outer-circle"
+              className="h-[320px] w-[320px] bg-conic-gradient rounded-full absolute z-[-2] top-[-10px] left-[-10px]"
             ></div>
           </div>
-          <div
-            data-testid="outer-circle"
-            className="h-[320px] w-[320px] bg-conic-gradient rounded-full absolute z-[-2] top-[-10px] left-[-10px]"
-          ></div>
         </div>
       </div>
-    </div>
+
+      <Button
+        onClick={() => {
+          setPlaySoundStatus("play");
+            onPlay();
+        }}
+      >
+        play
+      </Button>
+      <Button
+        onClick={() => {
+          setPlaySoundStatus("stop");
+            onStop();
+        }}
+      >
+        stop
+      </Button>
+      <Video source="/sounds/meditation-piano1.mp3" />
+      <Audio ref={audioRef} source="/sounds/meditation-piano1.mp3" />
+      <Slider className="w-[60%]" defaultValue={[50]} max={100} step={1} />
+      {/* <CustomText text={String(sound.duration())} /> */}
+      {/* <CustomText text={String(sound.seek().toFixed(0))} /> */}
+    </>
   );
 }

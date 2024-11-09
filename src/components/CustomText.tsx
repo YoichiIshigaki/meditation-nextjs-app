@@ -1,5 +1,11 @@
+
 import React from "react";
 
-export const CustomText = ({ text }: { text: string }) => {
-  return <p>{text}</p>;
+type CustomTextProps = {
+  text: string;
+  className?: string;
+};
+
+export const CustomText = ({ text, className }: CustomTextProps) => {
+  return <p className={className}>{text}</p>;
 };
