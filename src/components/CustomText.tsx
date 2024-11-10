@@ -2,7 +2,7 @@
 import React from "react";
 
 type CustomTextProps = {
-  text: string;
+  text: React.ReactNode;
   className?: string;
 };
 

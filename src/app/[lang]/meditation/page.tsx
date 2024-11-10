@@ -2,9 +2,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Button, CustomText, TranslateText } from "@/components";
-import { Video } from "@/components/Video";
 import { Audio, AudioHandlers } from "@/components/Audio";
-import { Slider } from "@/components/ui/slider";
 
 type PageProps = { params: { lang: string } };
 
@@ -74,15 +72,15 @@ export default function Page(_props: PageProps) {
 
   const audioRef = useRef<AudioHandlers | null>(null);
 
-  const onPlay = () => {
-    audioRef.current?.play?.();
-  } 
-  const onStop = () => {
-    audioRef.current?.stop?.();
-  } 
-  const onPause = () => {
-    audioRef.current?.pause?.();
-  } 
+  // const onPlay = () => {
+  //   audioRef.current?.play?.();
+  // } 
+  // const onStop = () => {
+  //   audioRef.current?.stop?.();
+  // } 
+  // const onPause = () => {
+  //   audioRef.current?.pause?.();
+  // } 
 
   useEffect(() => {
     const execBreathAnimationInterval = breathAnimationInterval();
@@ -130,28 +128,7 @@ export default function Page(_props: PageProps) {
           </div>
         </div>
       </div>
-
-      <Button
-        onClick={() => {
-          setPlaySoundStatus("play");
-            onPlay();
-        }}
-      >
-        play
-      </Button>
-      <Button
-        onClick={() => {
-          setPlaySoundStatus("stop");
-            onStop();
-        }}
-      >
-        stop
-      </Button>
-      <Video source="/sounds/meditation-piano1.mp3" />
       <Audio ref={audioRef} source="/sounds/meditation-piano1.mp3" />
-      <Slider className="w-[60%]" defaultValue={[50]} max={100} step={1} />
-      {/* <CustomText text={String(sound.duration())} /> */}
-      {/* <CustomText text={String(sound.seek().toFixed(0))} /> */}
     </>
   );
 }
