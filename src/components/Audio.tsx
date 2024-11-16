@@ -2,24 +2,23 @@
 import React, {
   forwardRef,
   useImperativeHandle,
-  AudioHTMLAttributes,
+  HTMLAttributes,
   useEffect,
   useState,
 } from "react";
-import { Play, Pause, RotateCcw, Volume2 } from "lucide-react";
+import { Play, Pause, VolumeOff, Volume2, Volume1 } from "lucide-react";
 
 import { Slider } from "./ui/slider";
 import { CustomText } from "./CustomText";
 import { Button } from "./Button";
 import { Howl, HowlOptions } from "howler";
 import { cn } from "@/lib/utils";
-import { deprecate } from "util";
 
 const defaultSource = "/sounds/meditation-piano1.mp3";
 
 type AudioProps = {
   source: string;
-} & AudioHTMLAttributes<HTMLAudioElement>;
+} & HTMLAttributes<HTMLDivElement>;
 
 type AudioParam<K extends keyof Howl> = Parameters<Howl[K]>[0];
 // 公開したいメソッドの定義
@@ -91,7 +90,16 @@ class AudioManager {
   }
 }
 
-export const Audio = forwardRef<AudioHandlers, AudioProps>((props, ref) => {
+const soundIcon = (volume: number, className?: string) => {
+  if (volume === 0) return <VolumeOff className={className} />;
+  else if (volume > 0 && volume < 50) return <Volume1 className={className} />;
+  return <Volume2 className={className} />;
+};
+
+export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
+  props,
+  ref
+) {
   const { source = defaultSource, className, ...rest } = props;
 
   const audioManager = AudioManager.getInstance(source);
@@ -100,6 +108,9 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>((props, ref) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [soundVolume, setSoundVolume] = useState(100);
+
+  console.log({ soundVolume });
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -107,9 +118,10 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>((props, ref) => {
     if (isActive && !isPaused) {
       interval = setInterval(() => {
         setCurrentTime((second) => {
-          if (second > wholeTimeSec) {
+          if (second >= wholeTimeSec) {
             clearInterval(interval!);
             setIsActive(false);
+            return 0;
           }
           return second + 1;
         });
@@ -119,7 +131,7 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>((props, ref) => {
     }
 
     return () => clearInterval(interval!);
-  }, [isActive, isPaused]);
+  }, [isActive, isPaused, wholeTimeSec]);
 
   useImperativeHandle(ref, () => ({
     play(param) {
@@ -167,19 +179,7 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>((props, ref) => {
   }
 
   return (
-    <div className="w-full m-4">
-      {/* <Button
-        onClick={() => {
-          setIsActive(false);
-          setIsPaused(false);
-          setCurrentTime(0);
-          audioManager.stop();
-        }}
-        className="text-center"
-      >
-        <RotateCcw />
-        <p>stop</p>
-      </Button> */}
+    <div className={cn("w-full m-4", className)} {...rest}>
       {/* 再生時間のシークバー */}
       <div className="flex gap-3">
         <Button
@@ -222,7 +222,18 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>((props, ref) => {
             setIsPaused(false);
           }}
         />
-        <Volume2 /> <Slider className="w-20" max={100} step={5} />
+        {soundIcon(soundVolume)}
+        <Slider
+          className="w-20"
+          max={100}
+          step={5}
+          value={[soundVolume]}
+          onValueChange={([value]) => {
+            setSoundVolume(value);
+            audioManager.setVolume(value / 100);
+          }}
+        />
+        <CustomText text={`${soundVolume}%`} />
       </div>
       <CustomText text={formatTimeString(wholeTimeSec)} />
       <CustomText text={formatTimeString(currentTime)} />
