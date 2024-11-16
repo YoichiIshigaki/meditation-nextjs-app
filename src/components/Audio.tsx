@@ -204,6 +204,7 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
           <Pause />
           <p>pause</p>
         </Button>
+        <CustomText text={formatTimeString(currentTime)} />
         <Slider
           className="w-[60%]"
           max={wholeTimeSec}
@@ -222,6 +223,7 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
             setIsPaused(false);
           }}
         />
+        <CustomText text={formatTimeString(wholeTimeSec)} />
         {soundIcon(soundVolume)}
         <Slider
           className="w-20"
@@ -235,8 +237,6 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
         />
         <CustomText text={`${soundVolume}%`} />
       </div>
-      <CustomText text={formatTimeString(wholeTimeSec)} />
-      <CustomText text={formatTimeString(currentTime)} />
     </div>
   );
 });
