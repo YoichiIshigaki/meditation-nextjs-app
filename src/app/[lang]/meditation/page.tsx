@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { Button, CustomText, TranslateText } from "@/components";
+import { TranslateText } from "@/components";
 import { Audio, AudioHandlers } from "@/components/Audio";
 
 type PageProps = { params: { lang: string } };
@@ -25,10 +25,6 @@ export default function Page(_props: PageProps) {
   const [breathe, setBreathe] = useState<"breathe" | "stop" | "exhale">(
     "breathe"
   );
-  const [playSoundStatus, setPlaySoundStatus] = useState<
-    "play" | "pause" | "stop"
-  >("stop");
-
   const breatheMap = {
     breathe: {
       message: "meditation:breathe.breathe",
@@ -72,16 +68,6 @@ export default function Page(_props: PageProps) {
 
   const audioRef = useRef<AudioHandlers | null>(null);
 
-  // const onPlay = () => {
-  //   audioRef.current?.play?.();
-  // } 
-  // const onStop = () => {
-  //   audioRef.current?.stop?.();
-  // } 
-  // const onPause = () => {
-  //   audioRef.current?.pause?.();
-  // } 
-
   useEffect(() => {
     const execBreathAnimationInterval = breathAnimationInterval();
     return () => {
@@ -90,7 +76,8 @@ export default function Page(_props: PageProps) {
   }, [breathAnimationInterval]);
 
   return (
-    <>
+    <div>
+      <video src="/videos/sea_twilight.mp4" autoPlay muted loop className="absolute top-[63px] left-0 w-full h-full object-fill opacity-80" />
       <div className="grid grid-rows-[20px_1fr_20px] items-center text-center p-0 h-screen w-screen font-meditation bg-sea bg-cover bg-no-repeat bg-center">
         <div className="h-screen w-screen container flex items-center justify-center m-auto relative scale-100 bg-opacity-80">
           <div
@@ -129,6 +116,6 @@ export default function Page(_props: PageProps) {
         </div>
       </div>
       <Audio ref={audioRef} source="/sounds/meditation-piano1.mp3" />
-    </>
+    </div>
   );
 }
