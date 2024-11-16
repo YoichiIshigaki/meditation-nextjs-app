@@ -96,6 +96,7 @@ const soundIcon = (volume: number, className?: string) => {
   return <Volume2 className={className} />;
 };
 
+// TODO: svgアイコンを上下左右、中央揃えにする。
 export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
   props,
   ref
@@ -179,9 +180,9 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
   }
 
   return (
-    <div className={cn("w-full m-4", className)} {...rest}>
+    <div className={cn("w-full p-4", className)} {...rest}>
       {/* 再生時間のシークバー */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 [&>p]:m-auto">
         <Button
           onClick={() => {
             setIsActive(true);
@@ -224,6 +225,7 @@ export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
           }}
         />
         <CustomText text={formatTimeString(wholeTimeSec)} />
+        {/* 音声バー */}
         {soundIcon(soundVolume)}
         <Slider
           className="w-20"
