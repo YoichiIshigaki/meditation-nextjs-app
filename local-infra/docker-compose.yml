@@ -4,7 +4,7 @@ services:
     image: localstack/localstack:3.8.1
     ports:
       - 4566:4566 # s3
-      - 8082:8080 # dashboard
+      - 8082:8080 # dashboard 有料版のみ使用可能
     environment:
       - DEFAULT_REGION=ap-northeast-1
       - DOCKER_SOCK=/var/run/docker.sock  # locakstackでもローカルDocker利用できるようにする設定
@@ -41,8 +41,8 @@ services:
     entrypoint: >
       /bin/sh -c "
       until (/usr/bin/mc config host add myminio http://minio:9000 user password) do echo '...waiting...' && sleep 1; done;
-      /usr/bin/mc mb myminio/mybucket;
-      /usr/bin/mc policy download myminio/mybucket;
+      /usr/bin/mc mb myminio/meditation-app;
+      /usr/bin/mc policy download myminio/meditation-app;
       exit 0;
       "
 
