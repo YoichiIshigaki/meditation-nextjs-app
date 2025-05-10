@@ -1,4 +1,4 @@
-{
+const meditation = {
   "welcome": "Welcome!!",
   "greeting": {
     "good_morning": "Good Morning!",
@@ -11,3 +11,5 @@
     "exhale": "Breathe out"
   }
 }
+
+export default meditation;

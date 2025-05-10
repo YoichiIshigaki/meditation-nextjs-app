@@ -1,4 +1,4 @@
-{
+const meditation = {
   "welcome": "ようこそ!!",
   "greeting": {
     "good_morning": "おはよう",
@@ -11,3 +11,5 @@
     "exhale": "吐いて"
   }
 }
+
+export default meditation;
