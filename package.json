@@ -1,5 +1,5 @@
 {
-  "name": "meditation-nextjs-app",
+  "name": "MediMate",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,6 +15,8 @@
     "@types/howler": "2.2.12",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
+    "firebase": "^11.8.1",
+    "firebase-admin": "^13.4.0",
     "howler": "2.2.4",
     "i18next": "23.16.0",
     "i18next-resources-to-backend": "1.2.1",
@@ -27,7 +29,8 @@
     "react-dom": "18",
     "react-i18next": "15.0.3",
     "tailwind-merge": "2.5.4",
-    "tailwindcss-animate": "1.0.7"
+    "tailwindcss-animate": "1.0.7",
+    "config-submodule": "github:YoichiIshigaki/config-modules#5814f2c11bcb4628c1093479c3bf74cb79a03d9f"
   },
   "devDependencies": {
     "@types/negotiator": "0.6.3",
