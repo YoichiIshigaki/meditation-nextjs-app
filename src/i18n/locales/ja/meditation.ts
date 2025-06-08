@@ -1,5 +1,6 @@
 const meditation = {
   "welcome": "ようこそ!!",
+  "login": "ログイン",
   "greeting": {
     "good_morning": "おはよう",
     "good_afternoon": "こんにちは",

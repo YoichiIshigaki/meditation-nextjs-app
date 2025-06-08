@@ -1,6 +1,7 @@
 const login = {
   password: 'Password',
-  email: 'Email'
+  email: 'Email',
+  login: 'Login'
 }
 
 export default login;

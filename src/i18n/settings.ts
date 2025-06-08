@@ -1,7 +1,15 @@
 export const defaultLanguage = "ja";
 // 日本語、英語、スペイン語
-export const availableLanguages = [defaultLanguage, "en", "es"];
-export const namespaces = ["translation", "home", "meditation"];
+export const availableLanguages = [defaultLanguage, "en", "es"] as const;
+export const namespaces = [
+  "translation",
+  "home",
+  "meditation",
+  "login",
+  "validation"
+] as const;
+
+export type Language = typeof availableLanguages[number]
 
 export const getOptions = (lng = defaultLanguage) => ({
   lng,

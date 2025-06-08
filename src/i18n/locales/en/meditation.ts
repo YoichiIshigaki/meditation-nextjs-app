@@ -1,5 +1,6 @@
 const meditation = {
   "welcome": "Welcome!!",
+  "login": "Login",
   "greeting": {
     "good_morning": "Good Morning!",
     "good_afternoon": "Good Afternoon!",

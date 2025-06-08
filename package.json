@@ -15,6 +15,7 @@
     "@types/howler": "2.2.12",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
+    "config-submodule": "github:YoichiIshigaki/config-modules#5814f2c11bcb4628c1093479c3bf74cb79a03d9f",
     "firebase": "^11.8.1",
     "firebase-admin": "^13.4.0",
     "howler": "2.2.4",
@@ -27,10 +28,11 @@
     "next-i18next": "15.3.1",
     "react": "18",
     "react-dom": "18",
+    "react-hook-form": "^7.56.4",
     "react-i18next": "15.0.3",
     "tailwind-merge": "2.5.4",
     "tailwindcss-animate": "1.0.7",
-    "config-submodule": "github:YoichiIshigaki/config-modules#5814f2c11bcb4628c1093479c3bf74cb79a03d9f"
+    "zod": "^3.25.42"
   },
   "devDependencies": {
     "@types/negotiator": "0.6.3",
