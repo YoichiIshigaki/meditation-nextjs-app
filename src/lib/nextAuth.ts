@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from 'next-auth/providers/credentials';
 import config from "@/config";
+import { signInWithEmail } from './auth'
 
 export const handler = NextAuth({
   providers: [
@@ -11,12 +12,14 @@ export const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // 実際には DB チェックなどを行う
-        console.log({ credentials });
-        if (credentials?.email === 'user@example.com' && credentials?.password === 'password') {
-          return { id: '1', name: 'User', email: 'user@example.com' };
-        }
-        return null;
+        if(process.env.IS_TEXT === 'true'){
+          if (credentials?.email === 'user@example.com' && credentials?.password === 'password') {
+            return { id: 'user-uid', name: 'test-user', email: 'user@example.com' };
+          }
+          return null;
+        } else {
+          return await signInWithEmail(credentials!.email, credentials!.password)
+        } 
       },
     }),
   ],
