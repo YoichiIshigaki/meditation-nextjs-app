@@ -2,7 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, type FieldErrors } from 'react-hook-form';
 import { useLanguage, useTranslation } from "@/i18n/client";
 import { TranslateText } from '@/components';
 
@@ -10,6 +10,17 @@ type FormData = {
   email: string;
   password: string;
 };
+
+const ErrorMessage = <T extends Record<string, string>,>(props: {
+  errors: FieldErrors<T>
+  type: string,
+  formKey: keyof typeof errors
+}) => {
+  const { errors, type, formKey: key } = props;
+  return errors[key]?.type === type ? (
+      <TranslateText className='text-red-500 font-medium' translateKey={`validation:${key}.${type}`} />
+  ) : null
+}
 
 export default function LoginPage() {
   const router = useRouter();
@@ -95,12 +106,8 @@ export default function LoginPage() {
           />
         )}
       />
-      {errors.email?.type === 'required' && (
-        <TranslateText className='text-red-500 font-medium' translateKey='validation:email.required' />
-      )}
-      {errors.password?.type === 'required' && (
-        <TranslateText className='text-red-500 font-medium' translateKey='validation:password.required' />
-      )}
+      <ErrorMessage<FormData> errors={errors} type='required' formKey='email' />
+      <ErrorMessage<FormData> errors={errors} type='required' formKey='password' />
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
         <TranslateText element={null} translateKey='login:login' />
       </button>
