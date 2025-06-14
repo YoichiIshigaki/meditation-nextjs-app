@@ -3,6 +3,6 @@ const home = {
   "message": {
     "help": "ayuda"
   }
-}
+} as const;
 
 export default home;

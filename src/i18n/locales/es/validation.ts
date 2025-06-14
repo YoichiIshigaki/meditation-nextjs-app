@@ -8,8 +8,7 @@ const validation = {
   email: {
     required: 'El correo electrónico es obligatorio.',
     regex: '',
-
   }
-}
+} as const;
 
 export default validation;

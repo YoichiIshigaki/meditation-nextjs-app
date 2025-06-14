@@ -11,6 +11,6 @@ const meditation = {
     "stop": "止めて",
     "exhale": "吐いて"
   }
-}
+} as const;
 
 export default meditation;

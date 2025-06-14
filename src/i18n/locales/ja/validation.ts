@@ -8,8 +8,7 @@ const validation = {
   email: {
     required: 'メールアドレスは必須です。',
     regex: '',
-
   }
-}
+} as const;
 
 export default validation;

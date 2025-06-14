@@ -1,4 +1,14 @@
+import login from './login';
+import meditation from './meditation';
+import home from './home';
+import validation from './validation';
+
 const translation = {
-  "app_name": "Next.js App Router i18n デモ"
+  app_name: "medimate app",
+  login,
+  meditation,
+  home,
+  validation,
 }
-export default translation;
+
+export default translation
