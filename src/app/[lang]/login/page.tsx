@@ -69,7 +69,8 @@ export default function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="p-6 max-w-sm mx-auto space-y-4">
-      <TranslateText className="text-xl font-bold capitalize" translateKey='login:login' />
+      <TranslateText element={"h1"} className="text-4xl font-bold capitalize" translateKey='login:login' />
+      <AppIcon shape="square" size="lg" />
       <Controller
         control={control}
           name="email"
@@ -79,8 +80,8 @@ export default function LoginPage() {
         render={({ field: { onChange, onBlur, value } }) => (
           <input
             type="text"
-            // name="email"
-            placeholder={t('login:email')} // 翻訳されない
+            name="email"
+            placeholder={t('login:email')}
             className="w-full border p-2"
             value={value}
             onBlur={onBlur}
@@ -97,7 +98,7 @@ export default function LoginPage() {
         render={({ field: { onChange, onBlur, value } }) => (
           <input
             type="password"
-            // name="password"
+            name="password"
             placeholder={t('login:password')}
             className="w-full border p-2"
             value={value}
