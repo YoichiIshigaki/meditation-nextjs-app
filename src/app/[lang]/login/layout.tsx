@@ -3,7 +3,7 @@ import { dir } from "i18next";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
-import { LanguageProvider } from "@/i18n/client";
+import { Providers } from "@/app/components/Providers";
 
 const MPLUS1Code = localFont({
   src: "../fonts/MPLUS1Code-Regular.ttf",
@@ -23,14 +23,14 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { lang: string };
 }>) {
-  console.log("RootLayout lang:", lang);
-  // Ensure lang is a valid language code
   return (
     <html lang={lang} dir={dir(lang)}>
+      <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <body className={`${MPLUS1Code.variable} p-0 m-0`}>
-        <LanguageProvider initialLanguage={lang}>
-          {children}
-        </LanguageProvider>
+        <Providers lang={lang}>{children}</Providers>
       </body>
     </html>
   );

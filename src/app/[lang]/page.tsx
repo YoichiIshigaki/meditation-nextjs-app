@@ -1,34 +1,33 @@
-"use client";
-import { Button } from "@/components/Button";
-import { LanguageProvider } from '@/i18n/client';
-import { TranslateText } from '../../components/TranslateText';
+'use client';
 
+import { cn } from '@/lib/utils';
+import React, { useState } from 'react';
+import Sidebar from '@/components/Sidebar';
+import MainContent from '@/components/MainContent';
 
-export default function Home({ params }: { params: { lang: string } }) {
-  const { lang } = params;
+interface HomeProps {
+  lang: string;
+}
+
+export default function Home({ lang }: HomeProps) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  console.log(lang);
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="max-w-4xl py-20 flex gap-4 mx-auto">
-        <Button id="get" onClick={() => alert("get")}>
-          GET
-        </Button>
-        <Button id="create" variant="success" onClick={() => alert("create")}>
-          CREATE
-        </Button>
-        <Button id="update" variant="secondary" onClick={() => alert("update")}>
-          UPDATE
-        </Button>
-        <Button id="delete" variant="danger" onClick={() => alert("delete")}>
-          DELETE
-        </Button>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <p className="text-sm text-slate-500">@copyright</p>
-        <p>{lang}</p>
-        <LanguageProvider initialLanguage={lang}>
-          <TranslateText translateKey="home:message.help" />
-        </LanguageProvider>
-      </footer>
+    <div className={cn('flex min-h-screen relative')}> {/* Added relative for overlay positioning */}
+      <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+      <MainContent toggleSidebar={toggleSidebar} /> {/* Pass toggleSidebar to MainContent for Header */}
+      {/* Overlay for mobile when sidebar is open */}
+      {!isSidebarCollapsed && (
+        <div
+          className="fixed inset-0 z-20 bg-black bg-opacity-50 md:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
     </div>
   );
 }

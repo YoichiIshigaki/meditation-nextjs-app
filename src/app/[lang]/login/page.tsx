@@ -1,10 +1,10 @@
 'use client';
-
-import { signIn } from 'next-auth/react';
+import { useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm, Controller, type FieldErrors } from 'react-hook-form';
 import { useLanguage, useTranslation } from "@/i18n/client";
-import { TranslateText } from '@/components';
+import { AppIcon, TranslateText } from '@/components';
 
 type FormData = {
   email: string;
@@ -27,7 +27,8 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const { language } = useLanguage();
   const { t } = useTranslation(language);
-  console.log({ language });
+  const { data: session, status } = useSession();
+  console.log({ session });
 
   const {
     control,
@@ -41,6 +42,14 @@ export default function LoginPage() {
         email: ''
       }
     });
+
+  const callbackUrl = searchParams.get('callbackUrl') || `/${language}`;
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push(callbackUrl);
+    }
+  }, [status, router, callbackUrl]);
   
   // submit時処理
   const onSubmit = async (data: FormData) => {
@@ -48,13 +57,11 @@ export default function LoginPage() {
     await handleLogin()
   };
 
-  const callbackUrl = searchParams.get('callbackUrl') || '/';
-
   const handleLogin = async () => {
     const form = getValues();
     const res = await signIn('credentials', {
       redirect: false,
-      // callbackUrl,
+      callbackUrl,
       ...form
     });
     console.dir(res, { depth: null, maxArrayLength: null })
@@ -66,6 +73,10 @@ export default function LoginPage() {
       alert('ログイン失敗');
     }
   };
+
+  if (['loading', 'authenticated'].includes(status)) {
+    return null;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="p-6 max-w-sm mx-auto space-y-4">

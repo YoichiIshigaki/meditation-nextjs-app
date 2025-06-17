@@ -34,9 +34,25 @@ export const AppIcon: React.FC<AppIconProps> = ({
   size,
   ...props
 }) => {
+  const getShape = () => {
+    switch (size) {
+      case "sm":
+        return "w-[10px] h-[10px]";
+      case "md":
+        return "w-[20px] h-[20px]";
+      case "lg":
+        return "w-[40px] h-[40px]";
+      default:
+        return "";
+    }
+    
+  };
   return (
     <div {...props} className={cn(appIconVariants({ shape, size }), className)}>
-      <div className="text-white w-[10px] h-[10px] m-auto text-center mt-1.5">
+      <div className={cn(
+        "text-white w-[10px] h-[10px] m-auto text-center mt-1.5",
+        getShape()
+        )}>
         <svg
           width="100%"
           height="100%"
@@ -97,7 +113,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
           </g>
         </svg>
       </div>
-      <p className="inline-block">Meditation</p>
+      <p className="inline-block">MediMate</p>
       <p>Web App</p>
     </div>
   );
