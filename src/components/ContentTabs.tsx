@@ -7,8 +7,8 @@ interface TabItemProps {
 
 function TabItem({ icon, label }: TabItemProps) {
   return (
-    <div className="flex items-center py-2 px-4 bg-gray-100 rounded-full whitespace-nowrap text-sm text-gray-600 cursor-pointer hover:bg-gray-200">
-      <div className="w-5 h-5 mr-1.5 flex justify-center items-center">{icon}</div>
+    <div className="flex items-center py-1.5 px-3 sm:py-2 sm:px-4 bg-gray-100 rounded-full whitespace-nowrap text-xs sm:text-sm text-gray-600 cursor-pointer hover:bg-gray-200">
+      <div className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-1.5 flex justify-center items-center">{icon}</div>
       <span>{label}</span>
     </div>
   );

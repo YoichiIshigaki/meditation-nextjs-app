@@ -36,7 +36,7 @@ const recommendations = [
 
 export default function MainContent({ toggleSidebar }: MainContentProps) {
   return (
-    <div className="flex-1 flex flex-col bg-gray-50">
+    <div className="flex-1 flex flex-col bg-gray-50 w-full">
       <Header toggleSidebar={toggleSidebar} />
       <HeroSection />
       <ContentTabs />

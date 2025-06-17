@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
 import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "../components/Providers";
@@ -24,6 +25,14 @@ export const metadata: Metadata = {
   title: 'マインドフルネスアプリ', // HTMLからタイトルを設定
   description: '今日のマインドフルネス', // 適切な説明に変更
 };
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: 'red',
+}
 
 export default function RootLayout({
   children,

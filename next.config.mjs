@@ -4,6 +4,14 @@ const nextConfig = {
     domains: [
       'avatars.githubusercontent.com'
     ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

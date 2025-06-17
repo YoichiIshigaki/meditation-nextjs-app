@@ -20,7 +20,7 @@ export default function Header({ toggleSidebar }: HeaderProps) {
             </svg>
           </button>
         )}
-        <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">や</div>
+        <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">J</div>
         <div>
           <div>やあjohnさん</div>
           <div className="text-sm text-gray-500">ムードチェック ∨</div>
