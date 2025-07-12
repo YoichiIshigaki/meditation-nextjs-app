@@ -3,7 +3,8 @@ import { dir } from "i18next";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
-import { Providers } from "@/app/components/Providers";
+import { Providers } from "@/components/wrapper/Providers";
+import { AuthenticationWrapper } from "@/components/wrapper/AuthenticationWrapper";
 
 const MPLUS1Code = localFont({
   src: "../fonts/MPLUS1Code-Regular.ttf",
@@ -30,7 +31,11 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`${MPLUS1Code.variable} p-0 m-0`}>
-        <Providers lang={lang}>{children}</Providers>
+        <Providers lang={lang}>
+          <AuthenticationWrapper>
+            {children}
+          </AuthenticationWrapper>
+        </Providers>
       </body>
     </html>
   );

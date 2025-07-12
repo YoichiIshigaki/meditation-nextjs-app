@@ -1,5 +1,4 @@
 'use client';
-import { useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm, Controller, type FieldErrors } from 'react-hook-form';
@@ -27,14 +26,12 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const { language } = useLanguage();
   const { t } = useTranslation(language);
-  const { data: session, status } = useSession();
-  console.log({ session });
 
   const {
     control,
     getValues,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     reValidateMode: 'onBlur',
     defaultValues: {
@@ -44,12 +41,6 @@ export default function LoginPage() {
     });
 
   const callbackUrl = searchParams.get('callbackUrl') || `/${language}`;
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.push(callbackUrl);
-    }
-  }, [status, router, callbackUrl]);
   
   // submit時処理
   const onSubmit = async (data: FormData) => {
@@ -68,15 +59,11 @@ export default function LoginPage() {
 
     if (res?.ok) {
       alert('ログイン成功');
-      // router.push(callbackUrl);
+      router.push(callbackUrl);
     } else {
       alert('ログイン失敗');
     }
   };
-
-  if (['loading', 'authenticated'].includes(status)) {
-    return null;
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="p-6 max-w-sm mx-auto space-y-4">
