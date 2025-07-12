@@ -1,0 +1,81 @@
+# Gemini CLI Project Context
+
+## 1. Project Overview
+
+This is a modern, multi-lingual web application built with Next.js, focusing on meditation and relaxation content. The application serves audio and video content to users and includes a robust authentication system.
+
+- **Purpose**: Meditation and relaxation content delivery platform.
+- **Key Features**:
+    - User Authentication (Login/Logout)
+    - Multi-lingual support (English, Japanese, Spanish)
+    - Audio and Video content playback
+    - API endpoints for fetching resources.
+
+## 2. Core Technologies
+
+- **Framework**: **Next.js 14+** (using the **App Router**)
+- **Language**: **TypeScript**
+- **Styling**: **Tailwind CSS** for utility-first styling.
+    - Configuration: `tailwind.config.ts`, `postcss.config.mjs`
+- **UI Components**: **Shadcn/UI** (`components.json`, `src/components/ui/`). Custom, reusable components are located in `src/components/`.
+- **Authentication**: **NextAuth.js (v5 / Auth.js)**.
+    - Configuration is in `src/lib/auth.ts` and `src/lib/nextAuth.ts`.
+    - The API endpoint is at `src/app/api/auth/[...nextauth]/route.ts`.
+- **Internationalization (i18n)**: **`i18next`** and **`react-i18next`**.
+    - Setup files: `src/i18n/server.ts` (server-side), `src/i18n/client.tsx` (client-side), `src/i18n/settings.ts` (shared config).
+- **Linting**: ESLint (`.eslintrc.json`) is used to enforce code style.
+
+## 3. Project Structure
+
+The project follows a feature-oriented structure within the `src` directory.
+
+- `src/app/[lang]/`: This is the core of the application, containing all user-facing pages.
+    - The `[lang]` dynamic segment handles the language (`en`, `ja`, `es`).
+    - `layout.tsx`: The root layout for the entire application for a given language.
+    - `page.tsx`: The main landing/home page.
+    - `meditation/`: Contains the pages related to the meditation feature.
+    - `login/`: Contains the user login page.
+
+- `src/app/api/`: Contains all backend API routes.
+    - `auth/`: Handles authentication endpoints via NextAuth.js.
+    - `sounds/`, `users/`: Custom API routes for application data.
+
+- `src/components/`: Contains reusable React components.
+    - `ui/`: Specifically for Shadcn/UI components.
+    - Other files (`Header.tsx`, `Audio.tsx`, etc.) are custom components for this application.
+
+- `src/lib/`: Houses core business logic, external service integrations, and helper functions.
+    - `auth.ts`: Core NextAuth.js configuration.
+    - `firebase.ts`: Firebase integration (if used).
+    - `utils.ts`: General utility functions.
+
+- `src/i18n/`: Manages the internationalization setup.
+    - `locales/`: Contains the translation JSON/TS files, organized by language and then by feature/page.
+        - Example: `src/i18n/locales/ja/meditation.ts` holds Japanese translations for the meditation page.
+
+- `src/middleware.ts`: Implements Next.js middleware. It likely handles request authentication and i18n language routing.
+
+- `public/`: Stores all static assets that are publicly accessible.
+    - `images/`, `sounds/`, `videos/`: Contains the media files used throughout the application.
+
+## 4. Key Concepts & Coding Conventions
+
+- **Routing**: All pages are part of the App Router. URLs are prefixed with the language code (e.g., `/ja/login`).
+- **Data Fetching**: Use server components for data fetching whenever possible to leverage Next.js performance benefits. Client-side fetching should be done via custom API routes in `src/app/api`.
+- **Styling**:
+    - Use **Tailwind CSS utility classes** directly in JSX.
+    - For complex components, you can create dedicated CSS files, but the preference is utility-first.
+    - Adhere to the design system defined in `tailwind.config.ts`.
+- **State Management**: For client-side state, prefer React Hooks (`useState`, `useContext`, `useReducer`). For global state, `src/app/components/Providers.tsx` suggests a React Context-based approach.
+- **Internationalization (i18n)**:
+    - All user-facing text **must** be translated.
+    - Add new translation keys to the appropriate files in `src/i18n/locales/{lang}/{namespace}.ts`.
+    - On the server, use the `createTranslation` function from `src/i18n/server.ts`.
+    - On the client, use the `useTranslation` hook from `src/i18n/client.tsx`.
+- **TypeScript**:
+    - Write all new code in TypeScript.
+    - Use strict types and avoid `any` where possible.
+    - Define types for API responses and component props.
+- **Components**:
+    - Create small, reusable components.
+    - All components should be functional components with hooks.
