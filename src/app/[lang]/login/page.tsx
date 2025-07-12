@@ -1,5 +1,5 @@
 'use client';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm, Controller, type FieldErrors } from 'react-hook-form';
 import { useLanguage, useTranslation } from "@/i18n/client";
