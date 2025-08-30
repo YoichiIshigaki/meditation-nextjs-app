@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useRef, VideoHTMLAttributes, useMemo } from "react";
 
 import videojs from "video.js";
@@ -65,7 +65,7 @@ export const Video: React.FC<VideoProps> = ({
         console.log("player pause");
       },
     }),
-    []
+    [],
   );
 
   useEffect(() => {
