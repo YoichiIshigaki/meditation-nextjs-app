@@ -7,7 +7,7 @@ import {
   type Auth,
   type UserCredential
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore/lite';
+import { getFirestore } from 'firebase/firestore';
 import config from '@/config';
 
 class FirebaseService {
@@ -73,3 +73,5 @@ const firebaseService = FirebaseService.getInstance();
 export const getApp = async () => firebaseService.getApp();
 export const getDB = async () => firebaseService.getDB();
 export const getAuth = async () => firebaseService.getAuth();
+
+export const FIRESTORE_COLLECTION_NAME_PREFIX = 'meditation'
