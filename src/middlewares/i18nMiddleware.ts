@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import Negotiator from "negotiator";
 import { defaultLanguage, availableLanguages } from "../i18n/settings";
 
@@ -8,7 +8,7 @@ const getNegotiatedLanguage = (
   return new Negotiator({ headers }).language([...availableLanguages]);
 };
 
-export const i18nMiddleware = (request: NextRequest) => {
+export const i18nMiddleware = (request: NextRequest, _: NextResponse) => {
   const headers = {
     "accept-language": request.headers.get("accept-language") ?? "",
   };
