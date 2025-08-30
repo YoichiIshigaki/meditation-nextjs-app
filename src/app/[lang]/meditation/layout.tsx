@@ -74,10 +74,7 @@ type GithubUser = typeof user;
 export default async function RootLayout({
   children,
   params: { lang },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { lang: string };
-}>) {
+}: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   const getGithubUser = async (username: string): Promise<GithubUser> => {
     const res = await fetch(`https://api.github.com/users/${username}`);
     const json = await res.json();
@@ -92,7 +89,7 @@ export default async function RootLayout({
       <body className={`${MPLUS1Code.variable} p-0 m-0`}>
         <LanguageProvider initialLanguage={lang}>
           <header className="flex justify-between border-b-purple-200 border-b-2 px-4 pt-[5px]">
-              <AppIcon id="app-icon" className={DancingScriptFont.className} />
+            <AppIcon id="app-icon" className={DancingScriptFont.className} />
             <div className="m-0 p-2 text-center text-purple-200">
               <Link href={`/${lang}/meditation`} className="">
                 <h1 className="text-4xl">Meditation App</h1>
@@ -108,7 +105,7 @@ export default async function RootLayout({
                   alt="avator-icon"
                 />
               ) : (
-                <CustomText text={"ログイン"}  />
+                <CustomText text={"ログイン"} />
               )}
             </div>
           </header>

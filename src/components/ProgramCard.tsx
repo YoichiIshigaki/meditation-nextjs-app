@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 interface ProgramCardProps {
   imageUrl: string;
@@ -23,7 +23,14 @@ export default function ProgramCard({
 }: ProgramCardProps) {
   return (
     <div className="flex flex-col sm:flex-row bg-white rounded-lg overflow-hidden mb-4 shadow-sm mx-5 cursor-pointer hover:shadow-md transition-shadow">
-      <Image src={imageUrl} width={80} height={80} className="w-full sm:w-20 h-32 sm:h-20 object-cover" alt={title} />
+      <Image
+        src={imageUrl}
+        width={80}
+        height={80}
+        className="w-full sm:w-20 h-32 sm:h-20 object-cover"
+        alt={title}
+      />
+
       <div className="p-2.5 flex-1 flex flex-col justify-between w-full">
         <div>
           <div className="font-bold text-sm sm:text-base">{title}</div>
@@ -31,12 +38,17 @@ export default function ProgramCard({
           <div className="flex items-center mt-1 sm:mt-1.5 text-xs text-gray-500">
             <span>{progress}</span>
             <div className="flex-1 h-[3px] bg-gray-300 rounded-sm mx-1.5">
-              <div className="h-full bg-[#7273d0] rounded-sm" style={{ width: progressPercent }}></div>
+              <div
+                className="h-full bg-[#7273d0] rounded-sm"
+                style={{ width: progressPercent }}
+              ></div>
             </div>
           </div>
         </div>
         <div className="inline-flex items-center bg-gray-100 py-0.5 px-1.5 sm:py-1 sm:px-2 rounded-full text-xs mt-2 sm:mt-1.5 self-start">
-          <div className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex justify-center items-center">{tagIcon}</div>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex justify-center items-center">
+            {tagIcon}
+          </div>
           <span>{tagLabel}</span>
         </div>
       </div>

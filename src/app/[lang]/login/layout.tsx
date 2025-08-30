@@ -20,10 +20,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params: { lang },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { lang: string };
-}>) {
+}: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   return (
     <html lang={lang} dir={dir(lang)}>
       <head>
@@ -32,9 +29,7 @@ export default async function RootLayout({
       </head>
       <body className={`${MPLUS1Code.variable} p-0 m-0`}>
         <Providers lang={lang}>
-          <AuthenticationWrapper>
-            {children}
-          </AuthenticationWrapper>
+          <AuthenticationWrapper>{children}</AuthenticationWrapper>
         </Providers>
       </body>
     </html>

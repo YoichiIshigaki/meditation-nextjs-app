@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Header from '@/components/Header';
-import HeroSection from '@/components/HeroSection';
-import ContentTabs from '@/components/ContentTabs';
-import ProgramCard from '@/components/ProgramCard';
-import RecommendationCard from '@/components/RecommendationCard';
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import ContentTabs from "@/components/ContentTabs";
+import ProgramCard from "@/components/ProgramCard";
+import RecommendationCard from "@/components/RecommendationCard";
 
 interface MainContentProps {
   toggleSidebar?: () => void;
@@ -41,7 +41,9 @@ export default function MainContent({ toggleSidebar }: MainContentProps) {
       <HeroSection />
       <ContentTabs />
 
-      <h2 className="text-xl font-bold mt-5 mb-3 mx-5">プログラムの続きから始める</h2>
+      <h2 className="text-xl font-bold mt-5 mb-3 mx-5">
+        プログラムの続きから始める
+      </h2>
       <ProgramCard
         imageUrl="https://picsum.photos/80/80?random=1"
         title="良い夢を"

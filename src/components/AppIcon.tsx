@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,7 @@ const appIconVariants = cva(
       shape: "square",
       size: "sm",
     },
-  }
+  },
 );
 
 type AppIconProps = HTMLAttributes<HTMLDivElement> &
@@ -45,14 +45,15 @@ export const AppIcon: React.FC<AppIconProps> = ({
       default:
         return "";
     }
-    
   };
   return (
     <div {...props} className={cn(appIconVariants({ shape, size }), className)}>
-      <div className={cn(
-        "text-white w-[10px] h-[10px] m-auto text-center mt-1.5",
-        getShape()
-        )}>
+      <div
+        className={cn(
+          "text-white w-[10px] h-[10px] m-auto text-center mt-1.5",
+          getShape(),
+        )}
+      >
         <svg
           width="100%"
           height="100%"

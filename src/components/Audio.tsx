@@ -47,7 +47,7 @@ class AudioManager {
   // インスタンスを一度だけ作成し、それを返す
   public static getInstance(
     source: string,
-    option?: HowlOptions
+    option?: HowlOptions,
   ): AudioManager {
     if (!AudioManager.instance) {
       AudioManager.instance = new AudioManager(source, option);
@@ -97,148 +97,149 @@ const soundIcon = (volume: number, className?: string) => {
 };
 
 // TODO: svgアイコンを上下左右、中央揃えにする。
-export const Audio = forwardRef<AudioHandlers, AudioProps>(function Audio(
-  props,
-  ref
-) {
-  const { source = defaultSource, className, ...rest } = props;
+export const Audio = forwardRef<AudioHandlers, AudioProps>(
+  function Audio(props, ref) {
+    const { source = defaultSource, className, ...rest } = props;
 
-  const audioManager = AudioManager.getInstance(source);
-  const wholeTimeSec = Math.round(audioManager.duration());
+    const audioManager = AudioManager.getInstance(source);
+    const wholeTimeSec = Math.round(audioManager.duration());
 
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [soundVolume, setSoundVolume] = useState(100);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [isActive, setIsActive] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const [soundVolume, setSoundVolume] = useState(100);
 
-  console.log({ soundVolume });
+    console.log({ soundVolume });
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    useEffect(() => {
+      let interval: NodeJS.Timeout | null = null;
 
-    if (isActive && !isPaused) {
-      interval = setInterval(() => {
-        setCurrentTime((second) => {
-          if (second >= wholeTimeSec) {
-            clearInterval(interval!);
-            setIsActive(false);
-            return 0;
-          }
-          return second + 1;
-        });
-      }, 1000);
-    } else {
-      clearInterval(interval!);
+      if (isActive && !isPaused) {
+        interval = setInterval(() => {
+          setCurrentTime((second) => {
+            if (second >= wholeTimeSec) {
+              clearInterval(interval!);
+              setIsActive(false);
+              return 0;
+            }
+            return second + 1;
+          });
+        }, 1000);
+      } else {
+        clearInterval(interval!);
+      }
+
+      return () => clearInterval(interval!);
+    }, [isActive, isPaused, wholeTimeSec]);
+
+    useImperativeHandle(ref, () => ({
+      play(param) {
+        console.log("sound play");
+        audioManager.play(param);
+      },
+      stop(param) {
+        console.log("sound stop");
+        audioManager.stop(param);
+      },
+      pause(param) {
+        console.log("sound pause");
+        audioManager.pause(param);
+      },
+      setVolume(param) {
+        console.log("sound set volume");
+        audioManager.setVolume(param);
+      },
+      isPlaying(param) {
+        console.log("sound confirm playing");
+        return audioManager.isPlaying(param);
+      },
+      duration(param) {
+        console.log("sound confirm duration");
+        return audioManager.duration(param);
+      },
+      /**
+       * @deprecate
+       * 一秒ごとに時間を取得できないため、getterとして使うのは不適
+       */
+      seek(param) {
+        console.log("sound confirm current time or set current time");
+        return audioManager.seek(param);
+      },
+    }));
+
+    const formatTimeString = (second: number): string => {
+      const min = Math.floor(second / 60);
+      const sec = second % 60;
+      return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+    };
+
+    if (wholeTimeSec === null) {
+      return <div>loading</div>;
     }
 
-    return () => clearInterval(interval!);
-  }, [isActive, isPaused, wholeTimeSec]);
+    return (
+      <div className={cn("w-full p-4", className)} {...rest}>
+        {/* 再生時間のシークバー */}
+        <div className="flex gap-3 [&>p]:m-auto">
+          <Button
+            onClick={() => {
+              setIsActive(true);
+              setIsPaused(false);
+              audioManager.play();
+            }}
+            className="text-center"
+          >
+            <Play />
+            <p>play</p>
+          </Button>
+          <Button
+            onClick={() => {
+              setIsActive(false);
+              setIsPaused(true);
+              audioManager.pause();
+            }}
+            className="text-center"
+          >
+            <Pause />
+            <p>pause</p>
+          </Button>
+          <CustomText text={formatTimeString(currentTime)} />
+          <Slider
+            className="w-[60%]"
+            max={wholeTimeSec}
+            step={1}
+            value={[currentTime]}
+            onValueChange={([value]) => {
+              setCurrentTime(value);
+              audioManager.pause();
+              setIsActive(false);
+              setIsPaused(true);
+            }}
+            onValueCommit={([value]) => {
+              audioManager.seek(value);
+              audioManager.play();
+              setIsActive(true);
+              setIsPaused(false);
+            }}
+          />
 
-  useImperativeHandle(ref, () => ({
-    play(param) {
-      console.log("sound play");
-      audioManager.play(param);
-    },
-    stop(param) {
-      console.log("sound stop");
-      audioManager.stop(param);
-    },
-    pause(param) {
-      console.log("sound pause");
-      audioManager.pause(param);
-    },
-    setVolume(param) {
-      console.log("sound set volume");
-      audioManager.setVolume(param);
-    },
-    isPlaying(param) {
-      console.log("sound confirm playing");
-      return audioManager.isPlaying(param);
-    },
-    duration(param) {
-      console.log("sound confirm duration");
-      return audioManager.duration(param);
-    },
-    /**
-     * @deprecate
-     * 一秒ごとに時間を取得できないため、getterとして使うのは不適
-     */
-    seek(param) {
-      console.log("sound confirm current time or set current time");
-      return audioManager.seek(param);
-    },
-  }));
+          <CustomText text={formatTimeString(wholeTimeSec)} />
+          {/* 音声バー */}
+          {soundIcon(soundVolume)}
+          <Slider
+            className="w-20"
+            max={100}
+            step={5}
+            value={[soundVolume]}
+            onValueChange={([value]) => {
+              setSoundVolume(value);
+              audioManager.setVolume(value / 100);
+            }}
+          />
 
-  const formatTimeString = (second: number): string => {
-    const min = Math.floor(second / 60);
-    const sec = second % 60;
-    return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
-  };
-
-  if (wholeTimeSec === null) {
-    return <div>loading</div>;
-  }
-
-  return (
-    <div className={cn("w-full p-4", className)} {...rest}>
-      {/* 再生時間のシークバー */}
-      <div className="flex gap-3 [&>p]:m-auto">
-        <Button
-          onClick={() => {
-            setIsActive(true);
-            setIsPaused(false);
-            audioManager.play();
-          }}
-          className="text-center"
-        >
-          <Play />
-          <p>play</p>
-        </Button>
-        <Button
-          onClick={() => {
-            setIsActive(false);
-            setIsPaused(true);
-            audioManager.pause();
-          }}
-          className="text-center"
-        >
-          <Pause />
-          <p>pause</p>
-        </Button>
-        <CustomText text={formatTimeString(currentTime)} />
-        <Slider
-          className="w-[60%]"
-          max={wholeTimeSec}
-          step={1}
-          value={[currentTime]}
-          onValueChange={([value]) => {
-            setCurrentTime(value);
-            audioManager.pause();
-            setIsActive(false);
-            setIsPaused(true);
-          }}
-          onValueCommit={([value]) => {
-            audioManager.seek(value);
-            audioManager.play();
-            setIsActive(true);
-            setIsPaused(false);
-          }}
-        />
-        <CustomText text={formatTimeString(wholeTimeSec)} />
-        {/* 音声バー */}
-        {soundIcon(soundVolume)}
-        <Slider
-          className="w-20"
-          max={100}
-          step={5}
-          value={[soundVolume]}
-          onValueChange={([value]) => {
-            setSoundVolume(value);
-            audioManager.setVolume(value / 100);
-          }}
-        />
-        <CustomText text={`${soundVolume}%`} />
+          <CustomText text={`${soundVolume}%`} />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);

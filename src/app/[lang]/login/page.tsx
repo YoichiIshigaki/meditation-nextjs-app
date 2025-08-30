@@ -1,25 +1,28 @@
-'use client';
-import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm, Controller, type FieldErrors } from 'react-hook-form';
+"use client";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm, Controller, type FieldErrors } from "react-hook-form";
 import { useLanguage, useTranslation } from "@/i18n/client";
-import { AppIcon, TranslateText } from '@/components';
+import { AppIcon, TranslateText } from "@/components";
 
 type FormData = {
   email: string;
   password: string;
 };
 
-const ErrorMessage = <T extends Record<string, string>,>(props: {
-  errors: FieldErrors<T>
-  type: string,
-  formKey: keyof typeof errors
+const ErrorMessage = <T extends Record<string, string>>(props: {
+  errors: FieldErrors<T>;
+  type: string;
+  formKey: keyof typeof errors;
 }) => {
   const { errors, type, formKey: key } = props;
   return errors[key]?.type === type ? (
-      <TranslateText className='text-red-500 font-medium' translateKey={`validation:${key}.${type}`} />
-  ) : null
-}
+    <TranslateText
+      className="text-red-500 font-medium"
+      translateKey={`validation:${key}.${type}`}
+    />
+  ) : null;
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,45 +36,53 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    reValidateMode: 'onBlur',
+    reValidateMode: "onBlur",
     defaultValues: {
-        password: '',
-        email: ''
-      }
-    });
+      password: "",
+      email: "",
+    },
+  });
 
-  const callbackUrl = searchParams.get('callbackUrl') || `/${language}`;
-  
+  const callbackUrl = searchParams.get("callbackUrl") || `/${language}`;
+
   // submit時処理
   const onSubmit = async (data: FormData) => {
     console.log({ data });
-    await handleLogin()
+    await handleLogin();
   };
 
   const handleLogin = async () => {
     const form = getValues();
-    const res = await signIn('credentials', {
+    const res = await signIn("credentials", {
       redirect: false,
       callbackUrl,
-      ...form
+      ...form,
     });
-    console.dir(res, { depth: null, maxArrayLength: null })
+    console.dir(res, { depth: null, maxArrayLength: null });
 
     if (res?.ok) {
-      alert('ログイン成功');
+      alert("ログイン成功");
       router.push(callbackUrl);
     } else {
-      alert('ログイン失敗');
+      alert("ログイン失敗");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-6 max-w-sm mx-auto space-y-4">
-      <TranslateText element={"h1"} className="text-4xl font-bold capitalize" translateKey='login:login' />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="p-6 max-w-sm mx-auto space-y-4"
+    >
+      <TranslateText
+        element={"h1"}
+        className="text-4xl font-bold capitalize"
+        translateKey="login:login"
+      />
+
       <AppIcon shape="square" size="lg" />
       <Controller
         control={control}
-          name="email"
+        name="email"
         rules={{
           required: true,
         }}
@@ -79,14 +90,15 @@ export default function LoginPage() {
           <input
             type="text"
             name="email"
-            placeholder={t('login:email')}
+            placeholder={t("login:email")}
             className="w-full border p-2"
             value={value}
             onBlur={onBlur}
             onChange={onChange}
           />
-        )} 
+        )}
       />
+
       <Controller
         control={control}
         name="password"
@@ -97,7 +109,7 @@ export default function LoginPage() {
           <input
             type="password"
             name="password"
-            placeholder={t('login:password')}
+            placeholder={t("login:password")}
             className="w-full border p-2"
             value={value}
             onBlur={onBlur}
@@ -105,10 +117,19 @@ export default function LoginPage() {
           />
         )}
       />
-      <ErrorMessage<FormData> errors={errors} type='required' formKey='email' />
-      <ErrorMessage<FormData> errors={errors} type='required' formKey='password' />
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        <TranslateText element={null} translateKey='login:login' />
+
+      <ErrorMessage<FormData> errors={errors} type="required" formKey="email" />
+      <ErrorMessage<FormData>
+        errors={errors}
+        type="required"
+        formKey="password"
+      />
+
+      <button
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        <TranslateText element={null} translateKey="login:login" />
       </button>
     </form>
   );

@@ -23,7 +23,7 @@ export default function Page(_props: PageProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [breatheCycleTime, _setBreatheCycleTime] = useState(7500);
   const [breathe, setBreathe] = useState<"breathe" | "stop" | "exhale">(
-    "breathe"
+    "breathe",
   );
   const breatheMap = {
     breathe: {
@@ -63,7 +63,7 @@ export default function Page(_props: PageProps) {
 
   const breathAnimationInterval = useCallback(
     () => setInterval(breatheAnimation, breatheCycleTime),
-    [breatheCycleTime, breatheAnimation]
+    [breatheCycleTime, breatheAnimation],
   );
 
   const audioRef = useRef<AudioHandlers | null>(null);
@@ -77,14 +77,21 @@ export default function Page(_props: PageProps) {
 
   return (
     <div>
-      <video src="/videos/sea_twilight.mp4" autoPlay muted loop className="absolute top-[63px] left-0 w-full h-full object-fill opacity-80" />
+      <video
+        src="/videos/sea_twilight.mp4"
+        autoPlay
+        muted
+        loop
+        className="absolute top-[63px] left-0 w-full h-full object-fill opacity-80"
+      />
+
       <div className="grid grid-rows-[20px_1fr_20px] items-center text-center p-0 h-screen w-screen font-meditation bg-sea bg-cover bg-no-repeat bg-center">
         <div className="h-screen w-screen container flex items-center justify-center m-auto relative scale-100 bg-opacity-80">
           <div
             data-testid="container"
             className={cn(
               "h-[300px] w-[300px] m-auto flex relative scale-100 items-center justify-center",
-              breatheMap[breathe].className
+              breatheMap[breathe].className,
             )}
           >
             <div
@@ -99,6 +106,7 @@ export default function Page(_props: PageProps) {
               className="text-white text-xl z-10"
               translateKey={breatheMap[breathe].message}
             />
+
             <div
               data-testid="pointer-container"
               className="w-[20px] h-[190px] absolute top-[-40px] left-[140px] origin-bottom animate-pointer"

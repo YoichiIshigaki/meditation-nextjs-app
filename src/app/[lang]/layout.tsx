@@ -22,33 +22,28 @@ const MPLUS1Code = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'マインドフルネスアプリ', // HTMLからタイトルを設定
-  description: '今日のマインドフルネス', // 適切な説明に変更
+  title: "マインドフルネスアプリ", // HTMLからタイトルを設定
+  description: "今日のマインドフルネス", // 適切な説明に変更
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1.0,
   maximumScale: 1,
   userScalable: false,
-  themeColor: 'red',
-}
+  themeColor: "red",
+};
 
 export default function RootLayout({
   children,
   params: { lang },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { lang: string };
-}>) {
+}: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   return (
     <html lang={lang} dir={lang}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${MPLUS1Code.variable} antialiased`}
-      > 
-      <Providers lang={lang}>
-        {children}
-      </Providers>
+      >
+        <Providers lang={lang}>{children}</Providers>
       </body>
     </html>
   );
