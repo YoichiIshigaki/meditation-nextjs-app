@@ -14,6 +14,7 @@ export const get = async (id: string): Promise<User> => {
   throw new Error(`User with id ${id} not found.`);
 }
 
+// npm run exec-trial-ts-file src/models/user/get.ts
 (async () => {
   if (require.main === module) {
     const id = "Tl4vOZQ803RtenBbmvkg";
