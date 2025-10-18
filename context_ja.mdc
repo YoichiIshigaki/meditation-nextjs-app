@@ -68,7 +68,7 @@
     - `tailwind.config.ts` で定義されたデザインシステムに従う。
 - **状態管理**: クライアントサイドの状態には、React Hooks (`useState`, `useContext`, `useReducer`) を優先的に使用する。グローバルな状態については、`src/app/components/Providers.tsx` がReact Contextベースのアプローチを示唆している。
 - **国際化 (i18n)**:
-    - ユーザー向けのテキストは**すべて**翻訳する必要がある。
+    - ユーザー向けのテキストは**日本語、英語、スペイン語**翻訳する必要がある。
     - 新しい翻訳キーは `src/i18n/locales/{lang}/{namespace}.ts` の適切なファイルに追加する。
     - サーバーサイドでは `src/i18n/server.ts` の `createTranslation` 関数を使用する。
     - クライアントサイドでは `src/i18n/client.tsx` の `useTranslation` フックを使用する。
