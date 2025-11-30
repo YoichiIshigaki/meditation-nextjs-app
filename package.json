@@ -12,7 +12,17 @@
     "start:production": "NODE_ENV=production next start",
     "start:staging": "NODE_ENV=production CUSTOM_ENV=staging next start",
     "lint": "next lint",
-    "exec-trial-ts-file": "tsx --env-file .env.local"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:env": "jest __tests__/env.test.ts",
+    "exec-trial-ts-file": "tsx --env-file .env.local",
+    "firestore:deploy:rules": "npx firebase deploy --only firestore:rules",
+    "firestore:deploy:indexes": "npx firebase deploy --only firestore:indexes",
+    "firestore:deploy": "npx firebase deploy --only firestore",
+    "firestore:init": "npx firebase use --add",
+    "firestore:list": "npx firebase projects:list",
+    "firestore:login": "npx firebase login",
+    "firestore:logout": "npx firebase logout"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.699.0",
@@ -53,6 +63,7 @@
     "dotenv": "^17.2.3",
     "eslint": "8",
     "eslint-config-next": "14.2.15",
+    "firebase-tools": "^14.26.0",
     "postcss": "8",
     "tailwindcss": "3.4.1",
     "tsx": "4.19.2",

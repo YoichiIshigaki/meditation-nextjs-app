@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "vue3-tutorial-127e1",
+    "development": "vue3-tutorial-127e1"
+  },
+  "targets": {},
+  "etags": {}
+}

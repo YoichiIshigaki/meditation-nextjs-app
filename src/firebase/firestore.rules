@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /memo_app_users/{userId}/memos/{memo} {
+      allow read, write: if request.auth.uid == userId
+    }
+    match /meditation_app_users/{userId} {
+       allow read, write: if true;
+    }
+    match /meditation_app_meditation_histories/{meditation_history_id} {
+       allow read, write: if true;
+    }
+    match /meditation_app_meditation_contents/{meditation_content_id} {
+       allow read, write: if true;
+    }
+  }
+}

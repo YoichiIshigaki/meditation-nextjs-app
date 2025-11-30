@@ -1,0 +1,29 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "author", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "coffee-beans",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "embedding_field",
+          "vectorConfig": { "dimension": 256, "flat": {} }
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "posts",
+      "fieldPath": "myBigMapField",
+      "indexes": []
+    }
+  ]
+}
