@@ -4,8 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:local": "NODE_ENV=development next dev",
     "build": "next build",
+    "build:production": "NODE_ENV=production next build",
+    "build:staging": "NODE_ENV=staging CUSTOM_ENV=staging next build",
     "start": "next start",
+    "start:production": "NODE_ENV=production next start",
+    "start:staging": "NODE_ENV=production CUSTOM_ENV=staging next start",
     "lint": "next lint",
     "exec-trial-ts-file": "tsx --env-file .env.local"
   },
@@ -36,6 +41,7 @@
     "react-i18next": "15.0.3",
     "tailwind-merge": "2.5.4",
     "tailwindcss-animate": "1.0.7",
+    "winston": "^3.18.3",
     "zod": "^3.25.42"
   },
   "devDependencies": {
@@ -44,6 +50,7 @@
     "@types/react": "18",
     "@types/react-dom": "18",
     "@types/video.js": "7.3.58",
+    "dotenv": "^17.2.3",
     "eslint": "8",
     "eslint-config-next": "14.2.15",
     "postcss": "8",
