@@ -1,3 +1,4 @@
+export * from './featureFlags'
 
 type Config = {
   NEXTAUTH_SECRET: string;
