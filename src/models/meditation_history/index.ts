@@ -1,4 +1,4 @@
-export * from './meditation_history'
+export * from './meditationHistory'
 export * from './get'
 export * from './type'
 export * from './mockData'
