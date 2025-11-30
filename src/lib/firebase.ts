@@ -74,4 +74,4 @@ export const getApp = async () => firebaseService.getApp();
 export const getDB = async () => firebaseService.getDB();
 export const getAuth = async () => firebaseService.getAuth();
 
-export const FIRESTORE_COLLECTION_NAME_PREFIX = 'meditation'
+export const FIRESTORE_COLLECTION_NAME_PREFIX = 'meditation_app'
