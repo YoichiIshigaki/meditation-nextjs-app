@@ -19,7 +19,8 @@ export const authOptions = {
             }
             return null;
           } else {
-            return await signInWithEmail(credentials!.email, credentials!.password)
+            const user = await signInWithEmail(credentials!.email, credentials!.password)
+            return user;
           } 
         } catch (error) {
           console.error(error);
@@ -30,9 +31,21 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
+      }
       return token;
     },
     async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.image = token.image as string;
+      }
       return session;
     },
   },
