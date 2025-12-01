@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
+import { useSession } from "next-auth/react";
 import { DashboardTemplate } from "../../../components/templates/DashboardTemplate";
 import { MindfulMeter } from "../../../components/organisms/MindfulMeter";
 import { MeditationStats } from "../../../components/organisms/MeditationStats";
 import { Calendar } from "../../../components/organisms/Calendar";
 import { MedalsSection } from "../../../components/organisms/MedalsSection";
-import { 
+import type { 
   MeditationStats as MeditationStatsType,
   WeeklyProgress,
   MedalData,
@@ -14,15 +15,16 @@ import {
 
 // メインダッシュボードコンポーネント
 const Dashboard: React.FC = () => {
+  const { data: session } = useSession();
   const [, setSelectedDate] = useState<number>(12);
   const [currentMonth, setCurrentMonth] = useState<string>("7月");
   const [currentYear, setCurrentYear] = useState<number>(2025);
 
   // サンプルデータ
   const stats: MeditationStatsType = {
-    totalSessions: 340,
-    mindfulDays: 4494,
-    weekStreak: 12,
+    totalSessions: 0,
+    mindfulDays: 0,
+    weekStreak: 0,
   };
 
   const weeklyProgress: WeeklyProgress = {
@@ -100,8 +102,12 @@ const Dashboard: React.FC = () => {
     console.log('Medal clicked:', medal);
   };
 
+  // ユーザー名を取得
+  const userName = session?.user?.name || "ゲスト";
+  const userId = session?.user?.id || "guest";
+
   return (
-    <DashboardTemplate userName="John" userId="user-id">
+    <DashboardTemplate userName={userName} userId={userId}>
       <MindfulMeter 
         weeklyProgress={weeklyProgress}
         overallProgress={75}
