@@ -5,6 +5,7 @@ export type MeditationHistoryDoc = MediMateDocType<{
   user_id: string;
   meditation_id: string; // コンテンツのID
   duration: number;
+  score: number;
   date: string; // yyyy-mm-dd
   mindfulness_score: number;
 }>
@@ -14,6 +15,7 @@ export type MeditationHistory = MediMateType<{
   user_id: string;
   meditation_id: string; // コンテンツのID
   duration: number;
+  score: number;
   date: string; // yyyy-mm-dd
   mindfulness_score: number;
   created_at: Date;
@@ -25,6 +27,7 @@ export const toMeditationHistory = (id: string, meditationHistoryDoc: Meditation
   user_id: meditationHistoryDoc.user_id,
   meditation_id: meditationHistoryDoc.meditation_id,
   duration: meditationHistoryDoc.duration,
+  score: meditationHistoryDoc.score,
   date: meditationHistoryDoc.date,
   mindfulness_score: meditationHistoryDoc.mindfulness_score,
   created_at: meditationHistoryDoc.created_at.toDate(),
