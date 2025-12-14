@@ -1,6 +1,7 @@
-import * as meditationHistory from "../models/meditation_history"
+import * as meditationHistory from "@/models/meditation_history"
 import * as dateFns from "date-fns";
-import type { MeditationHistory } from "../models/meditation_history"
+import type { MeditationHistory } from "@/models/meditation_history"
+import { createAdjacentPairs } from "@/util/array";
 
 
 const getThisYearMeditationHistories = async (userId: string) :Promise<MeditationHistory[]> => { 
@@ -79,12 +80,7 @@ const removeDuplicateDates = (histories: MeditationHistory[]): MeditationHistory
   });
 };
 
-/**
- * 配列の隣接する要素のペアを作成する
- */
-const createAdjacentPairs = <T>(array: T[]): Array<[T, T]> => {
-  return array.slice(0, -1).map((item, index) => [item, array[index + 1]]);
-};
+
 
 /**
  * 連続した日付の連続日数を計算する
