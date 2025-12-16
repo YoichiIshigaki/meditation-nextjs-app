@@ -1,4 +1,4 @@
-import { createAdjacentPairs } from '@/util/array';
+import { createAdjacentPairs, chunk } from '@/util/array';
 
 describe('createAdjacentPairs', () => {
   describe('基本的な動作', () => {
@@ -103,3 +103,33 @@ describe('createAdjacentPairs', () => {
   });
 });
 
+describe('chunk', () => {
+  it('should split an array into chunks of a specified size', () => {
+    const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const chunkSize = 3;
+    const expected = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]];
+    expect(chunk(array, chunkSize)).toEqual(expected);
+  });
+
+  it('should handle an array that divides evenly by the chunk size', () => {
+    const array = [1, 2, 3, 4, 5, 6];
+    const chunkSize = 2;
+    const expected = [[1, 2], [3, 4], [5, 6]];
+    expect(chunk(array, chunkSize)).toEqual(expected);
+  });
+
+  it('should handle a chunk size larger than the array length', () => {
+    const array = [1, 2, 3];
+    expect(chunk(array, 5)).toEqual([[1, 2, 3]]);
+  });
+
+  it('should return an empty array for an empty input array', () => {
+    expect(chunk([], 3)).toEqual([]);
+  });
+
+  it('should return an empty array for a chunk size of 0 or less', () => {
+    const array = [1, 2, 3];
+    expect(chunk(array, 0)).toEqual([]);
+    expect(chunk(array, -1)).toEqual([]);
+  });
+});
