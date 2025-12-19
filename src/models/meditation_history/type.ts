@@ -1,4 +1,4 @@
-import type { MediMateType, MediMateDocType } from '../common/type';
+import type { MediMateType, MediMateDocType } from "../common/type";
 
 export type MeditationHistoryDoc = MediMateDocType<{
   id: string; // ${user_id}_${meditation_id} ユーザーID_コンテンツIDの形式
@@ -8,7 +8,7 @@ export type MeditationHistoryDoc = MediMateDocType<{
   score: number;
   date: string; // yyyy-mm-dd
   mindfulness_score: number;
-}>
+}>;
 
 export type MeditationHistory = MediMateType<{
   id: string; // ${user_id}_${meditation_id} ユーザーID_コンテンツIDの形式
@@ -20,9 +20,12 @@ export type MeditationHistory = MediMateType<{
   mindfulness_score: number;
   created_at: Date;
   updated_at: Date;
-}>
+}>;
 
-export const toMeditationHistory = (id: string, meditationHistoryDoc: MeditationHistoryDoc): MeditationHistory => ({
+export const toMeditationHistory = (
+  id: string,
+  meditationHistoryDoc: MeditationHistoryDoc,
+): MeditationHistory => ({
   id,
   user_id: meditationHistoryDoc.user_id,
   meditation_id: meditationHistoryDoc.meditation_id,
@@ -33,4 +36,3 @@ export const toMeditationHistory = (id: string, meditationHistoryDoc: Meditation
   created_at: meditationHistoryDoc.created_at.toDate(),
   updated_at: meditationHistoryDoc.updated_at.toDate(),
 });
-

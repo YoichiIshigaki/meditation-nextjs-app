@@ -6,11 +6,11 @@ import { MindfulMeter } from "../../../components/organisms/MindfulMeter";
 import { MeditationStats } from "../../../components/organisms/MeditationStats";
 import { Calendar } from "../../../components/organisms/Calendar";
 import { MedalsSection } from "../../../components/organisms/MedalsSection";
-import type { 
+import type {
   MeditationStats as MeditationStatsType,
   WeeklyProgress,
   MedalData,
-  CalendarDay as CalendarDayType
+  CalendarDay as CalendarDayType,
 } from "../../../types/dashboard";
 
 // メインダッシュボードコンポーネント
@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
 
   const handleDateSelect = (day: number) => {
     setSelectedDate(day);
-    console.log('Selected date:', day);
+    console.log("Selected date:", day);
   };
 
   const handleMonthChange = (month: string) => {
@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
   };
 
   const handleMedalClick = (medal: MedalData) => {
-    console.log('Medal clicked:', medal);
+    console.log("Medal clicked:", medal);
   };
 
   // ユーザー名を取得
@@ -108,13 +108,10 @@ const Dashboard: React.FC = () => {
 
   return (
     <DashboardTemplate userName={userName} userId={userId}>
-      <MindfulMeter 
-        weeklyProgress={weeklyProgress}
-        overallProgress={75}
-      />
-      
+      <MindfulMeter weeklyProgress={weeklyProgress} overallProgress={75} />
+
       <MeditationStats stats={stats} />
-      
+
       <Calendar
         calendarDays={calendarDays}
         selectedMonth={currentMonth}
@@ -123,11 +120,8 @@ const Dashboard: React.FC = () => {
         onMonthChange={handleMonthChange}
         onYearChange={handleYearChange}
       />
-      
-      <MedalsSection 
-        medals={medals}
-        onMedalClick={handleMedalClick}
-      />
+
+      <MedalsSection medals={medals} onMedalClick={handleMedalClick} />
     </DashboardTemplate>
   );
 };

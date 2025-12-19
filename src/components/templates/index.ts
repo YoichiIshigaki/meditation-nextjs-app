@@ -1,1 +1,1 @@
-export { DashboardTemplate } from './DashboardTemplate';
+export { DashboardTemplate } from "./DashboardTemplate";

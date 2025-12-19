@@ -7,12 +7,12 @@ services:
       - 8082:8080 # dashboard 有料版のみ使用可能
     environment:
       - DEFAULT_REGION=ap-northeast-1
-      - DOCKER_SOCK=/var/run/docker.sock  # locakstackでもローカルDocker利用できるようにする設定
-      - DEBUG=1                           # トラブルシューティングに役立つため、DEBUGログをonに設定
+      - DOCKER_SOCK=/var/run/docker.sock # locakstackでもローカルDocker利用できるようにする設定
+      - DEBUG=1 # トラブルシューティングに役立つため、DEBUGログをonに設定
     volumes:
       - local-aws:/var/lib/localstack/
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./local_script:/etc/localstack/init/ready.d  # localstackのDocker起動時に実行される.shスクリプトの置き場
+      - ./local_script:/etc/localstack/init/ready.d # localstackのDocker起動時に実行される.shスクリプトの置き場
     networks:
       local-aws-network:
   minio:
@@ -45,7 +45,6 @@ services:
       /usr/bin/mc policy download myminio/meditation-app;
       exit 0;
       "
-
 
 networks:
   local-aws-network:

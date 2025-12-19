@@ -1,5 +1,5 @@
-import React from 'react';
-import { CalendarDay as CalendarDayType } from '../../types/dashboard';
+import React from "react";
+import { CalendarDay as CalendarDayType } from "../../types/dashboard";
 
 interface CalendarDayProps {
   day: CalendarDayType;

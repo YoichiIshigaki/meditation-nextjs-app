@@ -1,11 +1,5 @@
-import React from 'react';
-import {
-  Calendar,
-  User,
-  Heart,
-  Target,
-  Book,
-} from "lucide-react";
+import React from "react";
+import { Calendar, User, Heart, Target, Book } from "lucide-react";
 
 export const DashboardHeader: React.FC = () => {
   return (

@@ -11,6 +11,7 @@ export const AuthenticationWrapper = ({
   children: React.ReactNode;
 }) => {
   const { status } = useSession();
+  console.log({ status });
   const router = useRouter();
   const { language } = useLanguage();
 

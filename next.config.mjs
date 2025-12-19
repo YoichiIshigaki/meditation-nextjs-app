@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
-import { config } from 'dotenv';
-import { resolve } from 'path';
+import { config } from "dotenv";
+import { resolve } from "path";
 
 // 環境変数を取得
 const customEnv = process.env.CUSTOM_ENV; // カスタム環境名（例: staging）
@@ -17,17 +17,14 @@ const customEnv = process.env.CUSTOM_ENV; // カスタム環境名（例: stagin
 
 if (customEnv) {
   // カスタム環境がある場合のみ、手動で読み込む
-  const customEnvFiles = [
-    `.env.${customEnv}.local`,
-    `.env.${customEnv}`,
-  ];
+  const customEnvFiles = [`.env.${customEnv}.local`, `.env.${customEnv}`];
 
   customEnvFiles.forEach((envFile) => {
     try {
       config({ path: resolve(process.cwd(), envFile), override: false });
     } catch (error) {
       // ファイルが存在しない場合は無視
-      if (error.code !== 'ENOENT') {
+      if (error.code !== "ENOENT") {
         console.warn(`Failed to load ${envFile}:`, error.message);
       }
     }
@@ -36,15 +33,13 @@ if (customEnv) {
 
 const nextConfig = {
   images: {
-    domains: [
-      'i.pinimg.com'
-    ],
+    domains: ["i.pinimg.com"],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "picsum.photos",
+        port: "",
+        pathname: "/**",
       },
     ],
   },

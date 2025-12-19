@@ -1,7 +1,7 @@
-import React from 'react';
-import { WeeklyProgressChart } from '../molecules/WeeklyProgressChart';
-import { CircularProgress } from '../atoms/CircularProgress';
-import { WeeklyProgress } from '../../types/dashboard';
+import React from "react";
+import { WeeklyProgressChart } from "../molecules/WeeklyProgressChart";
+import { CircularProgress } from "../atoms/CircularProgress";
+import { WeeklyProgress } from "../../types/dashboard";
 
 interface MindfulMeterProps {
   weeklyProgress: WeeklyProgress;
@@ -10,7 +10,7 @@ interface MindfulMeterProps {
 
 export const MindfulMeter: React.FC<MindfulMeterProps> = ({
   weeklyProgress,
-  overallProgress
+  overallProgress,
 }) => {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

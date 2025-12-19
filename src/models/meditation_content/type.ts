@@ -1,4 +1,4 @@
-import type { MediMateType, MediMateDocType } from '../common/type';
+import type { MediMateType, MediMateDocType } from "../common/type";
 
 export type MeditationContentDoc = MediMateDocType<{
   id: string;
@@ -9,7 +9,7 @@ export type MeditationContentDoc = MediMateDocType<{
   video_url: string;
   duration: number;
   // created_at と updated_at は MediMateDocType によって自動的に Timestamp 型として追加される
-}>
+}>;
 
 export type MeditationContent = MediMateType<{
   id: string;
@@ -21,9 +21,12 @@ export type MeditationContent = MediMateType<{
   duration: number;
   created_at: Date;
   updated_at: Date;
-}>
+}>;
 
-export const toMeditationContent = (id: string, meditationContentDoc: MeditationContentDoc): MeditationContent => ({
+export const toMeditationContent = (
+  id: string,
+  meditationContentDoc: MeditationContentDoc,
+): MeditationContent => ({
   id,
   title: meditationContentDoc.title,
   description: meditationContentDoc.description,
@@ -34,4 +37,3 @@ export const toMeditationContent = (id: string, meditationContentDoc: Meditation
   created_at: meditationContentDoc.created_at.toDate(),
   updated_at: meditationContentDoc.updated_at.toDate(),
 });
-

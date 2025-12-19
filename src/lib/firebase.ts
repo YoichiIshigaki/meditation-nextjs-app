@@ -1,14 +1,14 @@
-import { initializeApp } from 'firebase/app';
-import type { FirebaseOptions,  FirebaseApp } from 'firebase/app';
-import type { Firestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import type { FirebaseOptions, FirebaseApp } from "firebase/app";
+import type { Firestore } from "firebase/firestore";
 import {
   getAuth as getAuthFirebase,
   signInWithEmailAndPassword,
   type Auth,
-  type UserCredential
-} from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import config from '@/config';
+  type UserCredential,
+} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import config from "@/config";
 
 class FirebaseService {
   private static instance: FirebaseService;
@@ -29,7 +29,9 @@ class FirebaseService {
   public getApp(): Promise<FirebaseApp> {
     if (!this.appPromise) {
       this.appPromise = (async () => {
-        const firebaseClientConfig: FirebaseOptions = await import(`config-submodule/${config.FIREBASE_CLIENT_CREDENTIALS}`);
+        const firebaseClientConfig: FirebaseOptions = await import(
+          `config-submodule/${config.FIREBASE_CLIENT_CREDENTIALS}`
+        );
         return initializeApp(firebaseClientConfig);
       })();
     }
@@ -56,10 +58,17 @@ class FirebaseService {
     return this.authPromise;
   }
 
-  public async signInWithEmail(email: string, password: string): Promise<UserCredential | null> {
+  public async signInWithEmail(
+    email: string,
+    password: string,
+  ): Promise<UserCredential | null> {
     try {
       const firebaseAuth = await this.getAuth();
-      const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password,
+      );
       return userCredential;
     } catch (error) {
       console.error("Firebase authentication error:", error);
@@ -74,4 +83,4 @@ export const getApp = async () => firebaseService.getApp();
 export const getDB = async () => firebaseService.getDB();
 export const getAuth = async () => firebaseService.getAuth();
 
-export const FIRESTORE_COLLECTION_NAME_PREFIX = 'meditation_app'
+export const FIRESTORE_COLLECTION_NAME_PREFIX = "meditation_app";

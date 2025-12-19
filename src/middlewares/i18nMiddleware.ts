@@ -3,7 +3,7 @@ import Negotiator from "negotiator";
 import { defaultLanguage, availableLanguages } from "../i18n/settings";
 
 const getNegotiatedLanguage = (
-  headers: Negotiator.Headers
+  headers: Negotiator.Headers,
 ): string | undefined => {
   return new Negotiator({ headers }).language([...availableLanguages]);
 };
@@ -16,13 +16,13 @@ export const i18nMiddleware = (request: NextRequest, _: NextResponse) => {
 
   const pathname = request.nextUrl.pathname;
   const pathnameIsMissingLocale = availableLanguages.every(
-    (lang) => !pathname.startsWith(`/${lang}/`) && pathname !== `/${lang}`
+    (lang) => !pathname.startsWith(`/${lang}/`) && pathname !== `/${lang}`,
   );
 
   if (pathnameIsMissingLocale) {
     if (preferredLanguage !== defaultLanguage) {
       return NextResponse.redirect(
-        new URL(`/${preferredLanguage}${pathname}`, request.url)
+        new URL(`/${preferredLanguage}${pathname}`, request.url),
       );
     } else {
       const newPathname = `/${defaultLanguage}${pathname}`;
@@ -31,4 +31,4 @@ export const i18nMiddleware = (request: NextRequest, _: NextResponse) => {
   }
 
   return NextResponse.next();
-}
+};

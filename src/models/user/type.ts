@@ -1,5 +1,5 @@
-import type { Timestamp } from 'firebase/firestore';
-import type { MediMateDocType, MediMateType } from '../common/type';
+import type { Timestamp } from "firebase/firestore";
+import type { MediMateDocType, MediMateType } from "../common/type";
 
 export type UserDoc = MediMateDocType<{
   id: string;
@@ -9,7 +9,7 @@ export type UserDoc = MediMateDocType<{
   language: string;
   last_logged_in: Timestamp;
   status: string;
-}>
+}>;
 
 export type User = MediMateType<{
   id: string;
@@ -19,7 +19,7 @@ export type User = MediMateType<{
   language: string;
   last_logged_in: Date;
   status: string;
-}>
+}>;
 
 export const toUser = (id: string, userDoc: UserDoc): User => ({
   id,
@@ -32,4 +32,3 @@ export const toUser = (id: string, userDoc: UserDoc): User => ({
   created_at: userDoc.created_at.toDate(),
   updated_at: userDoc.updated_at.toDate(),
 });
-

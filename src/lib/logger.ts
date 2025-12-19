@@ -22,8 +22,8 @@ const level = () => {
 const format = winston.format.combine(
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.printf(
-    (info) => `${info.timestamp} ${info.level}: ${info.message}`
-  )
+    (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+  ),
 );
 
 // ログの出力先を定義
@@ -52,4 +52,3 @@ export const logger = winston.createLogger({
   format,
   transports,
 });
-

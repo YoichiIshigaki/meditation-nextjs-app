@@ -1,6 +1,6 @@
-import React from 'react';
-import { ProgressBar } from '../atoms/ProgressBar';
-import { WeeklyProgress } from '../../types/dashboard';
+import React from "react";
+import { ProgressBar } from "../atoms/ProgressBar";
+import { WeeklyProgress } from "../../types/dashboard";
 
 interface WeeklyProgressChartProps {
   weeklyProgress: WeeklyProgress;
@@ -9,7 +9,7 @@ interface WeeklyProgressChartProps {
 
 export const WeeklyProgressChart: React.FC<WeeklyProgressChartProps> = ({
   weeklyProgress,
-  title = "先週の瞑想"
+  title = "先週の瞑想",
 }) => {
   return (
     <div className="mb-8">

@@ -1,8 +1,10 @@
-import type { MeditationContent } from './type'
+import type { MeditationContent } from "./type";
 
-export const getMockMeditationContent = (count: number, date: Date): MeditationContent[] => {
-
-  const mockContents = Array.from({length: count },(_, index) => {
+export const getMockMeditationContent = (
+  count: number,
+  date: Date,
+): MeditationContent[] => {
+  const mockContents = Array.from({ length: count }, (_, index) => {
     return {
       id: `id_${index}`,
       title: `title_${index}`,
@@ -16,4 +18,4 @@ export const getMockMeditationContent = (count: number, date: Date): MeditationC
     };
   }) satisfies MeditationContent[];
   return mockContents;
-}
+};

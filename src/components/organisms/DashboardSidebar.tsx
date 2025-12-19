@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   User,
   BarChart3,
@@ -16,7 +16,7 @@ interface DashboardSidebarProps {
 
 export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   userName = "John",
-  userId = "user-id"
+  userId = "user-id",
 }) => {
   const menuItems = [
     { icon: BarChart3, label: "これまでの瞑想" },

@@ -1,7 +1,7 @@
-import login from './login';
-import meditation from './meditation';
-import home from './home';
-import validation from './validation';
+import login from "./login";
+import meditation from "./meditation";
+import home from "./home";
+import validation from "./validation";
 
 const translation = {
   app_name: "medimate app",
@@ -9,6 +9,6 @@ const translation = {
   meditation,
   home,
   validation,
-}
+};
 
-export default translation
+export default translation;

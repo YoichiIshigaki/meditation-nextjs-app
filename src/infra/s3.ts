@@ -1,16 +1,11 @@
-// 作業ファイル
-import {
-  S3Client,
-  // GetObjectCommand,
-  PutObjectCommand,
-} from "@aws-sdk/client-s3"; // AWSのS3用ライブラリ
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import fs from "fs";
 import path from "path";
 
 // S3 バッケット名
-const BUCKET_NAME = "meditation-app";
+export const BUCKET_NAME = "meditation-app";
 
-// 認証の設定
+// ローカルの認証の設定
 export const localS3 = new S3Client({
   region: "ap-northeast-1",
   credentials: {
@@ -24,7 +19,7 @@ export const localS3 = new S3Client({
 const uploadLocalFileToS3 = async (
   srcPath: string,
   fileName: string,
-  bucketName: string
+  bucketName: string,
 ) => {
   //ストリームを開ける
   const readStream = fs.createReadStream(srcPath);

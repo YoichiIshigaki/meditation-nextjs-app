@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface CircularProgressProps {
   progress: number;
@@ -11,14 +11,17 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
   progress,
   size = 128,
   strokeWidth = 10,
-  className = ""
+  className = "",
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const strokeDasharray = `${(progress / 100) * circumference} ${circumference}`;
 
   return (
-    <div className={`relative ${className}`} style={{ width: size, height: size }}>
+    <div
+      className={`relative ${className}`}
+      style={{ width: size, height: size }}
+    >
       <svg
         className="transform -rotate-90"
         width={size}

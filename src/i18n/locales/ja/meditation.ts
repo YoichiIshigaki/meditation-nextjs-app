@@ -1,16 +1,16 @@
 const meditation = {
-  "welcome": "ようこそ!!",
-  "login": "ログイン",
-  "greeting": {
-    "good_morning": "おはよう",
-    "good_afternoon": "こんにちは",
-    "good_evening": "こんばんわ"
+  welcome: "ようこそ!!",
+  login: "ログイン",
+  greeting: {
+    good_morning: "おはよう",
+    good_afternoon: "こんにちは",
+    good_evening: "こんばんわ",
   },
-  "breathe": {
-    "breathe": "息を吸って",
-    "stop": "止めて",
-    "exhale": "吐いて"
-  }
+  breathe: {
+    breathe: "息を吸って",
+    stop: "止めて",
+    exhale: "吐いて",
+  },
 } as const;
 
 export default meditation;

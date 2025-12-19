@@ -1,8 +1,8 @@
 const home = {
-  welcome: 'welcome!!',
+  welcome: "welcome!!",
   message: {
-    help: 'help'
-  }
+    help: "help",
+  },
 } as const;
 
 export default home;

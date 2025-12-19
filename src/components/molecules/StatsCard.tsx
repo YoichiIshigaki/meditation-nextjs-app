@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface StatsCardProps {
   value: number | string;
@@ -6,10 +6,10 @@ interface StatsCardProps {
   className?: string;
 }
 
-export const StatsCard: React.FC<StatsCardProps> = ({ 
-  value, 
-  label, 
-  className = "" 
+export const StatsCard: React.FC<StatsCardProps> = ({
+  value,
+  label,
+  className = "",
 }) => {
   return (
     <div className={`text-center ${className}`}>

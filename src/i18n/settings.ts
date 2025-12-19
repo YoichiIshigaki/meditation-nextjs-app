@@ -1,4 +1,4 @@
-import type { InitOptions } from 'i18next';
+import type { InitOptions } from "i18next";
 
 export const defaultLanguage = "ja";
 // 日本語、英語、スペイン語
@@ -8,10 +8,10 @@ export const namespaces = [
   "home",
   "meditation",
   "login",
-  "validation"
+  "validation",
 ] as const;
 
-export type Language = typeof availableLanguages[number]
+export type Language = (typeof availableLanguages)[number];
 
 export const getOptions = (lng = defaultLanguage): InitOptions => ({
   lng,
@@ -20,6 +20,6 @@ export const getOptions = (lng = defaultLanguage): InitOptions => ({
   ns: namespaces,
   fallbackNS: namespaces[0],
   defaultNS: namespaces[0],
-  nsSeparator: ':',
-  keySeparator: '.',
+  nsSeparator: ":",
+  keySeparator: ".",
 });
