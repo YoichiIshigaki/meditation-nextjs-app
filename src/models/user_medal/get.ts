@@ -1,5 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 import { userMedal, toUserMedal, type UserMedal, type UserMedalDoc } from "./";
+import { main } from "@/models/common/util";
 
 export const get = async (id: string): Promise<UserMedal> => {
   const userMedalDocRef = doc(await userMedal(), id);
@@ -15,13 +16,9 @@ export const get = async (id: string): Promise<UserMedal> => {
   throw new Error(`UserMedal with id ${id} not found.`);
 };
 
-// npm run exec-trial-ts-file src/models/user_medal/get.ts
-(async () => {
-  if (require.main === module) {
-    const id = "id_0";
-    await get(id).then((userMedal) => {
-      console.log(userMedal);
-    });
-    process.exit(0);
-  }
-})();
+/*
+ * get test data user medal
+ *
+ * npm run exec-trial-ts-file src/models/user_medal/get.ts
+ */
+main(get, "id_0");

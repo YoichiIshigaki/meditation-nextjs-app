@@ -1,5 +1,6 @@
 import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { meditationMedal, type MeditationMedal } from ".";
+import { main } from "@/models/common/util";
 
 type MeditationContentUpdateParam = Partial<
   Omit<MeditationMedal, "id" | "created_at" | "updated_at">
@@ -30,22 +31,12 @@ export const update = async (
   await updateDoc(docRef, updateData);
 };
 
-/**
- * @description
- * update test data meditation contents
- * @example
+/*
+ * update test data meditation medal
  *
- * npm run exec-trial-ts-file src/models/meditation_content/update.ts
+ * npm run exec-trial-ts-file src/models/meditation_medal/update.ts
  */
-(async () => {
-  if (require.main === module) {
-    const id = "rvnCsTHo6ijt9cRuznb2"; // 更新するドキュメントのID
-    await update(id, {
-      medal_name: "updated medal_name",
-      description: "updated description",
-    }).then(() => {
-      console.log("Updated successfully");
-    });
-    process.exit(0);
-  }
-})();
+main(update, "rvnCsTHo6ijt9cRuznb2", {
+  medal_name: "updated medal_name",
+  description: "updated description",
+});

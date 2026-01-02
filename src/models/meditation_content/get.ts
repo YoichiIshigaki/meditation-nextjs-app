@@ -5,6 +5,7 @@ import {
   type MeditationContent,
   type MeditationContentDoc,
 } from "./";
+import { main } from "@/models/common/util";
 
 export const get = async (id: string): Promise<MeditationContent> => {
   const MeditationContentDocRef = doc(await meditationContent(), id);
@@ -22,13 +23,9 @@ export const get = async (id: string): Promise<MeditationContent> => {
   throw new Error(`MeditationContent with id ${id} not found.`);
 };
 
-// npm run exec-trial-ts-file src/models/meditation_content/get.ts
-(async () => {
-  if (require.main === module) {
-    const id = "id_0";
-    await get(id).then((meditationContent) => {
-      console.log(meditationContent);
-    });
-    process.exit(0);
-  }
-})();
+/*
+ * get test data meditation content
+ *
+ * npm run exec-trial-ts-file src/models/meditation_content/get.ts
+ */
+main(get, "id_0");

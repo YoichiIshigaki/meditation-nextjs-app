@@ -4,6 +4,7 @@ import {
   type MeditationMedal,
   type MeditationMedalDoc,
 } from ".";
+import { main } from "@/models/common/util";
 
 type MeditationContentCreateParam = Omit<
   MeditationMedal,
@@ -37,22 +38,13 @@ export const create = async (
   return docRef.id;
 };
 
-/**
- * @description
- * add test data meditation contents
- * @example
+/*
+ * add test data meditation medal
  *
- * npm run exec-trial-ts-file src/models/meditation_content/create.ts
+ * npm run exec-trial-ts-file src/models/meditation_medal/create.ts
  */
-(async () => {
-  if (require.main === module) {
-    await create({
-      medal_name: "medal_name",
-      description: "description",
-      image_url: "image_url",
-    }).then((createdId) => {
-      console.log(createdId);
-    });
-    process.exit(0);
-  }
-})();
+main(create, {
+  medal_name: "medal_name",
+  description: "description",
+  image_url: "image_url",
+});

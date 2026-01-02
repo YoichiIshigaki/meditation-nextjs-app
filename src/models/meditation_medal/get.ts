@@ -5,6 +5,7 @@ import {
   type MeditationMedal,
   type MeditationMedalDoc,
 } from ".";
+import { main } from "@/models/common/util";
 
 export const get = async (id: string): Promise<MeditationMedal> => {
   const meditationMedalDocRef = doc(await meditationMedal(), id);
@@ -23,12 +24,4 @@ export const get = async (id: string): Promise<MeditationMedal> => {
 };
 
 // npm run exec-trial-ts-file src/models/meditation_content/get.ts
-(async () => {
-  if (require.main === module) {
-    const id = "id_0";
-    await get(id).then((meditationMedal) => {
-      console.log(meditationMedal);
-    });
-    process.exit(0);
-  }
-})();
+main(get, "id_0");

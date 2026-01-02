@@ -1,5 +1,6 @@
 import { addDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { userMedal, type UserMedal, type UserMedalDoc } from "./";
+import { main } from "@/models/common/util";
 
 type UserMedalCreateParam = Omit<UserMedal, "id" | "created_at" | "updated_at">;
 
@@ -34,31 +35,13 @@ export const create = async (param: UserMedalCreateParam): Promise<string> => {
   return docRef.id;
 };
 
-/**
- * @description
+/*
  * add test data user medals
- * @example
  *
  * npm run exec-trial-ts-file src/models/user_medal/create.ts
  */
-(async () => {
-  if (require.main === module) {
-    await create({
-      user_id: "user_1",
-      medal_id: "medal_1",
-      earned_at: new Date(),
-    }).then((createdId) => {
-      console.log(createdId);
-    });
-    process.exit(0);
-  }
-})();
-
-const execExampleFunction = (fn: () => Promise<void>) => {
-  (async () => {
-    if (require.main === module) {
-      await fn();
-      process.exit(0);
-    }
-  })();
-};
+main(create, {
+  user_id: "user_1",
+  medal_id: "medal_1",
+  earned_at: new Date(),
+});

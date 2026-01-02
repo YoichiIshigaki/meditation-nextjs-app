@@ -4,6 +4,7 @@ import {
   type MeditationHistory,
   type MeditationHistoryDoc,
 } from "./";
+import { main } from "@/models/common/util";
 
 type MeditationHistoryCreateParam = Omit<
   MeditationHistory,
@@ -40,25 +41,16 @@ export const create = async (
   return docRef.id;
 };
 
-/**
- * @description
- * add test data meditation histories
- * @example
+/*
+ * add test data meditation history
  *
  * npm run exec-trial-ts-file src/models/meditation_history/create.ts
  */
-(async () => {
-  if (require.main === module) {
-    await create({
-      user_id: "user_1",
-      meditation_id: "meditation_1",
-      duration: 15,
-      score: 100,
-      date: "2025-01-01",
-      mindfulness_score: 80,
-    }).then((createdId) => {
-      console.log(createdId);
-    });
-    process.exit(0);
-  }
-})();
+main(create, {
+  user_id: "user_1",
+  meditation_id: "meditation_1",
+  duration: 15,
+  score: 100,
+  date: "2025-01-01",
+  mindfulness_score: 80,
+});

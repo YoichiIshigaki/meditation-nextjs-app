@@ -11,6 +11,7 @@ import {
   type MeditationContent,
   type MeditationContentDoc,
 } from "./";
+import { main } from "@/models/common/util";
 
 type ListOptions = {
   limitCount?: number;
@@ -53,27 +54,13 @@ export const list = async (
   return meditationContents;
 };
 
-/**
- * @description
+/*
  * list test data meditation contents
- * @example
  *
  * npm run exec-trial-ts-file src/models/meditation_content/list.ts
  */
-(async () => {
-  if (require.main === module) {
-    await list({
-      limitCount: 10,
-      orderByField: "created_at",
-      orderDirection: "desc",
-    })
-      .then((meditationContents) => {
-        console.log(`Found ${meditationContents.length} meditation contents`);
-        console.log(meditationContents);
-      })
-      .catch((error) => {
-        console.error("List failed:", error);
-      });
-    process.exit(0);
-  }
-})();
+main(list, {
+  limitCount: 10,
+  orderByField: "created_at",
+  orderDirection: "desc",
+});

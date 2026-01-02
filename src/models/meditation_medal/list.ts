@@ -12,6 +12,7 @@ import {
   type MeditationMedal,
   type MeditationMedalDoc,
 } from ".";
+import { main } from "@/models/common/util";
 
 type ListOptions = {
   limitCount?: number;
@@ -64,27 +65,13 @@ export const list = async (
   return meditationMedals;
 };
 
-/**
- * @description
- * list test data meditation contents
- * @example
+/*
+ * list test data meditation medal
  *
- * npm run exec-trial-ts-file src/models/meditation_content/list.ts
+ * npm run exec-trial-ts-file src/models/meditation_medal/list.ts
  */
-(async () => {
-  if (require.main === module) {
-    await list({
-      limitCount: 10,
-      orderByField: "created_at",
-      orderDirection: "desc",
-    })
-      .then((meditationMedals) => {
-        console.log(`Found ${meditationMedals.length} meditation contents`);
-        console.log(meditationMedals);
-      })
-      .catch((error) => {
-        console.error("List failed:", error);
-      });
-    process.exit(0);
-  }
-})();
+main(list, {
+  limitCount: 10,
+  orderByField: "created_at",
+  orderDirection: "desc",
+});

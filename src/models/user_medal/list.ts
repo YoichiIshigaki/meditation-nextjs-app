@@ -7,6 +7,7 @@ import {
   type QueryConstraint,
 } from "firebase/firestore";
 import { userMedal, toUserMedal, type UserMedal, type UserMedalDoc } from "./";
+import { main } from "@/models/common/util";
 
 type ListOptions = {
   userId?: string;
@@ -57,28 +58,14 @@ export const list = async (options?: ListOptions): Promise<UserMedal[]> => {
   return userMedals;
 };
 
-/**
- * @description
+/*
  * list test data user medals
- * @example
  *
  * npm run exec-trial-ts-file src/models/user_medal/list.ts
  */
-(async () => {
-  if (require.main === module) {
-    await list({
-      userId: "user_1",
-      limitCount: 10,
-      orderByField: "created_at",
-      orderDirection: "desc",
-    })
-      .then((userMedals) => {
-        console.log(`Found ${userMedals.length} user medals`);
-        console.log(userMedals);
-      })
-      .catch((error) => {
-        console.error("List failed:", error);
-      });
-    process.exit(0);
-  }
-})();
+main(list, {
+  userId: "user_1",
+  limitCount: 10,
+  orderByField: "created_at",
+  orderDirection: "desc",
+});

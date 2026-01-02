@@ -12,6 +12,7 @@ import {
   type MeditationHistory,
   type MeditationHistoryDoc,
 } from "./";
+import { main } from "@/models/common/util";
 
 type ListOptions = {
   userId?: string;
@@ -70,28 +71,14 @@ export const list = async (
   return histories;
 };
 
-/**
- * @description
+/*
  * list test data meditation histories
- * @example
  *
  * npm run exec-trial-ts-file src/models/meditation_history/list.ts
  */
-(async () => {
-  if (require.main === module) {
-    await list({
-      // userId: 'some-user-id', // 特定ユーザーに絞りたい場合は指定
-      limitCount: 10,
-      orderByField: "created_at",
-      orderDirection: "desc",
-    })
-      .then((histories) => {
-        console.log(`Found ${histories.length} meditation histories`);
-        console.log(histories);
-      })
-      .catch((error) => {
-        console.error("List failed:", error);
-      });
-    process.exit(0);
-  }
-})();
+main(list, {
+  // userId: 'some-user-id', // 特定ユーザーに絞りたい場合は指定
+  limitCount: 10,
+  orderByField: "created_at",
+  orderDirection: "desc",
+});

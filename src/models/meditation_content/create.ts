@@ -4,6 +4,7 @@ import {
   type MeditationContent,
   type MeditationContentDoc,
 } from "./";
+import { main } from "@/models/common/util";
 
 type MeditationContentCreateParam = Omit<
   MeditationContent,
@@ -40,25 +41,17 @@ export const create = async (
   return docRef.id;
 };
 
-/**
- * @description
- * add test data meditation contents
- * @example
+/*
+ * add test data meditation content
  *
  * npm run exec-trial-ts-file src/models/meditation_content/create.ts
  */
-(async () => {
-  if (require.main === module) {
-    await create({
-      title: "title",
-      description: "description",
-      image_url: "image_url",
-      audio_url: "audio_url",
-      video_url: "video_url",
-      duration: 10,
-    }).then((createdId) => {
-      console.log(createdId);
-    });
-    process.exit(0);
-  }
-})();
+main(create, {
+  title: "title",
+  description: "description",
+  image_url: "image_url",
+  audio_url: "audio_url",
+  video_url: "video_url",
+  duration: 10,
+});
+

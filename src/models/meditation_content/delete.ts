@@ -1,5 +1,6 @@
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 import { meditationContent } from "./";
+import { main } from "@/models/common/util";
 
 export const deleteMeditationContent = async (id: string): Promise<void> => {
   const collectionRef = await meditationContent();
@@ -17,23 +18,10 @@ export const deleteMeditationContent = async (id: string): Promise<void> => {
   await deleteDoc(docRef);
 };
 
-/**
- * @description
- * delete test data meditation contents
- * @example
+/*
+ * delete test data meditation content
  *
  * npm run exec-trial-ts-file src/models/meditation_content/delete.ts
  */
-(async () => {
-  if (require.main === module) {
-    const id = "rvnCsTHo6ijt9cRuznb2"; // 削除するドキュメントのID
-    await deleteMeditationContent(id)
-      .then(() => {
-        console.log("Deleted successfully");
-      })
-      .catch((error) => {
-        console.error("Delete failed:", error);
-      });
-    process.exit(0);
-  }
-})();
+main(deleteMeditationContent, "rvnCsTHo6ijt9cRuznb2");
+

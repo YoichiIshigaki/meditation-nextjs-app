@@ -1,5 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 import { user, toUser, type User, type UserDoc } from "./";
+import { main } from "@/models/common/util";
 
 export const get = async (id: string): Promise<User> => {
   const userDocRef = doc(await user(), id);
@@ -27,13 +28,9 @@ export const getNotThrow = async (id: string): Promise<User | null> => {
   return null;
 };
 
-// npm run exec-trial-ts-file src/models/user/get.ts
-(async () => {
-  if (require.main === module) {
-    const id = "Tl4vOZQ803RtenBbmvkg";
-    await get(id).then((user) => {
-      console.log(user);
-    });
-    process.exit(0);
-  }
-})();
+/*
+ * get test data user
+ *
+ * npm run exec-trial-ts-file src/models/user/get.ts
+ */
+main(get, "Tl4vOZQ803RtenBbmvkg");
