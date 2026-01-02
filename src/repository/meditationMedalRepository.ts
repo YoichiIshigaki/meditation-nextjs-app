@@ -2,6 +2,7 @@ import * as userMedal from "@/models/user_medal";
 import * as meditationMedal from "@/models/meditation_medal";
 import type { MeditationMedal } from "@/models/meditation_medal";
 import { getListByChunk } from "./utils";
+
 /**
  * ユーザーが保持しているメダルを取得する
  * メダルの詳細情報も含めて返す
@@ -107,7 +108,7 @@ const getUserMedalIds = async (userId: string): Promise<string[]> => {
 const getMedalByIds = async (
   medalIds: string[],
 ): Promise<MeditationMedal[]> => {
-  return await getListByChunk(medalIds, (ids) =>
+  return await getListByChunk<MeditationMedal>(medalIds, (ids) =>
     meditationMedal.list({ medalIds: ids }),
   );
 };
