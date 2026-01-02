@@ -1,0 +1,84 @@
+import {
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  where,
+  type QueryConstraint,
+} from "firebase/firestore";
+import { userMedal, toUserMedal, type UserMedal, type UserMedalDoc } from "./";
+
+type ListOptions = {
+  userId?: string;
+  medalId?: string;
+  limitCount?: number;
+  orderByField?: keyof UserMedal;
+  orderDirection?: "asc" | "desc";
+};
+
+export const list = async (options?: ListOptions): Promise<UserMedal[]> => {
+  const collectionRef = await userMedal();
+
+  // クエリ制約を構築
+  const constraints: QueryConstraint[] = [];
+
+  // 特定ユーザーのメダルに絞り込み（任意）
+  if (options?.userId) {
+    constraints.push(where("user_id", "==", options.userId));
+  }
+
+  // 特定メダルIDに絞り込み（任意）
+  if (options?.medalId) {
+    constraints.push(where("medal_id", "==", options.medalId));
+  }
+
+  // ソート順を設定（デフォルトはcreated_atの降順）
+  const orderField = options?.orderByField || "created_at";
+  const orderDir = options?.orderDirection || "desc";
+  constraints.push(orderBy(orderField, orderDir));
+
+  // 取得件数の制限
+  if (options?.limitCount) {
+    constraints.push(limit(options.limitCount));
+  }
+
+  // クエリを実行
+  const q = query(collectionRef, ...constraints);
+  const querySnapshot = await getDocs(q);
+
+  // ドキュメントを配列に変換
+  const userMedals: UserMedal[] = [];
+  querySnapshot.forEach((docSnap) => {
+    if (docSnap.exists()) {
+      userMedals.push(toUserMedal(docSnap.id, docSnap.data() as UserMedalDoc));
+    }
+  });
+
+  return userMedals;
+};
+
+/**
+ * @description
+ * list test data user medals
+ * @example
+ *
+ * npm run exec-trial-ts-file src/models/user_medal/list.ts
+ */
+(async () => {
+  if (require.main === module) {
+    await list({
+      userId: "user_1",
+      limitCount: 10,
+      orderByField: "created_at",
+      orderDirection: "desc",
+    })
+      .then((userMedals) => {
+        console.log(`Found ${userMedals.length} user medals`);
+        console.log(userMedals);
+      })
+      .catch((error) => {
+        console.error("List failed:", error);
+      });
+    process.exit(0);
+  }
+})();
