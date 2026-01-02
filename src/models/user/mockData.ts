@@ -9,9 +9,11 @@ export const getMockUsers = (count: number): User[] => {
       language: `language_${index}`,
       last_logged_in: new Date(),
       status: `status_${index}`,
+      thumbnail_url: `thumbnail_url_${index}`,
       created_at: new Date(),
       updated_at: new Date(),
     };
   }) satisfies User[];
   return mockUsers;
 };
+  
