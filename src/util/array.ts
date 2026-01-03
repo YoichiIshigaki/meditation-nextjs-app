@@ -1,5 +1,8 @@
 /**
  * 配列の隣接する要素のペアを作成する
+ *
+ * @param array 配列
+ * @returns 隣接する要素のペアの配列
  */
 export const createAdjacentPairs = <T>(array: T[]): Array<[T, T]> => {
   return array.slice(0, -1).map((item, index) => [item, array[index + 1]]);
@@ -7,6 +10,7 @@ export const createAdjacentPairs = <T>(array: T[]): Array<[T, T]> => {
 
 /**
  * 配列をチャンクに分割する
+ *
  * @param array 分割する配列
  * @param size 各チャンクのサイズ
  * @returns チャンクに分割された2次元配列
