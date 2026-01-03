@@ -24,4 +24,3 @@ export const deleteMeditationContent = async (id: string): Promise<void> => {
  * npm run exec-trial-ts-file src/models/meditation_content/delete.ts
  */
 main(deleteMeditationContent, "rvnCsTHo6ijt9cRuznb2");
-

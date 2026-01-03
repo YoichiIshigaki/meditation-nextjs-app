@@ -98,7 +98,6 @@ const getUserMedalIds = async (userId: string): Promise<string[]> => {
   return userMedals.map((um) => um.medal_id);
 };
 
-
 /**
  * メダルIDリストからメダルの詳細情報を取得する
  *
