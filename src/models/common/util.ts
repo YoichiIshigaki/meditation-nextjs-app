@@ -1,9 +1,29 @@
+import typia from "typia";
+import { Timestamp, serverTimestamp } from "firebase/firestore";
+
 export const main = async <Args extends any[], Return>(
   func: (...args: Args) => Promise<Return>,
   ...args: Args
 ) => {
-  if (require.main === module) {
-    console.log("main executed function name: ", func.name);
+  const getCallerFile = () => {
+    const originalFunc = Error.prepareStackTrace;
+    let callerFile;
+    try {
+      const err = new Error();
+      Error.prepareStackTrace = function (err, stack) {
+        return stack;
+      };
+      const stack = err.stack as unknown;
+      Error.prepareStackTrace = originalFunc;
+      if (stack && Array.isArray(stack) && stack.length >= 3) {
+        callerFile = stack[2].getFileName();
+      }
+    } catch (e) { }
+    return callerFile;
+  };
+
+  if (getCallerFile() === require.main?.filename) {
+    console.log("main executed function name: ", getCallerFile());
     func(...args)
       .then((result) => {
         console.log("result: ", result);
@@ -14,4 +34,28 @@ export const main = async <Args extends any[], Return>(
         process.exit(1);
       });
   }
+};
+
+
+// optional は禁止、nullは許容したい
+type RequiredAllowNull<T> = {
+  [K in keyof T]-?: Exclude<T[K], undefined>;
+};
+
+export const getUpdateParam = <T extends Record<string, unknown>>(param: T) => {
+  const updateData = Object.entries(param).reduce(
+    (acc, [key, value]) =>
+      value !== undefined
+        ? {
+          ...acc,
+          [key as keyof T]:
+            value instanceof Date ? Timestamp.fromDate(value) : value,
+        }
+        : acc,
+    {},
+  );
+  if (!typia.is<RequiredAllowNull<T>>(updateData)) {
+    throw new Error("Invalid update data");
+  }
+  return { ...updateData, updated_at: serverTimestamp() };
 };
