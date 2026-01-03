@@ -4,8 +4,8 @@ export type MeditationHistoryDoc = MediMateDocType<{
   id: string; // ${user_id}_${meditation_id} ユーザーID_コンテンツIDの形式
   user_id: string;
   meditation_id: string; // コンテンツのID
-  duration: number;
-  score: number;
+  duration: number; // 瞑想した時間
+  score: number; // 瞑想したスコア
   date: string; // yyyy-mm-dd
   mindfulness_score: number;
 }>;
