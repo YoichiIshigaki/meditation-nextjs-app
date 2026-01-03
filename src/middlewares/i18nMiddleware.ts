@@ -8,6 +8,7 @@ const getNegotiatedLanguage = (
   return new Negotiator({ headers }).language([...availableLanguages]);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const i18nMiddleware = (request: NextRequest, _: NextResponse) => {
   const headers = {
     "accept-language": request.headers.get("accept-language") ?? "",

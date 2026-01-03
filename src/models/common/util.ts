@@ -1,7 +1,7 @@
 import typia from "typia";
 import { Timestamp, serverTimestamp } from "firebase/firestore";
 
-export const main = async <Args extends any[], Return>(
+export const main = async <Args extends unknown[], Return>(
   func: (...args: Args) => Promise<Return>,
   ...args: Args
 ) => {
@@ -18,7 +18,9 @@ export const main = async <Args extends any[], Return>(
       if (stack && Array.isArray(stack) && stack.length >= 3) {
         callerFile = stack[2].getFileName();
       }
-    } catch (e) { }
+    } catch (e: unknown) {
+      console.error("getCallerFile error: ", e);
+    }
     return callerFile;
   };
 

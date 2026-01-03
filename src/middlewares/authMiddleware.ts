@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt";
 // 認証が必要なルートをここで定義
 const protectedRoutes = ["/", "/dashboard", "/settings"];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const authMiddleware = async (req: NextRequest, _: NextResponse) => {
   const { pathname } = req.nextUrl;
   const [lang, ...rest] = pathname.split("/").filter((s) => !!s);
