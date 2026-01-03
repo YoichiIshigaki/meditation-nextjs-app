@@ -16,4 +16,3 @@ export const getMockUsers = (count: number): User[] => {
   }) satisfies User[];
   return mockUsers;
 };
-  
