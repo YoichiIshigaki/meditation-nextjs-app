@@ -15,7 +15,6 @@
     "test": "jest",
     "prettier": "prettier -w ./",
     "test:watch": "jest --watch",
-    "test:env": "jest __tests__/env.test.ts",
     "exec-trial-ts-file": "tsx --env-file .env.local",
     "firestore:deploy:rules": "npx firebase deploy --only firestore:rules",
     "firestore:deploy:indexes": "npx firebase deploy --only firestore:indexes",
