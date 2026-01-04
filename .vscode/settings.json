@@ -7,6 +7,12 @@
   "i18n-ally.sortKeys": true,
   "i18n-ally.displayLanguage": "ja",
   "cSpell.words": ["MediMate","medimate"],
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
   // "i18n-ally.extract.autoDetect": true,
   // "i18n-ally.defaultNamespace": "translation",
   // "i18n-ally.enabledParsers": [
