@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 import { config } from "dotenv";
 import { resolve } from "path";
 
@@ -31,6 +30,7 @@ if (customEnv) {
   });
 }
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     domains: ["i.pinimg.com"],
