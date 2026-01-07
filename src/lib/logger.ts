@@ -1,6 +1,3 @@
-import winston from "winston";
-import path from "path";
-
 const env = process.env.NODE_ENV || "development";
 const logDir = process.env.LOG_DIR || "app-logs";
 
@@ -18,37 +15,74 @@ const level = () => {
   return env === "development" ? "debug" : "info";
 };
 
-// ログのフォーマットを定義
-const format = winston.format.combine(
-  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-  winston.format.printf(
-    (info) => `${info.timestamp} ${info.level}: ${info.message}`,
-  ),
-);
+type LoggerType = {
+  info: (...message: unknown[]) => void;
+  error: (...message: unknown[]) => void;
+  warn: (...message: unknown[]) => void;
+  http: (...message: unknown[]) => void;
+  debug: (...message: unknown[]) => void;
+};
 
-// ログの出力先を定義
-const transports: winston.transport[] = [
-  // エラーログファイル
-  new winston.transports.File({
-    filename: path.join(logDir, "app-error.log"),
-    level: "error",
-    format: winston.format.json(),
-  }),
-  // 全てのログファイル
-  new winston.transports.File({
-    filename: path.join(logDir, "app-all.log"),
-    format: winston.format.json(),
-  }),
-];
-// 開発環境用のコンソール出力
-if (env === "development") {
-  transports.push(new winston.transports.Console());
+let loggerImplementation: LoggerType;
+
+if (process.env.NEXT_RUNTIME === "edge") {
+  // Edge runtime (Middleware etc.)
+  loggerImplementation = {
+    info: (...m) => console.log('info: ', ...m),
+    error: (...m) => console.error('error: ', ...m),
+    warn: (...m) => console.warn('warn: ', ...m),
+    http: (...m) => console.log('http: ', ...m),
+    debug: (...m) => console.log('debug: ', ...m),
+  };
+} else {
+  // Node.js runtime
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const winston = require("winston");
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const path = require("path");
+
+  // ログのフォーマットを定義
+  const format = winston.format.combine(
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    winston.format.printf(
+      (info: any) => `${info.timestamp} ${info.level}: ${info.message}`,
+    ),
+  );
+
+  // ログの出力先を定義
+  const transports: any[] = [
+    // エラーログファイル
+    new winston.transports.File({
+      filename: path.join(logDir, "app-error.log"),
+      level: "error",
+      format: winston.format.json(),
+    }),
+    // 全てのログファイル
+    new winston.transports.File({
+      filename: path.join(logDir, "app-all.log"),
+      format: winston.format.json(),
+    }),
+  ];
+
+  // 開発環境用のコンソール出力
+  if (env === "development") {
+    transports.push(new winston.transports.Console());
+  }
+
+  loggerImplementation = winston.createLogger({
+    level: level(),
+    levels,
+    format,
+    transports,
+  });
 }
 
 // ロガーを作成
-export const logger = winston.createLogger({
-  level: level(),
-  levels,
-  format,
-  transports,
-});
+export const logger = loggerImplementation;
+
+// デバッグ用のコンソール出力
+export const clientDebugLog = (...arg: unknown[]) => {
+  if (["development", "local"].includes(process.env.NODE_ENV ?? "")) {
+    console.log(...arg);
+  }
+};
