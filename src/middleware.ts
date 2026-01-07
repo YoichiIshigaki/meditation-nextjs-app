@@ -17,27 +17,32 @@ type MiddlewareFunction = (
   res: NextResponse,
 ) => Promise<NextResponse> | NextResponse;
 
-const checkMiddleware = async (
+type CheckMiddlewareFunction = (
   request: NextRequest,
   response: NextResponse,
-  ...middlewares: MiddlewareFunction[]
+) => ((...middlewares: MiddlewareFunction[]) => Promise<NextResponse<unknown>>)
+
+const checkMiddleware: CheckMiddlewareFunction = (
+  request: NextRequest,
+  response: NextResponse,
 ) => {
-  for (const middleware of middlewares) {
-    const res = await middleware(request, response);
-    if (res?.redirected) return res;
-  }
-  return NextResponse.next();
+  return async (...middlewares: MiddlewareFunction[]) => {
+    for (const middleware of middlewares) {
+      const res = await middleware(request, response);
+      if (res?.redirected || res?.status !== 200) return res;
+    }
+    return response;
+  };
 };
 
-export const middleware = async (
-  request: NextRequest,
-  response: NextResponse,
-) => {
-  return checkMiddleware(
+export const middleware = async (request: NextRequest) => {
+  const response = NextResponse.next();
+  return await checkMiddleware(
     request,
     response,
+  )(
     i18nMiddleware,
     loggerMiddleware,
-    authMiddleware,
+    authMiddleware
   );
 };
