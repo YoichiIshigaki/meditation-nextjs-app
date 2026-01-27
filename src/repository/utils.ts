@@ -1,4 +1,4 @@
-import { chunk } from "@/util/array";
+import { chunk } from "@/utils/array";
 
 export const getListByChunk = async <T extends { id: string }>(
   Ids: string[],

@@ -1,7 +1,7 @@
 import * as meditationHistory from "@/models/meditation_history";
 import * as dateFns from "date-fns";
 import type { MeditationHistory } from "@/models/meditation_history";
-import { createAdjacentPairs } from "@/util/array";
+import { createAdjacentPairs } from "@/utils/array";
 
 const getThisYearMeditationHistories = async (
   userId: string,

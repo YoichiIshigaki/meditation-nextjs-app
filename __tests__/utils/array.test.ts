@@ -1,4 +1,4 @@
-import { createAdjacentPairs, chunk } from "@/util/array";
+import { createAdjacentPairs, chunk } from "@/utils/array";
 
 describe("createAdjacentPairs", () => {
   describe("基本的な動作", () => {
