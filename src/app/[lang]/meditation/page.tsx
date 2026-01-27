@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/styles/classMerge";
 import { TranslateText } from "@/components";
 import { Audio, AudioHandlers } from "@/components/Audio";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/styles/classMerge";
 import React from "react";
 
 interface SidebarItemProps {

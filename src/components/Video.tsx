@@ -4,7 +4,7 @@ import React, { useEffect, useRef, VideoHTMLAttributes, useMemo } from "react";
 import videojs from "video.js";
 import Player from "video.js/dist/types/player";
 import "video.js/dist/video-js.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/styles/classMerge";
 
 type VideoOption = {
   /**

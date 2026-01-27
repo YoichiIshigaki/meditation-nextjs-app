@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/styles/classMerge";
 import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import MainContent from "@/components/MainContent";

@@ -1,7 +1,7 @@
 "use client";
 import React, { HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/styles/classMerge";
 // import WaveSvg from "./wave.svg";
 
 const appIconVariants = cva(

@@ -12,7 +12,7 @@ import { Slider } from "./ui/slider";
 import { CustomText } from "./CustomText";
 import { Button } from "./Button";
 import { Howl, HowlOptions } from "howler";
-import { cn } from "@/lib/utils";
+import { cn } from "@/styles/classMerge";
 
 const defaultSource = "/sounds/meditation-piano1.mp3";
 
