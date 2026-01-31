@@ -33,16 +33,13 @@ const shortcutItems = [
 export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
   return (
     <div
+      style={{
+        width: isCollapsed ? "60px" : "225px",
+        transition: "width 300ms ease-in-out",
+      }}
       className={cn(
-        "bg-gray-100 border-r border-gray-300 p-4 flex flex-col",
-        "fixed inset-y-0 left-0 z-30 w-64 transform transition-transform duration-300 ease-in-out", // Mobile: fixed, w-64
-        "md:static md:z-auto md:transform-none md:transition-all md:duration-300 md:ease-in-out", // Desktop: static
-        {
-          "translate-x-0": !isCollapsed, // Show on mobile
-          "-translate-x-full": isCollapsed, // Hide on mobile
-          "md:w-[225px]": !isCollapsed, // Desktop expanded
-          "md:w-[60px] md:overflow-hidden": isCollapsed, // Desktop collapsed
-        },
+        "bg-gray-100 border-r border-gray-300 p-4 flex flex-col overflow-hidden",
+        "hidden md:flex",
       )}
     >
       <div
@@ -72,8 +69,11 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
       <div className="mt-5 w-full">
         <div
           className={cn(
-            "flex justify-between items-center py-1 text-sm text-gray-500 cursor-pointer",
-            { hidden: isCollapsed },
+            "flex justify-between items-center py-1 text-sm text-gray-500 cursor-pointer transition-opacity duration-300",
+            {
+              "opacity-0": isCollapsed,
+              "opacity-100": !isCollapsed,
+            },
           )}
         >
           <span>ショートカット</span>
