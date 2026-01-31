@@ -1,0 +1,212 @@
+import { type MeditationContent } from "../../src/models/meditation_content";
+import { type MeditationMedal } from "../../src/models/meditation_medal";
+import { type MeditationHistory } from "../../src/models/meditation_history";
+import { type MockAuthUser } from "./types";
+import { now, daysAgo } from "./helpers";
+
+// ============================================================
+// モックデータ定義
+// ============================================================
+
+export const mockUsers: MockAuthUser[] = [
+  {
+    id: "user_001",
+    email: "taro@example.com",
+    password: "password123",
+    first_name: "太郎",
+    last_name: "山田",
+    thumbnail_url:
+      "https://stickershop.line-scdn.net/stickershop/v1/product/19804848/LINEStorePC/main.png",
+    language: "ja",
+    status: "active",
+    last_logged_in: now,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "user_002",
+    email: "hanako@example.com",
+    password: "password123",
+    first_name: "花子",
+    last_name: "佐藤",
+    thumbnail_url:
+      "https://stickershop.line-scdn.net/stickershop/v1/product/29118925/LINEStorePC/main.png",
+    language: "ja",
+    status: "active",
+    last_logged_in: now,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "user_003",
+    email: "john@example.com",
+    password: "password123",
+    first_name: "John",
+    last_name: "Smith",
+    thumbnail_url: "https://picsum.photos/100/100?random=3",
+    language: "en",
+    status: "active",
+    last_logged_in: now,
+    created_at: now,
+    updated_at: now,
+  },
+];
+
+export const mockMeditationContents: MeditationContent[] = [
+  {
+    id: "content_001",
+    title: "朝の瞑想",
+    description: "一日の始まりを穏やかに迎えるための5分間の瞑想です。",
+    image_url: "https://picsum.photos/400/300?random=10",
+    audio_url: "https://example.com/audio/morning.mp3",
+    video_url: "",
+    duration: 300,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "content_002",
+    title: "ストレス解消",
+    description: "日々のストレスを和らげる10分間のリラックス瞑想。",
+    image_url: "https://picsum.photos/400/300?random=11",
+    audio_url: "https://example.com/audio/stress-relief.mp3",
+    video_url: "",
+    duration: 600,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "content_003",
+    title: "深い眠りへ",
+    description: "就寝前に聴く、心地よい眠りへ導く15分間の瞑想。",
+    image_url: "https://picsum.photos/400/300?random=12",
+    audio_url: "https://example.com/audio/sleep.mp3",
+    video_url: "",
+    duration: 900,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "content_004",
+    title: "集中力アップ",
+    description: "仕事や勉強の前に。集中力を高める7分間の瞑想。",
+    image_url: "https://picsum.photos/400/300?random=13",
+    audio_url: "https://example.com/audio/focus.mp3",
+    video_url: "",
+    duration: 420,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "content_005",
+    title: "感謝の瞑想",
+    description: "日々の感謝を振り返る穏やかな8分間の瞑想。",
+    image_url: "https://picsum.photos/400/300?random=14",
+    audio_url: "https://example.com/audio/gratitude.mp3",
+    video_url: "",
+    duration: 480,
+    created_at: now,
+    updated_at: now,
+  },
+];
+
+export const mockMedals: MeditationMedal[] = [
+  {
+    id: "medal_001",
+    medal_name: "初めての一歩",
+    description: "初めて瞑想を完了しました",
+    image_url: "https://picsum.photos/100/100?random=20",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "medal_002",
+    medal_name: "1週間継続",
+    description: "7日連続で瞑想を行いました",
+    image_url: "https://picsum.photos/100/100?random=21",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "medal_003",
+    medal_name: "1ヶ月マスター",
+    description: "30日連続で瞑想を行いました",
+    image_url: "https://picsum.photos/100/100?random=22",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "medal_004",
+    medal_name: "早起き瞑想家",
+    description: "朝6時前に瞑想を10回行いました",
+    image_url: "https://picsum.photos/100/100?random=23",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "medal_005",
+    medal_name: "瞑想の達人",
+    description: "合計100回の瞑想を完了しました",
+    image_url: "https://picsum.photos/100/100?random=24",
+    created_at: now,
+    updated_at: now,
+  },
+];
+
+export const mockMeditationHistories: MeditationHistory[] = [
+  {
+    id: "user_001_content_001",
+    user_id: "user_001",
+    meditation_id: "content_001",
+    duration: 300,
+    score: 85,
+    date: daysAgo(1),
+    mindfulness_score: 78,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "user_001_content_002",
+    user_id: "user_001",
+    meditation_id: "content_002",
+    duration: 600,
+    score: 92,
+    date: daysAgo(2),
+    mindfulness_score: 85,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "user_001_content_003",
+    user_id: "user_001",
+    meditation_id: "content_003",
+    duration: 900,
+    score: 88,
+    date: daysAgo(3),
+    mindfulness_score: 82,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "user_002_content_001",
+    user_id: "user_002",
+    meditation_id: "content_001",
+    duration: 300,
+    score: 75,
+    date: daysAgo(1),
+    mindfulness_score: 70,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "user_002_content_004",
+    user_id: "user_002",
+    meditation_id: "content_004",
+    duration: 420,
+    score: 80,
+    date: daysAgo(2),
+    mindfulness_score: 75,
+    created_at: now,
+    updated_at: now,
+  },
+];

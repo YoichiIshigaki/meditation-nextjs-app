@@ -5,14 +5,14 @@ const environment = process.env.NODE_ENV;
 
 const apiEndpoint = (env: string) => {
   switch (env) {
-    case "development": // localも含む
-      return `${window.location.protocol}://${window.location.hostname}:${window.location.port}/api/`;
+    case "development":
+      return "/api/";
     case "staging":
       return "https://stg.some-domain.com/api/";
     case "production":
       return "https://some-domain.com/api/";
     default:
-      return "http://localhost:3000/api/";
+      return "/api/";
   }
 };
 
