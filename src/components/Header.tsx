@@ -39,9 +39,6 @@ export default function Header({ toggleSidebar }: HeaderProps) {
           <div className="text-sm text-gray-500">ムードチェック ∨</div>
         </div>
       </div>
-      <div className="w-[30px] h-[30px] bg-gray-100 rounded-full flex justify-center items-center">
-        1
-      </div>
     </div>
   );
 }
