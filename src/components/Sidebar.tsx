@@ -1,7 +1,8 @@
 "use client";
 
 import { cn } from "@/styles/classMerge";
-import React from "react";
+import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import SidebarItem from "@/components/SidebarItem";
 
 interface SidebarProps {
@@ -31,6 +32,8 @@ const shortcutItems = [
 ];
 
 export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(true);
+
   return (
     <div
       style={{
@@ -75,18 +78,34 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
               "opacity-100": !isCollapsed,
             },
           )}
+          onClick={() => setIsShortcutsOpen(!isShortcutsOpen)}
         >
           <span>ショートカット</span>
-          <span>∨</span>
-        </div>
-        {shortcutItems.map((item) => (
-          <SidebarItem
-            key={item.text}
-            icon={item.icon}
-            text={item.text}
-            isCollapsed={isCollapsed}
+          <ChevronDown
+            className={cn(
+              "w-4 h-4 transition-transform duration-300",
+              { "rotate-180": !isShortcutsOpen }
+            )}
           />
-        ))}
+        </div>
+        <div
+          className={cn(
+            "overflow-hidden transition-all duration-300",
+            {
+              "max-h-96 opacity-100": isShortcutsOpen,
+              "max-h-0 opacity-0": !isShortcutsOpen,
+            }
+          )}
+        >
+          {shortcutItems.map((item) => (
+            <SidebarItem
+              key={item.text}
+              icon={item.icon}
+              text={item.text}
+              isCollapsed={isCollapsed}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

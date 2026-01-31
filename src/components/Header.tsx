@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { useLanguage, useTranslation } from "@/i18n/client";
 
 interface HeaderProps {
@@ -42,9 +43,10 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
           {user?.first_name?.slice(0, 1).toUpperCase() || "G"}
         </div>
         <div>
-          <div>{greeting}{user?.first_name || t("guest")}{honorificTitle}</div>
-          {/* TODO:アイコンに置き換え */}
-          <div className="text-sm text-gray-500">{t("mood_check")} ∨</div>
+          <div>{greeting}{user?.first_name || t("home:header.guest")}{honorificTitle}</div>
+          <div className="text-sm text-gray-500 flex items-center gap-1">
+            {t("home:mood_check")} <ChevronDown className="w-4 h-4" />
+          </div>
         </div>
       </div>
     </div>
