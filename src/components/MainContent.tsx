@@ -6,9 +6,8 @@ import ContentTabs from "@/components/ContentTabs";
 import ProgramCard from "@/components/ProgramCard";
 import RecommendationCard from "@/components/RecommendationCard";
 import { useSession } from "next-auth/react";
-import { useTranslation } from "react-i18next";
 import { useGetApi } from "@/hooks/useApi";
-import { useLanguage } from "@/i18n/client";
+import { useLanguage, useTranslation } from "@/i18n/client";
 
 interface MainContentProps {
   toggleSidebar?: () => void;
@@ -76,7 +75,7 @@ export default function MainContent({ toggleSidebar }: MainContentProps) {
         tagLabel="プログラム"
       />
 
-      <h2 className="text-xl font-bold mt-5 mb-3 mx-5">今日のおすすめ</h2>
+      <h2 className="text-xl font-bold mt-5 mb-3 mx-5">{t("home:main_content.today_recommendation")}</h2>
       <div className="mx-5">
         <div className="text-sm text-gray-500 mb-4">6月10日 土曜日</div>
         {!isPending && !error && recommendations.map((rec, index) => (
