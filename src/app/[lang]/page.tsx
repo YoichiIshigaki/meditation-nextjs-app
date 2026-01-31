@@ -5,13 +5,8 @@ import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import MainContent from "@/components/MainContent";
 
-interface HomeProps {
-  lang: string;
-}
-
-export default function Home({ lang }: HomeProps) {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true); // Mobile-first: sidebar initially collapsed
-  console.log(lang);
+export default function Home() {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
