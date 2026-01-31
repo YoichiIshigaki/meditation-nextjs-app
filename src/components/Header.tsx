@@ -1,10 +1,17 @@
 "use client";
 
+import { useLanguage, useTranslation } from "@/i18n/client";
+
 interface HeaderProps {
   toggleSidebar?: () => void;
-}
+  user?: any;
+};
 
-export default function Header({ toggleSidebar }: HeaderProps) {
+export default function Header({ toggleSidebar, user }: HeaderProps) {
+  const { language } = useLanguage();
+  const { t } = useTranslation(language);
+  const greeting = user ? t("home:header.greeting") : t("home:header.guest_greeting");
+  const honorificTitle = user ? t("home:header.honorific_title") : t("home:header.guest_honorific");
   return (
     <div className="flex justify-between items-center py-4 px-5 bg-white/80">
       <div className="flex items-center">
@@ -32,11 +39,12 @@ export default function Header({ toggleSidebar }: HeaderProps) {
           </button>
         )}
         <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">
-          J
+          {user?.first_name?.slice(0, 1).toUpperCase() || "G"}
         </div>
         <div>
-          <div>やあjohnさん</div>
-          <div className="text-sm text-gray-500">ムードチェック ∨</div>
+          <div>{greeting}{user?.first_name || t("guest")}{honorificTitle}</div>
+          {/* TODO:アイコンに置き換え */}
+          <div className="text-sm text-gray-500">{t("mood_check")} ∨</div>
         </div>
       </div>
     </div>
