@@ -11,6 +11,10 @@ const home = {
     guest: "ゲスト",
   },
   mood_check: "ムードチェック",
+  main_content: {
+    continue_program: "プログラムを続ける",
+    today_recommendation: "今日のおすすめ",
+  },
 } as const;
 
 export default home;

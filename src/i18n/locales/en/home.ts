@@ -11,6 +11,10 @@ const home = {
     guest: "Guest",
   },
   mood_check: "Mood Check",
+  main_content: {
+    continue_program: "Continue Program",
+    today_recommendation: "Today's Recommendation",
+  },
 } as const;
 
 export default home;
