@@ -21,14 +21,10 @@ export const i18nMiddleware = (request: NextRequest, _: NextResponse) => {
   );
 
   if (pathnameIsMissingLocale) {
-    if (preferredLanguage !== defaultLanguage) {
-      return NextResponse.redirect(
-        new URL(`/${preferredLanguage}${pathname}`, request.url),
-      );
-    } else {
-      const newPathname = `/${defaultLanguage}${pathname}`;
-      return NextResponse.rewrite(new URL(newPathname, request.url));
-    }
+    // 言語プレフィックスがない場合は常にリダイレクト
+    return NextResponse.redirect(
+      new URL(`/${preferredLanguage}${pathname}`, request.url),
+    );
   }
 
   return NextResponse.next();
