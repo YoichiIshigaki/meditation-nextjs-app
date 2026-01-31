@@ -7,7 +7,7 @@ export const main = async <Args extends unknown[], Return>(
 ) => {
   const getCallerFile = () => {
     const originalFunc = Error.prepareStackTrace;
-    let callerFile;
+    let callerFile = null;
     try {
       const err = new Error();
       Error.prepareStackTrace = function (err, stack) {
@@ -24,7 +24,10 @@ export const main = async <Args extends unknown[], Return>(
     return callerFile;
   };
 
-  if (getCallerFile() === require.main?.filename) {
+  if (
+    getCallerFile() === require.main?.filename &&
+    process.env.RUN_SCRIPT === "true"
+  ) {
     console.log("main executed function name: ", getCallerFile());
     func(...args)
       .then((result) => {
