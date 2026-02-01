@@ -11,8 +11,11 @@ interface HeaderProps {
 export default function Header({ toggleSidebar, user }: HeaderProps) {
   const { language } = useLanguage();
   const { t } = useTranslation(language);
+
   const greeting = user ? t("home:header.greeting") : t("home:header.guest_greeting");
   const honorificTitle = user ? t("home:header.honorific_title") : t("home:header.guest_honorific");
+
+  const userName = user?.name ?? t("home:header.guest");
   return (
     <div className="flex justify-between items-center py-4 px-5 bg-white/80">
       <div className="flex items-center">
@@ -47,11 +50,11 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
           />
         ) : (
           <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">
-            {user?.first_name?.slice(0, 1).toUpperCase() || "G"}
+            {userName.slice(0, 1).toUpperCase() || "G"}
           </div>
         )}
         <div>
-          <div>{greeting}{user?.name || t("home:header.guest")}{honorificTitle}</div>
+          <div>{greeting}{userName}{honorificTitle}</div>
           <div className="text-sm text-gray-500 flex items-center gap-1">
             {t("home:mood_check")} <ChevronDown className="w-4 h-4" />
           </div>
