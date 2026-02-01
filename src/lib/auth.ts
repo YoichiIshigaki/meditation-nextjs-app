@@ -2,21 +2,27 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   sendPasswordResetEmail,
-  createUserWithEmailAndPassword,
+  createUserWithEmailAndPassword as firebaseCreateUserWithEmailAndPassword,
 } from "firebase/auth";
 import type { UserCredential } from "firebase/auth";
 import { getAuth } from "./firebase";
 import { User } from "next-auth";
 import { getNotThrow } from "../models/user";
+import type { Auth } from "firebase/auth";
+import type { Auth as AdminAuth } from "firebase-admin/auth";
+
+const isClientAuth = (auth: Auth | AdminAuth): auth is Auth => {
+  return "currentUser" in auth;
+};
 
 export const signInWithEmail = async (
+  auth: Auth,
   email: string,
   password: string,
 ): Promise<User | null> => {
   try {
-    const firebaseAuth = await getAuth();
     const userCredential: UserCredential = await signInWithEmailAndPassword(
-      firebaseAuth,
+      auth,
       email,
       password,
     );
@@ -46,7 +52,9 @@ export const signInWithEmail = async (
   }
 };
 
-export const signOut = async (): Promise<void> => {
+export const signOut = async (
+  auth: Auth | AdminAuth,
+): Promise<void> => {
   try {
     const firebaseAuth = await getAuth();
     await firebaseSignOut(firebaseAuth);
@@ -58,10 +66,11 @@ export const signOut = async (): Promise<void> => {
 };
 
 export const forgetPassword = async (
+  auth?: Auth | AdminAuth,
   email: string,
 ): Promise<{ success: boolean; error?: unknown }> => {
   try {
-    const firebaseAuth = await getAuth();
+    const firebaseAuth = auth ?? await getAuth();
     const result = await sendPasswordResetEmail(firebaseAuth, email);
     console.dir(result, { depth: null });
     return { success: true };
@@ -72,22 +81,42 @@ export const forgetPassword = async (
   }
 };
 
-export const signUpWithEmailAndPassword = async (
+export const createUserWithEmailAndPassword = async (
+  auth: Auth | AdminAuth,
   email: string,
   password: string,
 ): Promise<User | null> => {
   try {
-    const firebaseAuth = await getAuth();
-    const userCredential: UserCredential = await createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password,
-    );
+    const { uid, email: userEmail } = await (async () => {
+      if (isClientAuth(auth)) {
+        const userCredential = await firebaseCreateUserWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
+        if (!userCredential?.user?.email) {
+          throw new Error("Failed to create user");
+        }
+        return {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+        };
+      } else {
+        const userRecord = await auth.createUser({
+          email,
+          password,
+        });
+        return {
+          uid: userRecord.uid,
+          email: userRecord.email || null,
+        };
+      }
+    })();
 
     return {
-      id: userCredential.user.uid,
+      id: uid,
       name: "",
-      email: userCredential.user.email,
+      email: userEmail ?? "",
       image: "",
     };
   } catch (error) {
