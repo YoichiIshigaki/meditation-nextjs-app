@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     fontFamily: {
       meditation: "var(--m-plus-1code)",
+      dancing: "var(--font-dancing-script)",
     },
     extend: {
       colors: {
@@ -63,6 +64,7 @@ const config: Config = {
         pointer: "rotate 7500ms linear forwards infinite",
         grow: "grow 3s linear forwards",
         shrink: "shrink 3s linear forwards",
+        blob: "blob 7s infinite",
       },
       keyframes: {
         rotate: {
@@ -87,6 +89,20 @@ const config: Config = {
           },
           "100%": {
             transform: "scale(1)",
+          },
+        },
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(30px, -50px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
           },
         },
       },

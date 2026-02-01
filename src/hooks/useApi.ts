@@ -6,7 +6,7 @@ const environment = process.env.NODE_ENV;
 
 const apiEndpoint = (env: string) => {
   if (isServer()) {
-    throw new Error("Client only");
+    return "/api/"; // SSR時はダミー値を返す
   }
   switch (env) {
     case "development":
@@ -21,10 +21,24 @@ const apiEndpoint = (env: string) => {
   }
 };
 
-export const apiInstance: AxiosInstance = axios.create({
-  baseURL: apiEndpoint(environment),
-  timeout: 30 * 1000, // 30s
-  // headers: {'X-Custom-Header': 'foobar'}
+// 遅延初期化用のシングルトン
+let _apiInstance: AxiosInstance | null = null;
+
+const getApiInstance = (): AxiosInstance => {
+  if (!_apiInstance) {
+    _apiInstance = axios.create({
+      baseURL: apiEndpoint(environment),
+      timeout: 30 * 1000, // 30s
+    });
+  }
+  return _apiInstance;
+};
+
+// 後方互換性のためのエクスポート
+export const apiInstance: AxiosInstance = new Proxy({} as AxiosInstance, {
+  get(_, prop) {
+    return getApiInstance()[prop as keyof AxiosInstance];
+  },
 });
 
 export const useGetApi = <R extends Record<string, unknown>>(

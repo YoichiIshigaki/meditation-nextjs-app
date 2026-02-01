@@ -2,6 +2,9 @@ import login from "./login";
 import meditation from "./meditation";
 import home from "./home";
 import validation from "./validation";
+import signup from "./signup";
+import forgot_password from "./forgot_password";
+import reset_password from "./reset_password";
 
 const translation = {
   app_name: "medimate app",
@@ -9,6 +12,9 @@ const translation = {
   meditation,
   home,
   validation,
+  signup,
+  forgot_password,
+  reset_password,
 };
 
 export default translation;

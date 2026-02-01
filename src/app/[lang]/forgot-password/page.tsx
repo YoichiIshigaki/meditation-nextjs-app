@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
 
   // usePostApi フック
   const { mutateAsync: forgotPassword, isPending: isLoading } = usePostApi<
-    { email: string },
+    { email: string; language: string },
     ForgotPasswordResponse
   >("auth/forgot-password");
 
@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
     setError(null);
 
     try {
-      const result = await forgotPassword({ email: data.email });
+      const result = await forgotPassword({ email: data.email, language });
 
       if (result.success) {
         setIsSuccess(true);
