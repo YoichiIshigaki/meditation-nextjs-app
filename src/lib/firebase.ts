@@ -17,7 +17,7 @@ class FirebaseService {
   private authPromise: Promise<Auth> | null = null;
 
   // private constructor to prevent direct instantiation.
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): FirebaseService {
     if (!FirebaseService.instance) {
@@ -56,24 +56,6 @@ class FirebaseService {
       })();
     }
     return this.authPromise;
-  }
-
-  public async signInWithEmail(
-    email: string,
-    password: string,
-  ): Promise<UserCredential | null> {
-    try {
-      const firebaseAuth = await this.getAuth();
-      const userCredential = await signInWithEmailAndPassword(
-        firebaseAuth,
-        email,
-        password,
-      );
-      return userCredential;
-    } catch (error) {
-      console.error("Firebase authentication error:", error);
-      return null;
-    }
   }
 }
 
