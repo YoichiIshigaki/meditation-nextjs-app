@@ -51,7 +51,7 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
           </div>
         )}
         <div>
-          <div>{greeting}{user?.first_name || t("home:header.guest")}{honorificTitle}</div>
+          <div>{greeting}{user?.name || t("home:header.guest")}{honorificTitle}</div>
           <div className="text-sm text-gray-500 flex items-center gap-1">
             {t("home:mood_check")} <ChevronDown className="w-4 h-4" />
           </div>
