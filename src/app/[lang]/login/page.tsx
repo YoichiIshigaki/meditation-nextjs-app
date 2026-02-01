@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller, type FieldErrors } from "react-hook-form";
 import { useLanguage, useTranslation } from "@/i18n/client";
 import { AppIcon, TranslateText } from "@/components";
+import { ToastContainer } from "@/components/Toast";
+import { useToast } from "@/hooks/useToast";
 import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 
 type FormData = {
@@ -15,7 +17,7 @@ type FormData = {
 const ErrorMessage = <T extends Record<string, string>>(props: {
   errors: FieldErrors<T>;
   type: string;
-  formKey: keyof typeof errors;
+  formKey: keyof FieldErrors<T>;
 }) => {
   const { errors, type, formKey: key } = props;
   return errors[key]?.type === type ? (
@@ -33,6 +35,7 @@ export default function LoginPage() {
   const { t } = useTranslation(language);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { toasts, removeToast, error: showError } = useToast();
 
   const {
     control,
@@ -68,7 +71,7 @@ export default function LoginPage() {
       if (res?.ok) {
         router.push(callbackUrl);
       } else {
-        alert(t("login:error"));
+        showError(t("login:error"));
       }
     } finally {
       setIsLoading(false);
@@ -77,6 +80,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-indigo-600 to-cyan-500 p-4">
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
+
       {/* 背景の装飾 */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
