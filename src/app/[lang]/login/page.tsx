@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller, type FieldErrors } from "react-hook-form";
@@ -35,7 +35,14 @@ export default function LoginPage() {
   const { t } = useTranslation(language);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { toasts, removeToast, error: showError } = useToast();
+  const { toasts, removeToast, error: showError, success: showSuccess } = useToast();
+
+  // 新規登録完了後のメッセージ表示
+  useEffect(() => {
+    if (searchParams.get("registered") === "true") {
+      showSuccess(t("login:registered_success"));
+    }
+  }, [searchParams, showSuccess, t]);
 
   const {
     control,
