@@ -8,8 +8,16 @@ import { useLanguage, useTranslation } from "@/i18n/client";
 import { AppIcon, TranslateText } from "@/components";
 import { ToastContainer } from "@/components/Toast";
 import { useToast } from "@/hooks/useToast";
+import { usePostApi } from "@/hooks/useApi";
 import { Mail, Lock, Eye, EyeOff, Loader2, User } from "lucide-react";
-import { createSignUpFormSchema, type SignUpFormSchema } from "@/schema/signup";
+import { createSignUpFormSchema, type SignUpFormSchema, type SignUpSchema } from "@/schema/signup";
+
+type SignUpResponse = {
+  success: boolean;
+  userId?: string;
+  error?: string;
+  code?: string;
+};
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -17,8 +25,12 @@ export default function SignUpPage() {
   const { t } = useTranslation(language);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { toasts, removeToast, success: showSuccess, error: showError } = useToast();
+
+  // usePostApi フック
+  const { mutateAsync: signUp, isPending: isLoading } = usePostApi<SignUpSchema, SignUpResponse>(
+    "auth/signup"
+  );
 
   // 翻訳関数を使用してスキーマを生成
   const signUpFormSchema = useMemo(() => createSignUpFormSchema(t), [t]);
@@ -40,22 +52,14 @@ export default function SignUpPage() {
   });
 
   const onSubmit = async (data: SignUpFormSchema) => {
-    setIsLoading(true);
-
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          language: data.language,
-        }),
+      const result = await signUp({
+        email: data.email,
+        password: data.password,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        language: data.language,
       });
-
-      const result = await res.json();
 
       if (result.success) {
         showSuccess(t("signup:success"));
@@ -81,8 +85,6 @@ export default function SignUpPage() {
       }
     } catch {
       showError(t("signup:error"));
-    } finally {
-      setIsLoading(false);
     }
   };
 
