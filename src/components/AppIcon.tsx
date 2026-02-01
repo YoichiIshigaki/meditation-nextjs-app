@@ -114,8 +114,8 @@ export const AppIcon: React.FC<AppIconProps> = ({
           </g>
         </svg>
       </div>
-      <p className="inline-block">MediMate</p>
-      <p>Web App</p>
+      <p className="inline-block font-dancing font-semibold">MediMate</p>
+      <p className="inline-block font-dancing font-semibold">Web App</p>
     </div>
   );
 };
