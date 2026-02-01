@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
@@ -9,7 +9,7 @@ import { AppIcon, TranslateText } from "@/components";
 import { ToastContainer } from "@/components/Toast";
 import { useToast } from "@/hooks/useToast";
 import { Mail, Lock, Eye, EyeOff, Loader2, User } from "lucide-react";
-import { signUpFormSchema, type SignUpFormSchema } from "@/schema/signup";
+import { createSignUpFormSchema, type SignUpFormSchema } from "@/schema/signup";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -19,6 +19,9 @@ export default function SignUpPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toasts, removeToast, success: showSuccess, error: showError } = useToast();
+
+  // 翻訳関数を使用してスキーマを生成
+  const signUpFormSchema = useMemo(() => createSignUpFormSchema(t), [t]);
 
   const {
     control,

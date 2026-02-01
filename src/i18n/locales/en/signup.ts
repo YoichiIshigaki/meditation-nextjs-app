@@ -14,6 +14,15 @@ const signup = {
   success: "Account created successfully!",
   error: "Registration failed. Please try again.",
   error_email_exists: "This email is already in use.",
+  // Validation messages
+  validation_email_invalid: "Please enter a valid email address",
+  validation_password_min: "Password must be at least 6 characters",
+  validation_first_name_required: "First name is required",
+  validation_last_name_required: "Last name is required",
+  validation_confirm_password_required: "Password confirmation is required",
+  validation_password_mismatch: "Passwords do not match",
+  validation_first_name_max: "First name must be 20 characters or less",
+  validation_last_name_max: "Last name must be 20 characters or less",
 } as const;
 
 export default signup;
