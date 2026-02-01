@@ -39,9 +39,17 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
             </svg>
           </button>
         )}
-        <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">
-          {user?.first_name?.slice(0, 1).toUpperCase() || "G"}
-        </div>
+        {user?.image ? (
+          <img
+            src={user.image}
+            alt="User"
+            className="w-10 h-10 rounded-full mr-2.5 object-contain"
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">
+            {user?.first_name?.slice(0, 1).toUpperCase() || "G"}
+          </div>
+        )}
         <div>
           <div>{greeting}{user?.first_name || t("home:header.guest")}{honorificTitle}</div>
           <div className="text-sm text-gray-500 flex items-center gap-1">
