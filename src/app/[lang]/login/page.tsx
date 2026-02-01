@@ -173,7 +173,7 @@ export default function LoginPage() {
             {/* パスワードを忘れた場合 */}
             <div className="text-right">
               <a
-                href="#"
+                href={`/${language}/forgot-password`}
                 className="text-sm text-white/70 hover:text-white transition-colors"
               >
                 {t("login:forgot_password")}
@@ -213,7 +213,7 @@ export default function LoginPage() {
           <p className="text-center text-white/70">
             {t("login:no_account")}{" "}
             <a
-              href="#"
+              href={`/${language}/signup`}
               className="text-white font-semibold hover:underline transition-all"
             >
               {t("login:sign_up")}
