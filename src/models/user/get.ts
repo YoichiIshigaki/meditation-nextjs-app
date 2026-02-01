@@ -1,12 +1,11 @@
-import { doc, getDoc } from "firebase/firestore";
-import { user, toUser, type User, type UserDoc } from "./";
+import { userCollection, toUser, type User, type UserDoc } from "./";
 import { main } from "@/models/common/util";
 
 export const get = async (id: string): Promise<User> => {
-  const userDocRef = doc(await user(), id);
-  const userDocSnap = await getDoc(userDocRef);
+  const collectionRef = await userCollection();
+  const userDocSnap = await collectionRef.doc(id).get();
 
-  if (userDocSnap.exists()) {
+  if (userDocSnap.exists) {
     // ドキュメントデータを取得し、idを付与して返す
     return toUser(userDocSnap.id, userDocSnap.data() as UserDoc);
   }
@@ -16,10 +15,10 @@ export const get = async (id: string): Promise<User> => {
 };
 
 export const getNotThrow = async (id: string): Promise<User | null> => {
-  const userDocRef = doc(await user(), id);
-  const userDocSnap = await getDoc(userDocRef);
+  const collectionRef = await userCollection();
+  const userDocSnap = await collectionRef.doc(id).get();
 
-  if (userDocSnap.exists()) {
+  if (userDocSnap.exists) {
     // ドキュメントデータを取得し、idを付与して返す
     return toUser(userDocSnap.id, userDocSnap.data() as UserDoc);
   }

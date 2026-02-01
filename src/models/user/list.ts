@@ -1,11 +1,4 @@
-import {
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  type QueryConstraint,
-} from "firebase/firestore";
-import { user, toUser, type User, type UserDoc } from "./";
+import { userCollection, toUser, type User, type UserDoc } from "./";
 import { main } from "@/models/common/util";
 
 export type ListOptions = {
@@ -15,26 +8,23 @@ export type ListOptions = {
 };
 
 export const list = async (options?: ListOptions): Promise<User[]> => {
-  const collectionRef = await user();
-
-  const constraints: QueryConstraint[] = [];
+  let collectionRef: FirebaseFirestore.Query = await userCollection();
 
   // Sort
   const orderField = options?.orderByField || "created_at";
   const orderDir = options?.orderDirection || "desc";
-  constraints.push(orderBy(orderField, orderDir));
+  collectionRef = collectionRef.orderBy(orderField, orderDir);
 
   // Limit
   if (options?.limitCount) {
-    constraints.push(limit(options.limitCount));
+    collectionRef = collectionRef.limit(options.limitCount);
   }
 
-  const q = query(collectionRef, ...constraints);
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await collectionRef.get();
 
   const users: User[] = [];
   querySnapshot.forEach((docSnap) => {
-    if (docSnap.exists()) {
+    if (docSnap.exists) {
       users.push(toUser(docSnap.id, docSnap.data() as UserDoc));
     }
   });

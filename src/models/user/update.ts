@@ -1,5 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
-import { user, type UserDoc } from "./";
+import { userCollection, type UserDoc } from "./";
 import { main, getUpdateParam } from "@/models/common/util";
 
 
@@ -11,15 +10,14 @@ export const update = async (
   id: string,
   param: UserUpdateParam,
 ): Promise<void> => {
-  const collectionRef = await user();
-  const docRef = doc(collectionRef, id);
+  const collectionRef = await userCollection();
 
   // Firestoreに保存するデータを作成
   // updated_atのみを更新（created_atは変更しない）
   const updateData = getUpdateParam<UserUpdateParam>(param);
 
   // ドキュメントを更新
-  await updateDoc(docRef, updateData);
+  await collectionRef.doc(id).update(updateData);
 
 };
 

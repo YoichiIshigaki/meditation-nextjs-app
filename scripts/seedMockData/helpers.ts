@@ -82,7 +82,7 @@ export const findExistingUserMedal = async (
   medalId: string
 ): Promise<string | null> => {
   const snapshot = await ctx.db
-    .collection(getCollectionName("user_medal"))
+    .collection(getCollectionName("user_medals"))
     .where("user_id", "==", userId)
     .where("medal_id", "==", medalId)
     .limit(1)
