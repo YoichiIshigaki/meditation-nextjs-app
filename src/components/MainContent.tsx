@@ -14,14 +14,17 @@ interface MainContentProps {
 }
 
 const useGetRecommendations = () => {
-  const apiPathPrefix = "/api/recommendations";
+  const apiPathPrefix = "recommendations";
   const { language } = useLanguage();
-  const { t } = useTranslation();
-  const { data, isPending, error } = useGetApi(
-    `${apiPathPrefix}`,
-    { type: "recommendations" },
-    "recommendations",
-  );
+  const { t } = useTranslation(language);
+  // TODO: APIから取得するように変更する
+  const isPending = false;
+  const error = null;
+  // const { data: _, isPending, error } = useGetApi(
+  //   `${apiPathPrefix}`,
+  //   { type: "recommendations" },
+  //   "recommendations",
+  // );
 
   const recommendations = [
     {
