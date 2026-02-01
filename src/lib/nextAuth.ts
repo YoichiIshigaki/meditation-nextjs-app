@@ -1,7 +1,8 @@
 import NextAuth, { type AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import config from "@/config";
-import { signInWithEmail } from "./auth";
+import { signInWithEmail } from "@/lib/auth";
+import { getAuth } from "@/lib/firebase";
 
 export const authOptions = {
   providers: [
@@ -27,9 +28,14 @@ export const authOptions = {
             }
             return null;
           } else {
+            if (!credentials?.email || !credentials?.password) {
+              return null;
+            }
+            const auth = await getAuth();
             const user = await signInWithEmail(
-              credentials!.email,
-              credentials!.password,
+              auth,
+              credentials.email,
+              credentials.password,
             );
             return user;
           }
