@@ -11,6 +11,7 @@ const signup = {
   or: "or",
   have_account: "Already have an account?",
   login: "Login",
+  success: "Account created successfully!",
   error: "Registration failed. Please try again.",
   error_email_exists: "This email is already in use.",
 } as const;

@@ -10,6 +10,7 @@ const login = {
   no_account: "¿No tienes una cuenta?",
   sign_up: "Registrarse",
   error: "Error al iniciar sesión. Verifica tu correo y contraseña.",
+  registered_success: "Cuenta creada exitosamente. Por favor inicia sesión.",
 } as const;
 
 export default login;

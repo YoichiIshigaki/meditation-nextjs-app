@@ -11,6 +11,7 @@ const signup = {
   or: "または",
   have_account: "すでにアカウントをお持ちですか？",
   login: "ログイン",
+  success: "アカウントを作成しました！",
   error: "登録に失敗しました。もう一度お試しください。",
   error_email_exists: "このメールアドレスは既に使用されています。",
 } as const;

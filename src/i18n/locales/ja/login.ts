@@ -10,6 +10,7 @@ const login = {
   no_account: "アカウントをお持ちでないですか？",
   sign_up: "新規登録",
   error: "ログインに失敗しました。メールアドレスとパスワードをご確認ください。",
+  registered_success: "アカウントを作成しました。ログインしてください。",
 } as const;
 
 export default login;

@@ -10,6 +10,7 @@ const login = {
   no_account: "Don't have an account?",
   sign_up: "Sign up",
   error: "Login failed. Please check your email and password.",
+  registered_success: "Account created successfully. Please log in.",
 } as const;
 
 export default login;
