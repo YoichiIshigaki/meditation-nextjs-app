@@ -9,7 +9,6 @@ export default function HeroSection() {
           "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://picsum.photos/1200/350') center/cover no-repeat",
       }}
     >
-      {/* <div className="absolute inset-0 bg-black/30"></div> Optional: overlay using Tailwind */}
       <div
         className="text-xl md:text-[22px] font-light mb-5 z-10"
         style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
