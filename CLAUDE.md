@@ -28,7 +28,11 @@ src/
 │   │   └── dashboard/     # ダッシュボード
 │   └── api/               # APIルート
 │       └── auth/          # 認証関連API
-├── components/            # 共通コンポーネント
+├── components/            # 共通コンポーネント（Atomicデザイン）
+│   ├── atoms/            # 最小単位（Button, Input, Icon, Label等）
+│   ├── molecules/        # Atomsの組み合わせ（FormField, SearchBar等）
+│   ├── organisms/        # Moleculesの組み合わせ（Header, Form, Card等）
+│   └── templates/        # ページレイアウト
 ├── config/               # 設定ファイル
 ├── hooks/                # カスタムフック
 ├── i18n/                 # 国際化 (i18next)
@@ -54,6 +58,35 @@ src/
 ```
 
 ## コーディング規約
+
+### コンポーネント設計（Atomicデザイン）
+コンポーネントはAtomicデザインに従って分類・配置する。
+
+| 分類 | 説明 | 例 |
+|------|------|-----|
+| **Atoms** | 最小単位のUI要素。それ以上分解できない | Button, Input, Icon, Label, Badge |
+| **Molecules** | Atomsを組み合わせた機能単位 | FormField (Label + Input), SearchBar, MenuItem |
+| **Organisms** | Moleculesを組み合わせた複雑なUI | Header, LoginForm, Card, Sidebar |
+| **Templates** | ページのレイアウト構造 | DashboardLayout, AuthLayout |
+
+```
+src/components/
+├── atoms/
+│   ├── Button/
+│   │   ├── index.tsx
+│   │   └── Button.stories.tsx  # (任意) Storybook
+│   └── Input/
+│       └── index.tsx
+├── molecules/
+│   └── FormField/
+│       └── index.tsx
+├── organisms/
+│   └── LoginForm/
+│       └── index.tsx
+└── templates/
+    └── AuthLayout/
+        └── index.tsx
+```
 
 ### ファイル命名規則
 - コンポーネント: PascalCase（例: `AppIcon.tsx`）
