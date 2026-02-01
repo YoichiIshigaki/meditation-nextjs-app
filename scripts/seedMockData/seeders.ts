@@ -72,7 +72,7 @@ export const seedUsers = async (
       }
 
       // Step 4: Firestoreにユーザードキュメント作成
-      await ctx.db.collection(getCollectionName("user")).doc(uid).set({
+      await ctx.db.collection(getCollectionName("users")).doc(uid).set({
         id: uid,
         first_name: user.first_name,
         last_name: user.last_name,
@@ -114,7 +114,7 @@ export const seedMeditationContents = async (ctx: SeedContext): Promise<string[]
     }
 
     // 既存チェック（ドキュメントIDで確認）
-    const docRef = ctx.db.collection(getCollectionName("meditation_content")).doc(docId);
+    const docRef = ctx.db.collection(getCollectionName("meditation_contents")).doc(docId);
     const doc = await docRef.get();
 
     if (doc.exists) {
@@ -154,7 +154,7 @@ export const seedMedals = async (ctx: SeedContext): Promise<string[]> => {
     }
 
     // 既存チェック（ドキュメントIDで確認）
-    const docRef = ctx.db.collection(getCollectionName("meditation_medal")).doc(docId);
+    const docRef = ctx.db.collection(getCollectionName("meditation_medals")).doc(docId);
     const doc = await docRef.get();
 
     if (doc.exists) {
@@ -215,7 +215,7 @@ export const seedMeditationHistories = async (
     }
 
     const docRef = await ctx.db
-      .collection(getCollectionName("meditation_history"))
+      .collection(getCollectionName("meditation_histories"))
       .add({
         ...history,
         user_id: actualUserId,
@@ -264,7 +264,7 @@ export const seedUserMedals = async (
       continue;
     }
 
-    const docRef = await ctx.db.collection(getCollectionName("user_medal")).add({
+    const docRef = await ctx.db.collection(getCollectionName("user_medals")).add({
       user_id: userId,
       medal_id: medalId,
       earned_at: admin.firestore.Timestamp.fromDate(new Date()),
