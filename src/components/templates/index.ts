@@ -1,1 +1,1 @@
-export { DashboardTemplate } from "./DashboardTemplate";
+export { AuthLayout, AuthLayoutSimple } from "./AuthLayout";

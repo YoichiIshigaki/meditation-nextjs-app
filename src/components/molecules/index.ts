@@ -1,3 +1,3 @@
-export { WeeklyProgressChart } from "./WeeklyProgressChart";
-export { StatsCard } from "./StatsCard";
-export { CalendarDay } from "./CalendarDay";
+export { PasswordInput } from "./PasswordInput";
+export { EmailInput } from "./EmailInput";
+export { TextInput } from "./TextInput";
