@@ -2,6 +2,7 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import type { UserCredential } from "firebase/auth";
 import { getAuth } from "./firebase";
@@ -70,3 +71,28 @@ export const forgetPassword = async (
     return { success: false, error };
   }
 };
+
+export const signUpWithEmailAndPassword = async (
+  email: string,
+  password: string,
+): Promise<User | null> => {
+  try {
+    const firebaseAuth = await getAuth();
+    const userCredential: UserCredential = await createUserWithEmailAndPassword(
+      firebaseAuth,
+      email,
+      password,
+    );
+
+    return {
+      id: userCredential.user.uid,
+      name: "",
+      email: userCredential.user.email,
+      image: "",
+    };
+  } catch (error) {
+    console.error("Firebase sign up error:");
+    console.dir(error, { depth: null });
+    return null;
+  }
+};  
