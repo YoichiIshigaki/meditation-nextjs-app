@@ -1,12 +1,17 @@
 import axios, { type AxiosInstance } from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { isServer } from "@/lib/utils";
 
 const environment = process.env.NODE_ENV;
 
 const apiEndpoint = (env: string) => {
+  if (isServer()) {
+    throw new Error("Client only");
+  }
   switch (env) {
     case "development":
-      return "/api/";
+    case "local":
+      return `http://${window.location.hostname}:${window.location.port}/api/`;
     case "staging":
       return "https://stg.some-domain.com/api/";
     case "production":
@@ -40,12 +45,11 @@ export const usePostApi = <
   R extends Record<string, unknown>,
 >(
   path: string,
-  body: T,
 ) => {
-  const { isPending, error, data, isSuccess } = useMutation({
-    mutationFn: () => apiInstance.post<R>(path, body).then((res) => res.data),
+  const { isPending, error, data, isSuccess, mutate, mutateAsync } = useMutation({
+    mutationFn: (body: T) => apiInstance.post<R>(path, body).then((res) => res.data),
   });
-  return { isPending, error, data, isSuccess };
+  return { isPending, error, data, isSuccess, mutate, mutateAsync };
 };
 
 export const usePutApi = <
@@ -62,8 +66,8 @@ export const usePutApi = <
 };
 
 export const useDeleteApi = (path: string, id: string) => {
-  const { isPending, error, isSuccess } = useMutation({
+  const { isPending, error, isSuccess, mutate } = useMutation({
     mutationFn: () => apiInstance.delete(`${path}/${id}`),
   });
-  return { isPending, error, isSuccess };
+  return { isPending, error, isSuccess, mutate };
 };

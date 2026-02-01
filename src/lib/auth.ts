@@ -65,15 +65,20 @@ export const signOut = async (
   }
 };
 
+type ForgetPasswordResult = { success: true } | { success: true; link: string } | { success: false; error: unknown };
+
 export const forgetPassword = async (
-  auth?: Auth | AdminAuth,
+  auth: Auth | AdminAuth,
   email: string,
-): Promise<{ success: boolean; error?: unknown }> => {
+): Promise<ForgetPasswordResult> => {
   try {
-    const firebaseAuth = auth ?? await getAuth();
-    const result = await sendPasswordResetEmail(firebaseAuth, email);
-    console.dir(result, { depth: null });
-    return { success: true };
+    if (isClientAuth(auth)) {
+      await sendPasswordResetEmail(auth, email);
+      return { success: true };
+    }
+    const link = await auth.generatePasswordResetLink(email);
+    console.dir(link, { depth: null });
+    return { success: true, link };
   } catch (error) {
     console.error("Firebase password reset error:");
     console.dir(error, { depth: null });
