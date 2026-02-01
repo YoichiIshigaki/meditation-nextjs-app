@@ -13,7 +13,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          if (process.env.IS_TEXT === "true") {
+          if (process.env.IS_TEST === "true") {
             if (
               credentials?.email === "user@example.com" &&
               credentials?.password === "password"
