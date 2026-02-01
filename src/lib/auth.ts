@@ -26,21 +26,17 @@ export const signInWithEmail = async (
     const temporaryUserName =
       userCredential.user.displayName ||
       userCredential.user.email?.split("@")[0];
-    // const providerUser = userCredential.user.providerData;
     const userData = await getNotThrow(userCredential.user.uid);
     const userName = userData
       ? `${userData.first_name} ${userData.last_name}`
       : temporaryUserName;
 
-    console.log(userCredential.user.uid);
-    const altImageUrl =
-      "https://i.pinimg.com/736x/74/61/e4/7461e4ab734d81af34c7982910c2d20e.jpg";
     return {
       id: userCredential.user.uid,
       name: userName,
       email: userCredential.user.email,
       image:
-        userData?.thumbnail_url ?? userCredential.user.photoURL ?? altImageUrl,
+        userData?.thumbnail_url ?? userCredential.user.photoURL ?? "",
     };
   } catch (error) {
     console.error("Firebase authentication error:");
