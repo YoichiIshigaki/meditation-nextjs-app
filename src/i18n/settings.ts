@@ -13,6 +13,7 @@ export const namespaces = [
   "signup",
   "reset_password",
   "explore",
+  "admin",
 ] as const;
 
 export type Language = (typeof availableLanguages)[number];
