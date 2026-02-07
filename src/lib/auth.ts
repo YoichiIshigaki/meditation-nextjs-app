@@ -44,6 +44,7 @@ export const signInWithEmail = async (
       email: userCredential.user.email,
       image:
         userData?.thumbnail_url ?? userCredential.user.photoURL ?? "",
+      role: userData?.role ?? "user",
     };
   } catch (error) {
     console.error("Firebase authentication error:");
