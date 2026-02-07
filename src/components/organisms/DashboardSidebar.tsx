@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import Link from "next/link";
 import {
   User,
   BarChart3,
@@ -7,7 +10,15 @@ import {
   Settings,
   Globe,
   LogOut,
+  Search,
+  type LucideIcon,
 } from "lucide-react";
+
+interface MenuItem {
+  icon: LucideIcon;
+  label: string;
+  href?: string;
+}
 
 interface DashboardSidebarProps {
   userName?: string;
@@ -18,13 +29,14 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   userName = "John",
   userId = "user-id",
 }) => {
-  const menuItems = [
-    { icon: BarChart3, label: "これまでの瞑想" },
-    { icon: Heart, label: "お気に入り" },
-    { icon: Target, label: "定期購読" },
-    { icon: Settings, label: "設定" },
-    { icon: BarChart3, label: "気分の履歴" },
-    { icon: Globe, label: "言語" },
+  const menuItems: MenuItem[] = [
+    { icon: Search, label: "探す", href: "/explore" },
+    { icon: BarChart3, label: "これまでの瞑想", href: "/meditation" },
+    { icon: Heart, label: "お気に入り", href: "/favorites" },
+    { icon: Target, label: "定期購読", href: "/subscription" },
+    { icon: Settings, label: "設定", href: "/settings" },
+    { icon: BarChart3, label: "気分の履歴", href: "/mood-history" },
+    { icon: Globe, label: "言語", href: "/language" },
     { icon: LogOut, label: "ログアウト" },
   ];
 
@@ -48,10 +60,20 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         <ul className="space-y-1">
           {menuItems.map((item, index) => (
             <li key={index}>
-              <button className="w-full flex items-center space-x-3 px-6 py-3 text-left text-gray-700 hover:bg-gray-50">
-                <item.icon className="w-5 h-5" />
-                <span>{item.label}</span>
-              </button>
+              {item.href ? (
+                <Link
+                  href={item.href}
+                  className="w-full flex items-center space-x-3 px-6 py-3 text-left text-gray-700 hover:bg-gray-50"
+                >
+                  <item.icon className="w-5 h-5" />
+                  <span>{item.label}</span>
+                </Link>
+              ) : (
+                <button className="w-full flex items-center space-x-3 px-6 py-3 text-left text-gray-700 hover:bg-gray-50">
+                  <item.icon className="w-5 h-5" />
+                  <span>{item.label}</span>
+                </button>
+              )}
             </li>
           ))}
         </ul>

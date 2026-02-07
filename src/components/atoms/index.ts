@@ -3,3 +3,7 @@ export { GlassButton } from "./GlassButton";
 export { PasswordToggle } from "./PasswordToggle";
 export { FormError } from "./FormError";
 export { Divider } from "./Divider";
+export { CategoryChip } from "./CategoryChip";
+export { SearchInput } from "./SearchInput";
+export { ContentBadge } from "./ContentBadge";
+export { Pagination } from "./Pagination";

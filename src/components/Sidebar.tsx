@@ -11,13 +11,13 @@ interface SidebarProps {
 }
 
 const mainNavigationItems = [
-  { icon: "📁", text: "フォルダ" },
-  { icon: "🏠", text: "今日", isActive: true },
-  { icon: "🔍", text: "探す" },
-  { icon: "🎵", text: "瞑想" },
-  { icon: "🔊", text: "サウンド" },
-  { icon: "👤", text: "プロフィール" },
-  { icon: "🔍", text: "検索" },
+  { icon: "📁", text: "フォルダ", href: "/dashboard" },
+  { icon: "🏠", text: "今日", isActive: true, href: "/dashboard" },
+  { icon: "🔍", text: "探す", href: "/explore" },
+  { icon: "🎵", text: "瞑想", href: "/meditation" },
+  { icon: "🔊", text: "サウンド", href: "/sounds" },
+  { icon: "👤", text: "プロフィール", href: "/profile" },
+  { icon: "🔎", text: "検索", href: "/search" },
 ];
 
 const shortcutItems = [
@@ -66,6 +66,7 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
           text={item.text}
           isCollapsed={isCollapsed}
           isActive={item.isActive}
+          href={item.href}
         />
       ))}
 
