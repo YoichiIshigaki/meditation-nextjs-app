@@ -7,6 +7,7 @@ type Config = {
   FIREBASE_CLIENT_CREDENTIALS: string;
   RESEND_API_KEY: string;
   EMAIL_FROM: string;
+  ROOT_USER_EMAIL: string;
 };
 
 const config: Config = {
@@ -16,6 +17,7 @@ const config: Config = {
   FIREBASE_CLIENT_CREDENTIALS: String(process.env.FIREBASE_CLIENT_CREDENTIALS),
   RESEND_API_KEY: String(process.env.RESEND_API_KEY),
   EMAIL_FROM: String(process.env.EMAIL_FROM || "onboarding@resend.dev"),
+  ROOT_USER_EMAIL: String(process.env.ROOT_USER_EMAIL),
 };
 
 export default config;
