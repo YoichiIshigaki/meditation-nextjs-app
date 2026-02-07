@@ -8,6 +8,8 @@ export type MeditationContentDoc = MediMateDocType<{
   audio_url: string;
   video_url: string;
   duration: number;
+  language: string;
+  category_id: string;
   // created_at と updated_at は MediMateDocType によって自動的に Timestamp 型として追加される
 }>;
 
@@ -19,6 +21,8 @@ export type MeditationContent = MediMateType<{
   audio_url: string;
   video_url: string;
   duration: number;
+  language: string;
+  category_id: string;
   created_at: Date;
   updated_at: Date;
 }>;
@@ -34,6 +38,8 @@ export const toMeditationContent = (
   audio_url: meditationContentDoc.audio_url,
   video_url: meditationContentDoc.video_url,
   duration: meditationContentDoc.duration,
+  language: meditationContentDoc.language,
+  category_id: meditationContentDoc.category_id ?? "",
   created_at: meditationContentDoc.created_at.toDate(),
   updated_at: meditationContentDoc.updated_at.toDate(),
 });
