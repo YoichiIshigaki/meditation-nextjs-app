@@ -8,7 +8,7 @@ export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   matcher: [
     // リクエストを受け付ける静的コンテンツの拡張子 動的な変数は受け付けない。
-    `/((?!api/auth|_next/static|_next/image|favicon.ico$|.*\\.png|.*\\.jpg|.*\\.mp3|.*\\.mp4).*)`,
+    `/((?!api|_next/static|_next/image|favicon.ico$|.*\\.png|.*\\.jpg|.*\\.mp3|.*\\.mp4).*)`,
   ],
 };
 
