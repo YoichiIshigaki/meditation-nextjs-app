@@ -10,7 +10,7 @@ type Config = {
 };
 
 const config: Config = {
-  NEXTAUTH_SECRET: String(process.env.AUTH_NEXT),
+  NEXTAUTH_SECRET: String(process.env.NEXTAUTH_SECRET),
   NEXTAUTH_URL: String(process.env.NEXTAUTH_URL),
   FIREBASE_ADMIN_CREDENTIALS: String(process.env.FIREBASE_ADMIN_CREDENTIALS),
   FIREBASE_CLIENT_CREDENTIALS: String(process.env.FIREBASE_CLIENT_CREDENTIALS),
