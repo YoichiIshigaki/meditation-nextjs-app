@@ -33,11 +33,17 @@ if (customEnv) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["i.pinimg.com"],
+    domains: ["i.pinimg.com", "firebasestorage.googleapis.com"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "picsum.photos",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
         port: "",
         pathname: "/**",
       },
