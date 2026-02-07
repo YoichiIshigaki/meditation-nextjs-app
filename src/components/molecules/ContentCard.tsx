@@ -21,6 +21,8 @@ interface ContentCardProps {
   content: ContentCardData;
   onClick?: () => void;
   onFavoriteClick?: () => void;
+  newBadgeLabel?: string;
+  popularBadgeLabel?: string;
   className?: string;
 }
 
@@ -28,6 +30,8 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   content,
   onClick,
   onFavoriteClick,
+  newBadgeLabel = "NEW",
+  popularBadgeLabel = "人気",
   className,
 }) => {
   return (
@@ -84,9 +88,9 @@ export const ContentCard: React.FC<ContentCardProps> = ({
         {/* 新着/人気バッジ */}
         {(content.isNew || content.isPopular) && (
           <div className="absolute top-3 left-3">
-            {content.isNew && <ContentBadge label="NEW" variant="new" />}
+            {content.isNew && <ContentBadge label={newBadgeLabel} variant="new" />}
             {content.isPopular && !content.isNew && (
-              <ContentBadge label="人気" variant="popular" />
+              <ContentBadge label={popularBadgeLabel} variant="popular" />
             )}
           </div>
         )}

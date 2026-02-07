@@ -9,12 +9,16 @@ interface FeaturedContentProps {
   content: ContentCardData;
   onClick?: () => void;
   className?: string;
+  featuredLabel?: string;
+  startButtonLabel?: string;
 }
 
 export const FeaturedContent: React.FC<FeaturedContentProps> = ({
   content,
   onClick,
   className,
+  featuredLabel = "おすすめ",
+  startButtonLabel = "今すぐ始める",
 }) => {
   return (
     <div
@@ -38,7 +42,7 @@ export const FeaturedContent: React.FC<FeaturedContentProps> = ({
       {/* コンテンツ */}
       <div className="relative p-8 flex flex-col justify-center min-h-[200px]">
         <span className="text-indigo-200 text-sm font-medium mb-2">
-          おすすめ
+          {featuredLabel}
         </span>
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 max-w-lg">
           {content.title}
@@ -50,7 +54,7 @@ export const FeaturedContent: React.FC<FeaturedContentProps> = ({
         <div className="flex items-center gap-4">
           <button className="flex items-center gap-2 bg-white text-indigo-600 px-5 py-2.5 rounded-full font-medium hover:bg-indigo-50 transition-colors">
             <Play className="w-4 h-4" />
-            今すぐ始める
+            {startButtonLabel}
           </button>
           <div className="flex items-center gap-1 text-indigo-200">
             <Clock className="w-4 h-4" />

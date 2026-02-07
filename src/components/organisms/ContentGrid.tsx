@@ -9,6 +9,8 @@ interface ContentGridProps {
   onContentClick?: (content: ContentCardData) => void;
   onFavoriteClick?: (content: ContentCardData) => void;
   emptyMessage?: string;
+  newBadgeLabel?: string;
+  popularBadgeLabel?: string;
   className?: string;
 }
 
@@ -17,6 +19,8 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
   onContentClick,
   onFavoriteClick,
   emptyMessage = "コンテンツが見つかりませんでした",
+  newBadgeLabel = "NEW",
+  popularBadgeLabel = "人気",
   className,
 }) => {
   if (contents.length === 0) {
@@ -43,6 +47,8 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
           content={content}
           onClick={() => onContentClick?.(content)}
           onFavoriteClick={() => onFavoriteClick?.(content)}
+          newBadgeLabel={newBadgeLabel}
+          popularBadgeLabel={popularBadgeLabel}
         />
       ))}
     </div>
