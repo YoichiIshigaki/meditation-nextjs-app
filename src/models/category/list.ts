@@ -12,7 +12,7 @@ export const list = async (options?: ListOptions): Promise<Category[]> => {
 
   // Sort
   const orderField = options?.orderByField || "order";
-  const orderDir = options?.orderDirection || "asc";
+  const orderDir = options?.orderDirection || "desc";
   collectionRef = collectionRef.orderBy(orderField, orderDir);
 
   // Limit
