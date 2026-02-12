@@ -66,10 +66,16 @@ export const ContentForm = ({
     }
   };
 
-  const handleAudioChange = (file: File | null) => {
+  const handleAudioChange = async (file: File | null) => {
     if (file) {
       setAudioFile(file);
       setAudioPreview(URL.createObjectURL(file));
+
+      const arrayBuffer = await file.arrayBuffer();
+      const audioContext = new AudioContext();
+      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      setValue("duration", Math.round(audioBuffer.duration));
+      audioContext.close();
     }
   };
 
