@@ -27,6 +27,7 @@ export const ContentForm = ({
   const { t } = useTranslation(language);
 
   const [imagePreview, setImagePreview] = useState<string | undefined>(initialData?.image_url);
+  const [audioPreview, setAudioPreview] = useState<string | undefined>(initialData?.audio_url);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -62,6 +63,13 @@ export const ContentForm = ({
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAudioChange = (file: File | null) => {
+    if (file) {
+      setAudioFile(file);
+      setAudioPreview(URL.createObjectURL(file));
     }
   };
 
@@ -196,12 +204,21 @@ export const ContentForm = ({
         label={t("admin:audioUrl")}
         accept="audio/*"
         maxSize={50 * 1024 * 1024}
-        onFileChange={setAudioFile}
+        onFileChange={handleAudioChange}
         onClear={() => {
           setAudioFile(null);
+          setAudioPreview(undefined);
           setValue("audio_url", "");
         }}
       />
+      {audioPreview && (
+        <audio
+          key={audioPreview}
+          controls
+          className="w-full mt-2"
+          src={audioPreview}
+        />
+      )}
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
