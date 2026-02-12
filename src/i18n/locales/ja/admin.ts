@@ -53,6 +53,7 @@ const admin = {
   deleteSuccess: "削除しました",
   deleteConfirm: "本当に削除しますか？",
   error: "エラーが発生しました",
+  notFound: "コンテンツが見つかりません",
 
   // Validation
   validation_title_required: "タイトルを入力してください",

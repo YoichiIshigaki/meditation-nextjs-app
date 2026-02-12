@@ -1,5 +1,4 @@
-import typia from "typia";
-import { Timestamp, serverTimestamp } from "firebase/firestore";
+import { Timestamp, FieldValue } from "firebase-admin/firestore";
 
 export const main = async <Args extends unknown[], Return>(
   func: (...args: Args) => Promise<Return>,
@@ -42,11 +41,6 @@ export const main = async <Args extends unknown[], Return>(
 };
 
 
-// optional は禁止、nullは許容したい
-type RequiredAllowNull<T> = {
-  [K in keyof T]-?: Exclude<T[K], undefined>;
-};
-
 export const getUpdateParam = <T extends Record<string, unknown>>(param: T) => {
   const updateData = Object.entries(param).reduce(
     (acc, [key, value]) =>
@@ -59,8 +53,9 @@ export const getUpdateParam = <T extends Record<string, unknown>>(param: T) => {
         : acc,
     {},
   );
-  if (!typia.is<RequiredAllowNull<T>>(updateData)) {
-    throw new Error("Invalid update data");
+  // 少なくとも1つの更新フィールドが必要
+  if (Object.keys(updateData).length === 0) {
+    throw new Error("Invalid update data: no fields to update");
   }
-  return { ...updateData, updated_at: serverTimestamp() };
+  return { ...updateData, updated_at: FieldValue.serverTimestamp() };
 };

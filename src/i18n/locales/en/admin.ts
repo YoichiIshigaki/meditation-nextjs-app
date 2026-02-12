@@ -53,6 +53,7 @@ const admin = {
   deleteSuccess: "Deleted successfully",
   deleteConfirm: "Are you sure you want to delete?",
   error: "An error occurred",
+  notFound: "Content not found",
 
   // Validation
   validation_title_required: "Title is required",
