@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { parseBlob } from "music-metadata";
 import { FileUploadInput } from "@/components/atoms/FileUploadInput";
 import type { Category } from "@/models/category";
 import type { MeditationContent } from "@/models/meditation_content";
@@ -76,6 +77,11 @@ export const ContentForm = ({
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
       setValue("duration", Math.round(audioBuffer.duration));
       audioContext.close();
+
+      const metadata = await parseBlob(file);
+      if (metadata.common.title) {
+        setValue("title", metadata.common.title);
+      }
     }
   };
 
