@@ -28,6 +28,7 @@ const admin = {
   delete: "削除",
   noContents: "コンテンツがありません",
   seconds: "秒",
+  minutes: "分",
   selectCategory: "カテゴリーを選択",
 
   // Categories

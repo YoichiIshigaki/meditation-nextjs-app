@@ -25,6 +25,14 @@ export const ContentTable = ({
     return category?.name || "-";
   };
 
+  const formatDuration = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return m > 0
+      ? `${m}${t("admin:minutes")}${s}${t("admin:seconds")}`
+      : `${s}${t("admin:seconds")}`;
+  };
+
   if (contents.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
@@ -76,7 +84,7 @@ export const ContentTable = ({
                 {getCategoryName(content.category_id)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {content.duration} {t("admin:seconds")}
+                {formatDuration(content.duration)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {content.language}

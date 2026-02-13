@@ -28,6 +28,7 @@ const admin = {
   delete: "Eliminar",
   noContents: "No se encontraron contenidos",
   seconds: "seg",
+  minutes: "min",
   selectCategory: "Seleccionar categoría",
 
   // Categories
