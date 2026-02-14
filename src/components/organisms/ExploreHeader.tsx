@@ -2,7 +2,10 @@
 
 import React from "react";
 import { SearchInput } from "@/components/atoms/SearchInput";
-import { CategoryTabList, Category } from "@/components/molecules/CategoryTabList";
+import {
+  CategoryTabList,
+  Category,
+} from "@/components/molecules/CategoryTabList";
 
 interface ExploreHeaderProps {
   title: string;

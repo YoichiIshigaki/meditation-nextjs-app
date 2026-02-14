@@ -16,17 +16,17 @@ export const useToast = () => {
 
   const success = useCallback(
     (message: string) => addToast("success", message),
-    [addToast]
+    [addToast],
   );
 
   const error = useCallback(
     (message: string) => addToast("error", message),
-    [addToast]
+    [addToast],
   );
 
   const info = useCallback(
     (message: string) => addToast("info", message),
-    [addToast]
+    [addToast],
   );
 
   return {

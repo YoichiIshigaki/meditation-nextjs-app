@@ -83,20 +83,16 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
         >
           <span>ショートカット</span>
           <ChevronDown
-            className={cn(
-              "w-4 h-4 transition-transform duration-300",
-              { "rotate-180": !isShortcutsOpen }
-            )}
+            className={cn("w-4 h-4 transition-transform duration-300", {
+              "rotate-180": !isShortcutsOpen,
+            })}
           />
         </div>
         <div
-          className={cn(
-            "overflow-hidden transition-all duration-300",
-            {
-              "max-h-96 opacity-100": isShortcutsOpen,
-              "max-h-0 opacity-0": !isShortcutsOpen,
-            }
-          )}
+          className={cn("overflow-hidden transition-all duration-300", {
+            "max-h-96 opacity-100": isShortcutsOpen,
+            "max-h-0 opacity-0": !isShortcutsOpen,
+          })}
         >
           {shortcutItems.map((item) => (
             <SidebarItem

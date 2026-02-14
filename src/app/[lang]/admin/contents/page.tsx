@@ -78,7 +78,9 @@ export default function AdminContentsPage() {
     <AdminTemplate>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">{t("admin:contentList")}</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            {t("admin:contentList")}
+          </h1>
           <Link
             href={`/${language}/admin/contents/new`}
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"

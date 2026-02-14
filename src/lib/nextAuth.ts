@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import config from "@/config";
 import { signInWithEmail } from "@/lib/auth";
 import { getAuth } from "@/lib/firebase";
-import { getNotThrow } from "@/models/user/get"
+import { getNotThrow } from "@/models/user/get";
 
 export const authOptions = {
   providers: [
@@ -37,11 +37,7 @@ export const authOptions = {
             return null;
           } else {
             const auth = await getAuth();
-            const user = await signInWithEmail(
-              auth,
-              email,
-              password,
-            );
+            const user = await signInWithEmail(auth, email, password);
             return user;
           }
         } catch (error) {

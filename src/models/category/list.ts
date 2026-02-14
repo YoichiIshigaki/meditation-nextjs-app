@@ -1,4 +1,9 @@
-import { categoryCollection, toCategory, type Category, type CategoryDoc } from "./";
+import {
+  categoryCollection,
+  toCategory,
+  type Category,
+  type CategoryDoc,
+} from "./";
 import { main } from "@/models/common/util";
 
 export type ListOptions = {

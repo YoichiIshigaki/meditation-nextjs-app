@@ -14,7 +14,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <FormError message={error} />
       </div>
     );
-  }
+  },
 );
 
 TextInput.displayName = "TextInput";

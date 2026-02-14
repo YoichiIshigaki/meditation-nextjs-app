@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import type { Category } from "@/models/category";
-import { createCategoryFormSchema, type CategoryFormSchema } from "@/schema/category";
+import {
+  createCategoryFormSchema,
+  type CategoryFormSchema,
+} from "@/schema/category";
 import { useLanguage, useTranslation } from "@/i18n/client";
 
 type CategoryFormProps = {
@@ -40,7 +43,9 @@ export const CategoryForm = ({
   });
 
   const submitLabel = initialData ? t("admin:submit") : t("admin:create");
-  const submittingLabel = initialData ? t("admin:submitting") : t("admin:creating");
+  const submittingLabel = initialData
+    ? t("admin:submitting")
+    : t("admin:creating");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -81,7 +86,9 @@ export const CategoryForm = ({
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
         {errors.description && (
-          <p className="mt-1 text-sm text-red-500">{errors.description.message}</p>
+          <p className="mt-1 text-sm text-red-500">
+            {errors.description.message}
+          </p>
         )}
       </div>
 

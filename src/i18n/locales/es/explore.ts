@@ -4,7 +4,8 @@ const explore = {
   search_placeholder: "Meditación, relajación, sueño...",
   featured: "Destacado",
   start_now: "Comenzar Ahora",
-  empty_message: "No se encontraron meditaciones que coincidan con tus criterios",
+  empty_message:
+    "No se encontraron meditaciones que coincidan con tus criterios",
   showing_results: "Mostrando {{start}}-{{end}} de {{total}}",
   categories: {
     all: "Todos",

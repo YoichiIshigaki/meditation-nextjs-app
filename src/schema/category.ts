@@ -5,7 +5,11 @@ type TranslationFunction = (key: string) => string;
 // API用のスキーマ - サーバーサイド用
 export const categorySchema = z.object({
   name: z.string().min(1).max(100),
-  slug: z.string().min(1).max(50).regex(/^[a-z0-9-]+$/),
+  slug: z
+    .string()
+    .min(1)
+    .max(50)
+    .regex(/^[a-z0-9-]+$/),
   description: z.string().max(500),
   order: z.number().int().min(0),
 });
@@ -35,4 +39,6 @@ export const createCategoryFormSchema = (t: TranslationFunction) =>
     order: z.number().int().min(0, t("admin:validation_order_min")),
   });
 
-export type CategoryFormSchema = z.infer<ReturnType<typeof createCategoryFormSchema>>;
+export type CategoryFormSchema = z.infer<
+  ReturnType<typeof createCategoryFormSchema>
+>;

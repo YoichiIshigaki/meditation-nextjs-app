@@ -23,8 +23,7 @@ class FirebaseAdminService {
     const serviceAccountModule = await import(
       `config-submodule/${config.FIREBASE_ADMIN_CREDENTIALS}`
     );
-    const serviceAccount =
-      serviceAccountModule.default || serviceAccountModule;
+    const serviceAccount = serviceAccountModule.default || serviceAccountModule;
     const projectId = serviceAccount.project_id;
     const storageBucket = `${projectId}.appspot.com`;
 

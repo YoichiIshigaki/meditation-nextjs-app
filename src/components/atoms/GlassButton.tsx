@@ -20,7 +20,8 @@ export const GlassButton = ({
 }: GlassButtonProps) => {
   const variants = {
     primary: "bg-white text-indigo-600 hover:bg-white/90 focus:ring-white/50",
-    secondary: "bg-white/10 text-white border border-white/20 hover:bg-white/20 focus:ring-white/30",
+    secondary:
+      "bg-white/10 text-white border border-white/20 hover:bg-white/20 focus:ring-white/30",
     ghost: "text-white/70 hover:text-white hover:bg-white/10",
   };
 
@@ -34,7 +35,7 @@ export const GlassButton = ({
         "disabled:opacity-50 disabled:cursor-not-allowed",
         "flex items-center justify-center gap-2",
         variants[variant],
-        className
+        className,
       )}
       {...props}
     >

@@ -3,7 +3,10 @@ import { forwardRef, useState, type InputHTMLAttributes } from "react";
 import { Lock } from "lucide-react";
 import { GlassInput, PasswordToggle, FormError } from "@/components/atoms";
 
-type PasswordInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
+type PasswordInputProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type"
+> & {
   error?: string;
   showIcon?: boolean;
 };
@@ -29,7 +32,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         <FormError message={error} />
       </div>
     );
-  }
+  },
 );
 
 PasswordInput.displayName = "PasswordInput";

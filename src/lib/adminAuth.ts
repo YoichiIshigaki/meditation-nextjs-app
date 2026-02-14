@@ -13,7 +13,6 @@ export type AdminSession = {
 };
 
 export const getAdminSession = async (): Promise<AdminSession | null> => {
-
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
@@ -21,7 +20,10 @@ export const getAdminSession = async (): Promise<AdminSession | null> => {
   }
 
   if (session.user.email === config.ROOT_USER_EMAIL) {
-    return { ...session, user: { ...session.user, role: "root" } } as AdminSession;
+    return {
+      ...session,
+      user: { ...session.user, role: "root" },
+    } as AdminSession;
   }
 
   if (session.user.role !== "admin") {
@@ -34,21 +36,21 @@ export const getAdminSession = async (): Promise<AdminSession | null> => {
 export const unauthorizedResponse = () => {
   return NextResponse.json(
     { success: false, error: "Unauthorized" },
-    { status: 401 }
+    { status: 401 },
   );
 };
 
 export const forbiddenResponse = () => {
   return NextResponse.json(
     { success: false, error: "Forbidden - Admin access required" },
-    { status: 403 }
+    { status: 403 },
   );
 };
 
 export const checkAdminSession = async (func: () => Promise<NextResponse>) => {
   const session = await getAdminSession();
 
-  console.log("session: ", session)
+  console.log("session: ", session);
 
   if (!session) {
     return unauthorizedResponse();

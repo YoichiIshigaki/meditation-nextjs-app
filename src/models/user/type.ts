@@ -31,7 +31,6 @@ export type User = MediMateType<{
   role: UserRole;
 }>;
 
-
 /**
  * 会員ステータス
  * active: 有効

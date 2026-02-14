@@ -9,7 +9,8 @@ const reset_password = {
   go_to_login: "ログインへ",
   error: "パスワードの変更に失敗しました。もう一度お試しください。",
   error_invalid_link: "無効なリンク",
-  error_invalid_link_description: "このパスワードリセットリンクは無効または期限切れです。",
+  error_invalid_link_description:
+    "このパスワードリセットリンクは無効または期限切れです。",
   request_new_link: "新しいリンクをリクエスト",
   // バリデーションメッセージ
   validation_password_min: "パスワードは6文字以上で入力してください",

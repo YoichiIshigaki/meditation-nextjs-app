@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json(
         { success: false, error: validation.error.errors[0].message },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -31,27 +31,27 @@ export async function POST(request: NextRequest) {
     if (firebaseError.code === "auth/invalid-action-code") {
       return NextResponse.json(
         { success: false, error: "Invalid or expired reset link" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (firebaseError.code === "auth/expired-action-code") {
       return NextResponse.json(
         { success: false, error: "Reset link has expired" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (firebaseError.code === "auth/weak-password") {
       return NextResponse.json(
         { success: false, error: "Password is too weak" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { success: false, error: "Failed to reset password" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,6 +1,7 @@
 const forgot_password = {
   title: "Forgot Password?",
-  subtitle: "Enter your email address and we'll send you a link to reset your password.",
+  subtitle:
+    "Enter your email address and we'll send you a link to reset your password.",
   email_placeholder: "Email address",
   send_reset_link: "Send Reset Link",
   sending: "Sending...",

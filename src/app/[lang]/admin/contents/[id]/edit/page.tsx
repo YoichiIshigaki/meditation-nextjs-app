@@ -84,7 +84,9 @@ export default function AdminContentEditPage() {
   if (!content) {
     return (
       <AdminTemplate>
-        <div className="text-center py-8 text-gray-500">{t("admin:notFound")}</div>
+        <div className="text-center py-8 text-gray-500">
+          {t("admin:notFound")}
+        </div>
       </AdminTemplate>
     );
   }
@@ -92,7 +94,9 @@ export default function AdminContentEditPage() {
   return (
     <AdminTemplate>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-800">{t("admin:editContent")}</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          {t("admin:editContent")}
+        </h1>
 
         <div className="bg-white rounded-lg shadow p-6">
           <ContentForm

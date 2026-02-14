@@ -1,6 +1,7 @@
 const forgot_password = {
   title: "パスワードをお忘れですか？",
-  subtitle: "登録したメールアドレスを入力してください。パスワード再設定のリンクをお送りします。",
+  subtitle:
+    "登録したメールアドレスを入力してください。パスワード再設定のリンクをお送りします。",
   email_placeholder: "メールアドレス",
   send_reset_link: "リセットリンクを送信",
   sending: "送信中...",

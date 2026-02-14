@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     if (!email) {
       return NextResponse.json(
         { success: false, error: "Email is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { success: false, error: "Failed to send reset email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

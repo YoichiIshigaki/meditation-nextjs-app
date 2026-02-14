@@ -12,7 +12,7 @@ class FirebaseService {
   private authPromise: Promise<Auth> | null = null;
 
   // private constructor to prevent direct instantiation.
-  private constructor() { }
+  private constructor() {}
 
   public static getInstance(): FirebaseService {
     if (!FirebaseService.instance) {

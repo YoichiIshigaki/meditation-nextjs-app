@@ -3,7 +3,10 @@ import { meditationContentUpdateSchema } from "@/schema/meditationContent";
 import { FieldValue } from "firebase-admin/firestore";
 import { getAdminFirestore } from "@/lib/firebaseAdmin";
 import { FIRESTORE_COLLECTION_NAME_PREFIX } from "@/lib/firebase";
-import { toMeditationContent, type MeditationContentDoc } from "@/models/meditation_content";
+import {
+  toMeditationContent,
+  type MeditationContentDoc,
+} from "@/models/meditation_content";
 import { checkAdminSession } from "@/lib/adminAuth";
 
 const COLLECTION_NAME = `${FIRESTORE_COLLECTION_NAME_PREFIX}_meditation_contents`;
@@ -22,17 +25,20 @@ export async function GET(request: NextRequest, { params }: Params) {
       if (!docSnap.exists) {
         return NextResponse.json(
           { success: false, error: "Content not found" },
-          { status: 404 }
+          { status: 404 },
         );
       }
 
-      const content = toMeditationContent(docSnap.id, docSnap.data() as MeditationContentDoc);
+      const content = toMeditationContent(
+        docSnap.id,
+        docSnap.data() as MeditationContentDoc,
+      );
       return NextResponse.json({ success: true, data: content });
     } catch (error) {
       console.error("Error fetching content:", error);
       return NextResponse.json(
         { success: false, error: "Content not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
   });
@@ -48,8 +54,12 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
       if (!validationResult.success) {
         return NextResponse.json(
-          { success: false, error: "Validation failed", details: validationResult.error.errors },
-          { status: 400 }
+          {
+            success: false,
+            error: "Validation failed",
+            details: validationResult.error.errors,
+          },
+          { status: 400 },
         );
       }
 
@@ -60,7 +70,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       if (!docSnap.exists) {
         return NextResponse.json(
           { success: false, error: "Content not found" },
-          { status: 404 }
+          { status: 404 },
         );
       }
 
@@ -76,7 +86,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       console.error("Error updating content:", error);
       return NextResponse.json(
         { success: false, error: "Failed to update content" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
@@ -94,7 +104,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       if (!docSnap.exists) {
         return NextResponse.json(
           { success: false, error: "Content not found" },
-          { status: 404 }
+          { status: 404 },
         );
       }
 
@@ -105,8 +115,8 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       console.error("Error deleting content:", error);
       return NextResponse.json(
         { success: false, error: "Failed to delete content" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
-};
+}

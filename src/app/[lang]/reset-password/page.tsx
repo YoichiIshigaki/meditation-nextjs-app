@@ -41,7 +41,10 @@ export default function ResetPasswordPage() {
     setOobCode(code);
   }, [searchParams]);
 
-  const resetPasswordFormSchema = useMemo(() => createResetPasswordFormSchema(t), [t]);
+  const resetPasswordFormSchema = useMemo(
+    () => createResetPasswordFormSchema(t),
+    [t],
+  );
 
   const {
     control,
@@ -96,7 +99,9 @@ export default function ResetPasswordPage() {
             <p className="text-white/70">
               {t("reset_password:error_invalid_link_description")}
             </p>
-            <GlassButton onClick={() => router.push(`/${language}/forgot-password`)}>
+            <GlassButton
+              onClick={() => router.push(`/${language}/forgot-password`)}
+            >
               {t("reset_password:request_new_link")}
             </GlassButton>
           </div>
@@ -110,7 +115,10 @@ export default function ResetPasswordPage() {
       <ToastContainer toasts={toasts} onRemove={removeToast} />
       <AuthBackground />
 
-      <AuthCard titleKey="reset_password:title" subtitle={t("reset_password:subtitle")}>
+      <AuthCard
+        titleKey="reset_password:title"
+        subtitle={t("reset_password:subtitle")}
+      >
         {isSuccess ? (
           <div className="text-center space-y-4">
             <div className="flex justify-center">

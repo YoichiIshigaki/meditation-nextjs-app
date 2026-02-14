@@ -14,7 +14,7 @@ const adminRoutes = ["/admin"];
 
 // 認証不要の公開ルート
 const publicRoutes = [
-  "/login",  // ログイン画面
+  "/login", // ログイン画面
   "/signup", // 新規登録画面
   "/forgot-password", // パスワード再設定画面
   "/reset-password", // パスワードリセット画面

@@ -58,7 +58,9 @@ export default function AdminContentNewPage() {
   return (
     <AdminTemplate>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-800">{t("admin:createContent")}</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          {t("admin:createContent")}
+        </h1>
 
         <div className="bg-white rounded-lg shadow p-6">
           <ContentForm

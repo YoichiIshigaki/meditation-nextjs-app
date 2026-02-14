@@ -4,12 +4,12 @@ import path from "path";
 // テンプレートファイルを読み込んでプレースホルダーを置換する
 const loadTemplate = (
   templateName: string,
-  replacements: Record<string, string>
+  replacements: Record<string, string>,
 ): string => {
   const templatePath = path.join(
     process.cwd(),
     "src/infra/email/templates",
-    `${templateName}.html`
+    `${templateName}.html`,
   );
   let html = fs.readFileSync(templatePath, "utf-8");
 

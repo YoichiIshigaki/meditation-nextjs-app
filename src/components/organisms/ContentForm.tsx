@@ -8,7 +8,10 @@ import { parseBlob } from "music-metadata";
 import { FileUploadInput } from "@/components/atoms/FileUploadInput";
 import type { Category } from "@/models/category";
 import type { MeditationContent } from "@/models/meditation_content";
-import { createMeditationContentFormSchema, type MeditationContentFormSchema } from "@/schema/meditationContent";
+import {
+  createMeditationContentFormSchema,
+  type MeditationContentFormSchema,
+} from "@/schema/meditationContent";
 import { useLanguage, useTranslation } from "@/i18n/client";
 
 type ContentFormProps = {
@@ -27,8 +30,12 @@ export const ContentForm = ({
   const { language } = useLanguage();
   const { t } = useTranslation(language);
 
-  const [imagePreview, setImagePreview] = useState<string | undefined>(initialData?.image_url);
-  const [audioPreview, setAudioPreview] = useState<string | undefined>(initialData?.audio_url);
+  const [imagePreview, setImagePreview] = useState<string | undefined>(
+    initialData?.image_url,
+  );
+  const [audioPreview, setAudioPreview] = useState<string | undefined>(
+    initialData?.audio_url,
+  );
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -54,7 +61,9 @@ export const ContentForm = ({
   });
 
   const submitLabel = initialData ? t("admin:submit") : t("admin:create");
-  const submittingLabel = initialData ? t("admin:submitting") : t("admin:creating");
+  const submittingLabel = initialData
+    ? t("admin:submitting")
+    : t("admin:creating");
 
   const handleImageChange = async (file: File | null) => {
     if (file) {
@@ -142,7 +151,9 @@ export const ContentForm = ({
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
         {errors.description && (
-          <p className="mt-1 text-sm text-red-500">{errors.description.message}</p>
+          <p className="mt-1 text-sm text-red-500">
+            {errors.description.message}
+          </p>
         )}
       </div>
 
@@ -163,7 +174,9 @@ export const ContentForm = ({
             ))}
           </select>
           {errors.category_id && (
-            <p className="mt-1 text-sm text-red-500">{errors.category_id.message}</p>
+            <p className="mt-1 text-sm text-red-500">
+              {errors.category_id.message}
+            </p>
           )}
         </div>
 
@@ -177,7 +190,9 @@ export const ContentForm = ({
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
           />
           {errors.duration && (
-            <p className="mt-1 text-sm text-red-500">{errors.duration.message}</p>
+            <p className="mt-1 text-sm text-red-500">
+              {errors.duration.message}
+            </p>
           )}
         </div>
       </div>
@@ -242,7 +257,9 @@ export const ContentForm = ({
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         />
         {errors.video_url && (
-          <p className="mt-1 text-sm text-red-500">{errors.video_url.message}</p>
+          <p className="mt-1 text-sm text-red-500">
+            {errors.video_url.message}
+          </p>
         )}
       </div>
 

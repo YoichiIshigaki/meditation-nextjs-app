@@ -50,7 +50,6 @@ const useGetRecommendations = () => {
   return { recommendations, isPending, error };
 };
 
-
 export default function MainContent({ toggleSidebar }: MainContentProps) {
   const session = useSession();
   const { language } = useLanguage();
@@ -76,12 +75,16 @@ export default function MainContent({ toggleSidebar }: MainContentProps) {
         tagLabel="プログラム"
       />
 
-      <h2 className="text-xl font-bold mt-5 mb-3 mx-5">{t("home:main_content.today_recommendation")}</h2>
+      <h2 className="text-xl font-bold mt-5 mb-3 mx-5">
+        {t("home:main_content.today_recommendation")}
+      </h2>
       <div className="mx-5">
         <div className="text-sm text-gray-500 mb-4">6月10日 土曜日</div>
-        {!isPending && !error && recommendations.map((rec, index) => (
-          <RecommendationCard key={index} {...rec} />
-        ))}
+        {!isPending &&
+          !error &&
+          recommendations.map((rec, index) => (
+            <RecommendationCard key={index} {...rec} />
+          ))}
       </div>
     </div>
   );

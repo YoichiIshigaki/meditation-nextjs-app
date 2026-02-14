@@ -26,7 +26,7 @@ export const CategoryTabList: React.FC<CategoryTabListProps> = ({
     <div
       className={cn(
         "flex flex-wrap gap-2 overflow-x-auto pb-2 scrollbar-hide",
-        className
+        className,
       )}
     >
       {categories.map((category) => (

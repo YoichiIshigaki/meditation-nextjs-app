@@ -2,7 +2,10 @@ import { forwardRef, type InputHTMLAttributes, useState } from "react";
 import { Upload, X } from "lucide-react";
 import { cn } from "@/lib/styles";
 
-type FileUploadInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
+type FileUploadInputProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange"
+> & {
   label?: string;
   accept?: string;
   maxSize?: number;
@@ -12,8 +15,24 @@ type FileUploadInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "onChang
   error?: string;
 };
 
-export const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps>(
-  ({ label, accept, maxSize, preview, onFileChange, onClear, error, className, ...props }, ref) => {
+export const FileUploadInput = forwardRef<
+  HTMLInputElement,
+  FileUploadInputProps
+>(
+  (
+    {
+      label,
+      accept,
+      maxSize,
+      preview,
+      onFileChange,
+      onClear,
+      error,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     const [dragActive, setDragActive] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
 
@@ -62,8 +81,10 @@ export const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps
         <div
           className={cn(
             "relative border-2 border-dashed rounded-lg p-6 text-center transition-colors",
-            dragActive ? "border-indigo-500 bg-indigo-50" : "border-gray-300 hover:border-gray-400",
-            error && "border-red-500"
+            dragActive
+              ? "border-indigo-500 bg-indigo-50"
+              : "border-gray-300 hover:border-gray-400",
+            error && "border-red-500",
           )}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -72,7 +93,11 @@ export const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps
         >
           {preview ? (
             <div className="relative inline-block">
-              <img src={preview} alt="Preview" className="max-h-32 rounded-lg" />
+              <img
+                src={preview}
+                alt="Preview"
+                className="max-h-32 rounded-lg"
+              />
               <button
                 type="button"
                 onClick={handleClear}
@@ -117,7 +142,7 @@ export const FileUploadInput = forwardRef<HTMLInputElement, FileUploadInputProps
         {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
       </div>
     );
-  }
+  },
 );
 
 FileUploadInput.displayName = "FileUploadInput";

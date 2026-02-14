@@ -8,7 +8,7 @@ import { parseParams } from "@/lib/query";
 export async function GET(request: NextRequest) {
   return checkAdminSession(async () => {
     try {
-      const query = parseParams(request)
+      const query = parseParams(request);
       const categories = await list(query);
 
       return NextResponse.json({ success: true, data: categories });
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
       console.error("Error fetching categories:", error);
       return NextResponse.json(
         { success: false, error: "Failed to fetch categories" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
@@ -31,8 +31,12 @@ export async function POST(request: NextRequest) {
 
       if (!validationResult.success) {
         return NextResponse.json(
-          { success: false, error: "Validation failed", details: validationResult.error.errors },
-          { status: 400 }
+          {
+            success: false,
+            error: "Validation failed",
+            details: validationResult.error.errors,
+          },
+          { status: 400 },
         );
       }
 
@@ -40,13 +44,13 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json(
         { success: true, data: { id } },
-        { status: 201 }
+        { status: 201 },
       );
     } catch (error) {
       console.error("Error creating category:", error);
       return NextResponse.json(
         { success: false, error: "Failed to create category" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });

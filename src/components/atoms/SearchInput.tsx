@@ -30,7 +30,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           "bg-white border border-gray-200",
           "text-gray-900 placeholder-gray-400",
           "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent",
-          "transition-all duration-200"
+          "transition-all duration-200",
         )}
       />
     </div>

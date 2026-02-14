@@ -22,7 +22,7 @@ import {
  * ユーザーをシードする（既存チェック → 画像アップロード → Auth → Firestore）
  */
 export const seedUsers = async (
-  ctx: SeedContext
+  ctx: SeedContext,
 ): Promise<{ ids: string[]; idMap: Record<string, string> }> => {
   console.log("🔐 Firebase Authユーザーを作成中...");
 
@@ -36,7 +36,9 @@ export const seedUsers = async (
       const dryRunUid = `dryrun_${user.id}`;
       ids.push(dryRunUid);
       idMap[user.id] = dryRunUid;
-      console.log(`    [DRY] 画像アップロード: users/${dryRunUid}/thumbnail.jpg`);
+      console.log(
+        `    [DRY] 画像アップロード: users/${dryRunUid}/thumbnail.jpg`,
+      );
       console.log(`    [DRY] Auth: ${user.email} (UID: ${dryRunUid})`);
       console.log(`    [DRY] Firestore: ${user.first_name} ${user.last_name}`);
       continue;
@@ -49,7 +51,9 @@ export const seedUsers = async (
       if (existingAuthUser) {
         ids.push(existingAuthUser.uid);
         idMap[user.id] = existingAuthUser.uid;
-        console.log(`    ⏭ 既存ユーザー: ${user.email} (UID: ${existingAuthUser.uid})`);
+        console.log(
+          `    ⏭ 既存ユーザー: ${user.email} (UID: ${existingAuthUser.uid})`,
+        );
         continue;
       }
 
@@ -63,32 +67,46 @@ export const seedUsers = async (
       console.log(`    ✓ Auth作成: ${user.email} (UID: ${uid})`);
 
       // Step 3: 画像をGCSにアップロード
-      const thumbnailUrl = await uploadUserThumbnail(ctx, uid, user.thumbnail_url);
+      const thumbnailUrl = await uploadUserThumbnail(
+        ctx,
+        uid,
+        user.thumbnail_url,
+      );
 
       if (thumbnailUrl === null) {
-        console.log(`    ⚠ 画像アップロード失敗のため、Authユーザーを削除してスキップします`);
+        console.log(
+          `    ⚠ 画像アップロード失敗のため、Authユーザーを削除してスキップします`,
+        );
         await ctx.auth.deleteUser(uid);
         continue;
       }
 
       // Step 4: Firestoreにユーザードキュメント作成
-      await ctx.db.collection(getCollectionName("users")).doc(uid).set({
-        id: uid,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        thumbnail_url: thumbnailUrl,
-        language: user.language,
-        status: user.status,
-        last_logged_in: admin.firestore.Timestamp.fromDate(new Date()),
-        created_at: admin.firestore.FieldValue.serverTimestamp(),
-        updated_at: admin.firestore.FieldValue.serverTimestamp(),
-      });
+      await ctx.db
+        .collection(getCollectionName("users"))
+        .doc(uid)
+        .set({
+          id: uid,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          thumbnail_url: thumbnailUrl,
+          language: user.language,
+          status: user.status,
+          last_logged_in: admin.firestore.Timestamp.fromDate(new Date()),
+          created_at: admin.firestore.FieldValue.serverTimestamp(),
+          updated_at: admin.firestore.FieldValue.serverTimestamp(),
+        });
 
       ids.push(uid);
       idMap[user.id] = uid;
-      console.log(`    ✓ Firestore作成: ${user.first_name} ${user.last_name} (ID: ${uid})`);
+      console.log(
+        `    ✓ Firestore作成: ${user.first_name} ${user.last_name} (ID: ${uid})`,
+      );
     } catch (error: unknown) {
-      console.error(`    ✗ エラー:`, error instanceof Error ? error.message : error);
+      console.error(
+        `    ✗ エラー:`,
+        error instanceof Error ? error.message : error,
+      );
     }
   }
 
@@ -99,7 +117,9 @@ export const seedUsers = async (
  * 瞑想コンテンツをシードする（既存チェック付き）
  * ドキュメントIDを固定して作成
  */
-export const seedMeditationContents = async (ctx: SeedContext): Promise<string[]> => {
+export const seedMeditationContents = async (
+  ctx: SeedContext,
+): Promise<string[]> => {
   console.log("\n🧘 瞑想コンテンツを作成中...");
 
   const ids: string[] = [];
@@ -114,7 +134,9 @@ export const seedMeditationContents = async (ctx: SeedContext): Promise<string[]
     }
 
     // 既存チェック（ドキュメントIDで確認）
-    const docRef = ctx.db.collection(getCollectionName("meditation_contents")).doc(docId);
+    const docRef = ctx.db
+      .collection(getCollectionName("meditation_contents"))
+      .doc(docId);
     const doc = await docRef.get();
 
     if (doc.exists) {
@@ -154,7 +176,9 @@ export const seedMedals = async (ctx: SeedContext): Promise<string[]> => {
     }
 
     // 既存チェック（ドキュメントIDで確認）
-    const docRef = ctx.db.collection(getCollectionName("meditation_medals")).doc(docId);
+    const docRef = ctx.db
+      .collection(getCollectionName("meditation_medals"))
+      .doc(docId);
     const doc = await docRef.get();
 
     if (doc.exists) {
@@ -180,7 +204,7 @@ export const seedMedals = async (ctx: SeedContext): Promise<string[]> => {
  */
 export const seedMeditationHistories = async (
   ctx: SeedContext,
-  userIdMap: Record<string, string>
+  userIdMap: Record<string, string>,
 ): Promise<string[]> => {
   console.log("\n📊 瞑想履歴を作成中...");
 
@@ -206,7 +230,7 @@ export const seedMeditationHistories = async (
       ctx,
       actualUserId,
       history.meditation_id,
-      history.date
+      history.date,
     );
     if (existingId) {
       ids.push(existingId);
@@ -236,7 +260,7 @@ export const seedMeditationHistories = async (
 export const seedUserMedals = async (
   ctx: SeedContext,
   userId: string | undefined,
-  medalIds: string[]
+  medalIds: string[],
 ): Promise<string[]> => {
   console.log("\n🎖️ ユーザーメダルを作成中...");
 
@@ -264,13 +288,15 @@ export const seedUserMedals = async (
       continue;
     }
 
-    const docRef = await ctx.db.collection(getCollectionName("user_medals")).add({
-      user_id: userId,
-      medal_id: medalId,
-      earned_at: admin.firestore.Timestamp.fromDate(new Date()),
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
-      updated_at: admin.firestore.FieldValue.serverTimestamp(),
-    });
+    const docRef = await ctx.db
+      .collection(getCollectionName("user_medals"))
+      .add({
+        user_id: userId,
+        medal_id: medalId,
+        earned_at: admin.firestore.Timestamp.fromDate(new Date()),
+        created_at: admin.firestore.FieldValue.serverTimestamp(),
+        updated_at: admin.firestore.FieldValue.serverTimestamp(),
+      });
     ids.push(docRef.id);
     console.log(`  ✓ 作成: メダル付与 (ID: ${docRef.id})`);
   }

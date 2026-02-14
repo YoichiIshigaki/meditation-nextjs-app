@@ -1,7 +1,10 @@
 "use client";
 
 import React from "react";
-import { ContentCard, ContentCardData } from "@/components/molecules/ContentCard";
+import {
+  ContentCard,
+  ContentCardData,
+} from "@/components/molecules/ContentCard";
 import { cn } from "@/styles/classMerge";
 
 interface ContentGridProps {
@@ -38,7 +41,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
     <div
       className={cn(
         "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
-        className
+        className,
       )}
     >
       {contents.map((content) => (

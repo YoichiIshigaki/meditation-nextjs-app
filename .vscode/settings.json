@@ -6,7 +6,7 @@
   "i18n-ally.namespace": true,
   "i18n-ally.sortKeys": true,
   "i18n-ally.displayLanguage": "ja",
-  "cSpell.words": ["MediMate","medimate"],
+  "cSpell.words": ["MediMate", "medimate"],
   "[typescript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },

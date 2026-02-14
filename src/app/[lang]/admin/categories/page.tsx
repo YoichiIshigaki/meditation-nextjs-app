@@ -126,7 +126,9 @@ export default function AdminCategoriesPage() {
     <AdminTemplate>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">{t("admin:categoryList")}</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            {t("admin:categoryList")}
+          </h1>
           {!showForm && !editingCategory && (
             <button
               onClick={() => setShowForm(true)}
@@ -142,7 +144,9 @@ export default function AdminCategoriesPage() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">
-                {editingCategory ? t("admin:editCategory") : t("admin:createCategory")}
+                {editingCategory
+                  ? t("admin:editCategory")
+                  : t("admin:createCategory")}
               </h2>
               <button
                 onClick={() => {

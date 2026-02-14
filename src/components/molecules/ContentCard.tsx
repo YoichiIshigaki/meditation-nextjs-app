@@ -39,7 +39,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
       className={cn(
         "group relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100",
         "hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer",
-        className
+        className,
       )}
       onClick={onClick}
     >
@@ -80,7 +80,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
               "w-4 h-4 transition-colors",
               content.isFavorite
                 ? "fill-red-500 text-red-500"
-                : "text-gray-600 hover:text-red-500"
+                : "text-gray-600 hover:text-red-500",
             )}
           />
         </button>
@@ -88,7 +88,9 @@ export const ContentCard: React.FC<ContentCardProps> = ({
         {/* 新着/人気バッジ */}
         {(content.isNew || content.isPopular) && (
           <div className="absolute top-3 left-3">
-            {content.isNew && <ContentBadge label={newBadgeLabel} variant="new" />}
+            {content.isNew && (
+              <ContentBadge label={newBadgeLabel} variant="new" />
+            )}
             {content.isPopular && !content.isNew && (
               <ContentBadge label={popularBadgeLabel} variant="popular" />
             )}
@@ -98,11 +100,17 @@ export const ContentCard: React.FC<ContentCardProps> = ({
 
       {/* コンテンツ情報 */}
       <div className="p-4">
-        <ContentBadge label={content.category} variant="category" className="mb-2" />
+        <ContentBadge
+          label={content.category}
+          variant="category"
+          className="mb-2"
+        />
         <h3 className="font-semibold text-gray-900 mb-1 line-clamp-1">
           {content.title}
         </h3>
-        <p className="text-sm text-gray-500 line-clamp-2">{content.description}</p>
+        <p className="text-sm text-gray-500 line-clamp-2">
+          {content.description}
+        </p>
       </div>
     </div>
   );

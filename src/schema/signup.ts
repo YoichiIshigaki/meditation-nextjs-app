@@ -29,11 +29,15 @@ export const createSignUpFormSchema = (t: TranslationFunction) =>
         .min(1, t("signup:validation_last_name_required"))
         .max(20, t("signup:validation_last_name_max")),
       language: z.string(),
-      confirm_password: z.string().min(1, t("signup:validation_confirm_password_required")),
+      confirm_password: z
+        .string()
+        .min(1, t("signup:validation_confirm_password_required")),
     })
     .refine((data) => data.password === data.confirm_password, {
       message: t("signup:validation_password_mismatch"),
       path: ["confirm_password"],
     });
 
-export type SignUpFormSchema = z.infer<ReturnType<typeof createSignUpFormSchema>>;
+export type SignUpFormSchema = z.infer<
+  ReturnType<typeof createSignUpFormSchema>
+>;

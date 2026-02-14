@@ -20,7 +20,7 @@ type MiddlewareFunction = (
 type CheckMiddlewareFunction = (
   request: NextRequest,
   response: NextResponse,
-) => ((...middlewares: MiddlewareFunction[]) => Promise<NextResponse<unknown>>)
+) => (...middlewares: MiddlewareFunction[]) => Promise<NextResponse<unknown>>;
 
 const checkMiddleware: CheckMiddlewareFunction = (
   request: NextRequest,
@@ -37,12 +37,9 @@ const checkMiddleware: CheckMiddlewareFunction = (
 
 export const middleware = async (request: NextRequest) => {
   const response = NextResponse.next();
-  return await checkMiddleware(
-    request,
-    response,
-  )(
+  return await checkMiddleware(request, response)(
     i18nMiddleware,
     loggerMiddleware,
-    authMiddleware
+    authMiddleware,
   );
 };

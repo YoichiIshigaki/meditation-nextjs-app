@@ -40,16 +40,15 @@ export const main = async <Args extends unknown[], Return>(
   }
 };
 
-
 export const getUpdateParam = <T extends Record<string, unknown>>(param: T) => {
   const updateData = Object.entries(param).reduce(
     (acc, [key, value]) =>
       value !== undefined
         ? {
-          ...acc,
-          [key as keyof T]:
-            value instanceof Date ? Timestamp.fromDate(value) : value,
-        }
+            ...acc,
+            [key as keyof T]:
+              value instanceof Date ? Timestamp.fromDate(value) : value,
+          }
         : acc,
     {},
   );

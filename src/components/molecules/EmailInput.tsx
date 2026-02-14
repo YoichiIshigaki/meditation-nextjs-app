@@ -20,7 +20,7 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
         <FormError message={error} />
       </div>
     );
-  }
+  },
 );
 
 EmailInput.displayName = "EmailInput";

@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     if (!validation.success) {
       return NextResponse.json(
         { success: false, error: validation.error.errors[0].message },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -21,12 +21,12 @@ export async function POST(request: NextRequest) {
     const userAuth = await createUserWithEmailAndPassword(
       adminAuth,
       body.email,
-      body.password
-    )
+      body.password,
+    );
     if (!userAuth) {
       return NextResponse.json(
         { success: false, error: "Failed to create user" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
           error: "Email already in use",
           code: "auth/email-already-in-use",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
           error: "Password is too weak",
           code: "auth/weak-password",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -79,13 +79,13 @@ export async function POST(request: NextRequest) {
           error: "Invalid email address",
           code: "auth/invalid-email",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { success: false, error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

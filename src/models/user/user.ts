@@ -3,4 +3,5 @@ import { getAdminFirestore } from "@/lib/firebaseAdmin";
 
 export const USER_COLLECTION_NAME = `${FIRESTORE_COLLECTION_NAME_PREFIX}_users`;
 
-export const userCollection = async () => (await getAdminFirestore()).collection(USER_COLLECTION_NAME);
+export const userCollection = async () =>
+  (await getAdminFirestore()).collection(USER_COLLECTION_NAME);

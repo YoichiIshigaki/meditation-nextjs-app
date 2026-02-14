@@ -1,7 +1,6 @@
 import { userCollection, type UserDoc } from "./";
 import { main, getUpdateParam } from "@/models/common/util";
 
-
 export type UserUpdateParam = Partial<
   Omit<UserDoc, "id" | "created_at" | "updated_at">
 >;
@@ -18,7 +17,6 @@ export const update = async (
 
   // ドキュメントを更新
   await collectionRef.doc(id).update(updateData);
-
 };
 
 /*

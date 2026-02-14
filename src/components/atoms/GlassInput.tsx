@@ -23,7 +23,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             "transition-all duration-200",
             icon ? "pl-12" : "pl-4",
             rightElement ? "pr-12" : "pr-4",
-            className
+            className,
           )}
           {...props}
         />
@@ -34,7 +34,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 GlassInput.displayName = "GlassInput";

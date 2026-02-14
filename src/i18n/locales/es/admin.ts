@@ -60,7 +60,8 @@ const admin = {
   validation_title_required: "El título es obligatorio",
   validation_title_max: "El título debe tener 200 caracteres o menos",
   validation_description_required: "La descripción es obligatoria",
-  validation_description_max: "La descripción debe tener 2000 caracteres o menos",
+  validation_description_max:
+    "La descripción debe tener 2000 caracteres o menos",
   validation_url_invalid: "Por favor ingrese una URL válida",
   validation_duration_min: "La duración debe ser 0 o mayor",
   validation_language_required: "Por favor seleccione un idioma",
@@ -69,8 +70,10 @@ const admin = {
   validation_name_max: "El nombre debe tener 100 caracteres o menos",
   validation_slug_required: "El slug es obligatorio",
   validation_slug_max: "El slug debe tener 50 caracteres o menos",
-  validation_slug_format: "El slug solo puede contener letras minúsculas, números y guiones",
-  validation_description_max_category: "La descripción debe tener 500 caracteres o menos",
+  validation_slug_format:
+    "El slug solo puede contener letras minúsculas, números y guiones",
+  validation_description_max_category:
+    "La descripción debe tener 500 caracteres o menos",
   validation_order_min: "El orden debe ser 0 o mayor",
 } as const;
 

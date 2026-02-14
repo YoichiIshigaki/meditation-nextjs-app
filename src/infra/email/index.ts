@@ -26,7 +26,10 @@ export const sendEmail = async ({ to, subject, html }: SendEmailParams) => {
   return data;
 };
 
-export const sendPasswordResetEmail = async (email: string, resetLink: string) => {
+export const sendPasswordResetEmail = async (
+  email: string,
+  resetLink: string,
+) => {
   const { subject, html } = passwordResetTemplate({ resetLink });
   return sendEmail({ to: email, subject, html });
 };

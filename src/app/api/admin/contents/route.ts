@@ -4,7 +4,11 @@ import { meditationContentSchema } from "@/schema/meditationContent";
 import { FieldValue } from "firebase-admin/firestore";
 import { getAdminFirestore } from "@/lib/firebaseAdmin";
 import { FIRESTORE_COLLECTION_NAME_PREFIX } from "@/lib/firebase";
-import { toMeditationContent, type MeditationContentDoc, type MeditationContent } from "@/models/meditation_content";
+import {
+  toMeditationContent,
+  type MeditationContentDoc,
+  type MeditationContent,
+} from "@/models/meditation_content";
 
 const COLLECTION_NAME = `${FIRESTORE_COLLECTION_NAME_PREFIX}_meditation_contents`;
 
@@ -15,10 +19,13 @@ export async function GET(request: NextRequest) {
       const { searchParams } = new URL(request.url);
       const limitCount = parseInt(searchParams.get("limit") || "50", 10);
       const orderByField = searchParams.get("orderBy") || "created_at";
-      const orderDir = (searchParams.get("orderDir") || "desc") as "asc" | "desc";
+      const orderDir = (searchParams.get("orderDir") || "desc") as
+        | "asc"
+        | "desc";
 
       const firestore = await getAdminFirestore();
-      let query: FirebaseFirestore.Query = firestore.collection(COLLECTION_NAME);
+      let query: FirebaseFirestore.Query =
+        firestore.collection(COLLECTION_NAME);
 
       query = query.orderBy(orderByField, orderDir);
       query = query.limit(limitCount);
@@ -28,7 +35,12 @@ export async function GET(request: NextRequest) {
       const contents: MeditationContent[] = [];
       querySnapshot.forEach((docSnap) => {
         if (docSnap.exists) {
-          contents.push(toMeditationContent(docSnap.id, docSnap.data() as MeditationContentDoc));
+          contents.push(
+            toMeditationContent(
+              docSnap.id,
+              docSnap.data() as MeditationContentDoc,
+            ),
+          );
         }
       });
 
@@ -37,7 +49,7 @@ export async function GET(request: NextRequest) {
       console.error("Error fetching contents:", error);
       return NextResponse.json(
         { success: false, error: "Failed to fetch contents" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
@@ -52,8 +64,12 @@ export async function POST(request: NextRequest) {
 
       if (!validationResult.success) {
         return NextResponse.json(
-          { success: false, error: "Validation failed", details: validationResult.error.errors },
-          { status: 400 }
+          {
+            success: false,
+            error: "Validation failed",
+            details: validationResult.error.errors,
+          },
+          { status: 400 },
         );
       }
 
@@ -70,13 +86,13 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json(
         { success: true, data: { id: docRef.id } },
-        { status: 201 }
+        { status: 201 },
       );
     } catch (error) {
       console.error("Error creating content:", error);
       return NextResponse.json(
         { success: false, error: "Failed to create content" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });

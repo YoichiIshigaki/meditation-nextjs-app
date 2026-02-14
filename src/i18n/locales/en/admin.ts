@@ -69,8 +69,10 @@ const admin = {
   validation_name_max: "Name must be 100 characters or less",
   validation_slug_required: "Slug is required",
   validation_slug_max: "Slug must be 50 characters or less",
-  validation_slug_format: "Slug can only contain lowercase letters, numbers, and hyphens",
-  validation_description_max_category: "Description must be 500 characters or less",
+  validation_slug_format:
+    "Slug can only contain lowercase letters, numbers, and hyphens",
+  validation_description_max_category:
+    "Description must be 500 characters or less",
   validation_order_min: "Order must be 0 or greater",
 } as const;
 

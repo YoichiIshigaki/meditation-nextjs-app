@@ -26,7 +26,7 @@ export const ContentBadge: React.FC<ContentBadgeProps> = ({
       className={cn(
         "px-2 py-1 rounded-md text-xs font-medium",
         variantStyles[variant],
-        className
+        className,
       )}
     >
       {label}

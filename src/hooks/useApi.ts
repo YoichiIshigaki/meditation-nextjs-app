@@ -60,9 +60,11 @@ export const usePostApi = <
 >(
   path: string,
 ) => {
-  const { isPending, error, data, isSuccess, mutate, mutateAsync } = useMutation({
-    mutationFn: (body: T) => apiInstance.post<R>(path, body).then((res) => res.data),
-  });
+  const { isPending, error, data, isSuccess, mutate, mutateAsync } =
+    useMutation({
+      mutationFn: (body: T) =>
+        apiInstance.post<R>(path, body).then((res) => res.data),
+    });
   return { isPending, error, data, isSuccess, mutate, mutateAsync };
 };
 

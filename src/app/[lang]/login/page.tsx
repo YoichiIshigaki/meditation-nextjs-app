@@ -6,18 +6,9 @@ import { useForm, Controller } from "react-hook-form";
 import { useLanguage, useTranslation } from "@/i18n/client";
 import { useToast } from "@/hooks/useToast";
 import { ToastContainer } from "@/components/Toast";
-import {
-  AuthBackground,
-  AuthCard,
-} from "@/components/organisms";
-import {
-  EmailInput,
-  PasswordInput,
-} from "@/components/molecules";
-import {
-  GlassButton,
-  Divider,
-} from "@/components/atoms";
+import { AuthBackground, AuthCard } from "@/components/organisms";
+import { EmailInput, PasswordInput } from "@/components/molecules";
+import { GlassButton, Divider } from "@/components/atoms";
 
 type FormData = {
   email: string;
@@ -30,7 +21,12 @@ export default function LoginPage() {
   const { language } = useLanguage();
   const { t } = useTranslation(language);
   const [isLoading, setIsLoading] = useState(false);
-  const { toasts, removeToast, error: showError, success: showSuccess } = useToast();
+  const {
+    toasts,
+    removeToast,
+    error: showError,
+    success: showSuccess,
+  } = useToast();
 
   // 新規登録完了後のメッセージ表示
   useEffect(() => {

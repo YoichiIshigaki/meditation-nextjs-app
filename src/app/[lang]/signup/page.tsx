@@ -12,7 +12,11 @@ import { ToastContainer } from "@/components/Toast";
 import { AuthBackground, AuthCard } from "@/components/organisms";
 import { EmailInput, PasswordInput, TextInput } from "@/components/molecules";
 import { GlassButton, Divider } from "@/components/atoms";
-import { createSignUpFormSchema, type SignUpFormSchema, type SignUpSchema } from "@/schema/signup";
+import {
+  createSignUpFormSchema,
+  type SignUpFormSchema,
+  type SignUpSchema,
+} from "@/schema/signup";
 
 type SignUpResponse = {
   success: boolean;
@@ -25,11 +29,17 @@ export default function SignUpPage() {
   const router = useRouter();
   const { language } = useLanguage();
   const { t } = useTranslation(language);
-  const { toasts, removeToast, success: showSuccess, error: showError } = useToast();
+  const {
+    toasts,
+    removeToast,
+    success: showSuccess,
+    error: showError,
+  } = useToast();
 
-  const { mutateAsync: signUp, isPending: isLoading } = usePostApi<SignUpSchema, SignUpResponse>(
-    "auth/signup"
-  );
+  const { mutateAsync: signUp, isPending: isLoading } = usePostApi<
+    SignUpSchema,
+    SignUpResponse
+  >("auth/signup");
 
   const signUpFormSchema = useMemo(() => createSignUpFormSchema(t), [t]);
 

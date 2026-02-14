@@ -9,7 +9,8 @@ const reset_password = {
   go_to_login: "Go to Login",
   error: "Failed to reset password. Please try again.",
   error_invalid_link: "Invalid Link",
-  error_invalid_link_description: "This password reset link is invalid or has expired.",
+  error_invalid_link_description:
+    "This password reset link is invalid or has expired.",
   request_new_link: "Request New Link",
   // Validation messages
   validation_password_min: "Password must be at least 6 characters",

@@ -11,7 +11,11 @@ type AdminNavItemProps = {
   label: string;
 };
 
-export const AdminNavItem = ({ href, icon: Icon, label }: AdminNavItemProps) => {
+export const AdminNavItem = ({
+  href,
+  icon: Icon,
+  label,
+}: AdminNavItemProps) => {
   const pathname = usePathname();
   const isActive = pathname.includes(href);
 
@@ -22,7 +26,7 @@ export const AdminNavItem = ({ href, icon: Icon, label }: AdminNavItemProps) => 
         "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
         isActive
           ? "bg-indigo-100 text-indigo-700"
-          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
       )}
     >
       <Icon className="w-5 h-5" />

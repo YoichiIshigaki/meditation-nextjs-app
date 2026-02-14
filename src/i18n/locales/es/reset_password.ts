@@ -9,7 +9,8 @@ const reset_password = {
   go_to_login: "Ir a Iniciar Sesión",
   error: "Error al restablecer la contraseña. Por favor intenta de nuevo.",
   error_invalid_link: "Enlace Inválido",
-  error_invalid_link_description: "Este enlace de restablecimiento de contraseña es inválido o ha expirado.",
+  error_invalid_link_description:
+    "Este enlace de restablecimiento de contraseña es inválido o ha expirado.",
   request_new_link: "Solicitar Nuevo Enlace",
   // Mensajes de validación
   validation_password_min: "La contraseña debe tener al menos 6 caracteres",

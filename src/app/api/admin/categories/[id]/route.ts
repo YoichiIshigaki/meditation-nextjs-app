@@ -3,7 +3,6 @@ import { get, update, remove } from "@/models/category";
 import { categoryUpdateSchema } from "@/schema/category";
 import { checkAdminSession } from "@/lib/adminAuth";
 
-
 type Params = { params: Promise<{ id: string }> };
 
 // GET: カテゴリー詳細取得
@@ -18,11 +17,11 @@ export async function GET(request: NextRequest, { params }: Params) {
       console.error("Error fetching category:", error);
       return NextResponse.json(
         { success: false, error: "Category not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
   });
-};
+}
 
 // PUT: カテゴリー更新
 export async function PUT(request: NextRequest, { params }: Params) {
@@ -34,8 +33,12 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
       if (!validationResult.success) {
         return NextResponse.json(
-          { success: false, error: "Validation failed", details: validationResult.error.errors },
-          { status: 400 }
+          {
+            success: false,
+            error: "Validation failed",
+            details: validationResult.error.errors,
+          },
+          { status: 400 },
         );
       }
 
@@ -46,11 +49,11 @@ export async function PUT(request: NextRequest, { params }: Params) {
       console.error("Error updating category:", error);
       return NextResponse.json(
         { success: false, error: "Failed to update category" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
-};
+}
 
 // DELETE: カテゴリー削除
 export async function DELETE(request: NextRequest, { params }: Params) {
@@ -64,8 +67,8 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       console.error("Error deleting category:", error);
       return NextResponse.json(
         { success: false, error: "Failed to delete category" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   });
-};
+}

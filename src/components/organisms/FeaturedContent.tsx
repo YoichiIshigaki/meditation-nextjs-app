@@ -25,7 +25,7 @@ export const FeaturedContent: React.FC<FeaturedContentProps> = ({
       className={cn(
         "relative rounded-2xl overflow-hidden cursor-pointer group",
         "shadow-lg hover:shadow-xl transition-shadow duration-300",
-        className
+        className,
       )}
       onClick={onClick}
     >

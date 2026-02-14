@@ -1,4 +1,9 @@
-import { categoryCollection, toCategory, type Category, type CategoryDoc } from "./";
+import {
+  categoryCollection,
+  toCategory,
+  type Category,
+  type CategoryDoc,
+} from "./";
 import { main } from "@/models/common/util";
 
 export const get = async (id: string): Promise<Category> => {
@@ -6,7 +11,10 @@ export const get = async (id: string): Promise<Category> => {
   const categoryDocSnap = await collectionRef.doc(id).get();
 
   if (categoryDocSnap.exists) {
-    return toCategory(categoryDocSnap.id, categoryDocSnap.data() as CategoryDoc);
+    return toCategory(
+      categoryDocSnap.id,
+      categoryDocSnap.data() as CategoryDoc,
+    );
   }
   console.error(`Category with id ${id} not found.`);
   throw new Error(`Category with id ${id} not found.`);
@@ -17,7 +25,10 @@ export const getNotThrow = async (id: string): Promise<Category | null> => {
   const categoryDocSnap = await collectionRef.doc(id).get();
 
   if (categoryDocSnap.exists) {
-    return toCategory(categoryDocSnap.id, categoryDocSnap.data() as CategoryDoc);
+    return toCategory(
+      categoryDocSnap.id,
+      categoryDocSnap.data() as CategoryDoc,
+    );
   }
   console.error(`Category with id ${id} not found.`);
   return null;

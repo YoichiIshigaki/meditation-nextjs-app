@@ -64,7 +64,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           "flex items-center justify-center w-10 h-10 rounded-lg transition-all",
           currentPage === 1
             ? "text-gray-300 cursor-not-allowed"
-            : "text-gray-600 hover:bg-gray-100"
+            : "text-gray-600 hover:bg-gray-100",
         )}
       >
         <ChevronLeft className="w-5 h-5" />
@@ -84,7 +84,7 @@ export const Pagination: React.FC<PaginationProps> = ({
                 "w-10 h-10 rounded-lg font-medium transition-all",
                 currentPage === page
                   ? "bg-indigo-600 text-white shadow-md"
-                  : "text-gray-600 hover:bg-gray-100"
+                  : "text-gray-600 hover:bg-gray-100",
               )}
             >
               {page}
@@ -101,7 +101,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           "flex items-center justify-center w-10 h-10 rounded-lg transition-all",
           currentPage === totalPages
             ? "text-gray-300 cursor-not-allowed"
-            : "text-gray-600 hover:bg-gray-100"
+            : "text-gray-600 hover:bg-gray-100",
         )}
       >
         <ChevronRight className="w-5 h-5" />

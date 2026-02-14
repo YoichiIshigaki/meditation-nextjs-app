@@ -40,8 +40,7 @@ export const signInWithEmail = async (
       id: userCredential.user.uid,
       name: userName,
       email: userCredential.user.email,
-      image:
-        userData?.thumbnail_url ?? userCredential.user.photoURL ?? "",
+      image: userData?.thumbnail_url ?? userCredential.user.photoURL ?? "",
       role: userData?.role ?? "user",
     };
   } catch (error) {
@@ -51,7 +50,10 @@ export const signInWithEmail = async (
   }
 };
 
-type ForgetPasswordResult = { success: true } | { success: true; link: string } | { success: false; error: unknown };
+type ForgetPasswordResult =
+  | { success: true }
+  | { success: true; link: string }
+  | { success: false; error: unknown };
 
 export const forgetPassword = async (
   auth: Auth | AdminAuth,
@@ -115,4 +117,4 @@ export const createUserWithEmailAndPassword = async (
     console.dir(error, { depth: null });
     return null;
   }
-};  
+};

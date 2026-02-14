@@ -27,7 +27,10 @@ export const sendEmail = async ({ to, subject, html }: SendEmailParams) => {
   return data;
 };
 
-export const sendPasswordResetEmail = async (email: string, resetLink: string) => {
+export const sendPasswordResetEmail = async (
+  email: string,
+  resetLink: string,
+) => {
   const subject = "パスワードリセットのご案内";
   const html = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">

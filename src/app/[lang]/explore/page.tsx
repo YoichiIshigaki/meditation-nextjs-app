@@ -261,7 +261,10 @@ export default function ExplorePage(_props: PageProps) {
 
   // 件数表示の計算
   const startItem = (currentPage - 1) * ITEMS_PER_PAGE + 1;
-  const endItem = Math.min(currentPage * ITEMS_PER_PAGE, filteredContents.length);
+  const endItem = Math.min(
+    currentPage * ITEMS_PER_PAGE,
+    filteredContents.length,
+  );
 
   return (
     <ExploreTemplate>

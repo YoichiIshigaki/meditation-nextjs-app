@@ -64,7 +64,7 @@ export const initAdmin = async (): Promise<{
  */
 export const getExistingAuthUser = async (
   ctx: SeedContext,
-  email: string
+  email: string,
 ): Promise<admin.auth.UserRecord | null> => {
   try {
     return await ctx.auth.getUserByEmail(email);
@@ -79,7 +79,7 @@ export const getExistingAuthUser = async (
 export const findExistingUserMedal = async (
   ctx: SeedContext,
   userId: string,
-  medalId: string
+  medalId: string,
 ): Promise<string | null> => {
   const snapshot = await ctx.db
     .collection(getCollectionName("user_medals"))
@@ -102,7 +102,7 @@ export const findExistingHistory = async (
   ctx: SeedContext,
   userId: string,
   meditationId: string,
-  date: string
+  date: string,
 ): Promise<string | null> => {
   const snapshot = await ctx.db
     .collection(getCollectionName("meditation_history"))
@@ -127,7 +127,7 @@ export const downloadImage = async (url: string): Promise<Buffer> => {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(
-      `画像のダウンロードに失敗: ${response.status} ${response.statusText}`
+      `画像のダウンロードに失敗: ${response.status} ${response.statusText}`,
     );
   }
   const arrayBuffer = await response.arrayBuffer();
@@ -138,7 +138,7 @@ export const uploadImageToStorage = async (
   ctx: SeedContext,
   imageBuffer: Buffer,
   destinationPath: string,
-  contentType: string = "image/jpeg"
+  contentType: string = "image/jpeg",
 ): Promise<string> => {
   const bucket = ctx.storage.bucket();
   const file = bucket.file(destinationPath);
@@ -159,7 +159,7 @@ export const uploadImageToStorage = async (
 export const uploadUserThumbnail = async (
   ctx: SeedContext,
   userId: string,
-  imageUrl: string
+  imageUrl: string,
 ): Promise<string | null> => {
   try {
     console.log(`    📷 画像をダウンロード中: ${imageUrl}`);
@@ -171,7 +171,7 @@ export const uploadUserThumbnail = async (
     const publicUrl = await uploadImageToStorage(
       ctx,
       imageBuffer,
-      destinationPath
+      destinationPath,
     );
 
     console.log(`    ✓ アップロード成功: ${publicUrl}`);
@@ -179,7 +179,7 @@ export const uploadUserThumbnail = async (
   } catch (error) {
     console.error(
       `    ✗ 画像アップロード失敗:`,
-      error instanceof Error ? error.message : error
+      error instanceof Error ? error.message : error,
     );
     return null;
   }

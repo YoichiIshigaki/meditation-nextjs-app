@@ -31,9 +31,7 @@ export default async function AdminDashboardPage({ params }: Props) {
                 <h2 className="text-lg font-semibold text-gray-800">
                   {t("admin:contents")}
                 </h2>
-                <p className="text-gray-500">
-                  {t("admin:contentList")}
-                </p>
+                <p className="text-gray-500">{t("admin:contentList")}</p>
               </div>
             </div>
           </Link>
@@ -50,9 +48,7 @@ export default async function AdminDashboardPage({ params }: Props) {
                 <h2 className="text-lg font-semibold text-gray-800">
                   {t("admin:categories")}
                 </h2>
-                <p className="text-gray-500">
-                  {t("admin:categoryList")}
-                </p>
+                <p className="text-gray-500">{t("admin:categoryList")}</p>
               </div>
             </div>
           </Link>
