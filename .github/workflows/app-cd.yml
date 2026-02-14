@@ -1,0 +1,17 @@
+name: CD MediMate App
+on:
+  push:
+    branches:
+      - main
+      - development
+      - staging
+      - production
+
+
+jobs:
+  build:
+    name: Greeting
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "implement CD"
+      - run: echo "start deploy"
