@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import config from "@/config";
 import { signInWithEmail } from "@/lib/auth";
 import { getAuth } from "@/lib/firebase";
+import { getNotThrow } from "@/models/user/get"
 
 export const authOptions = {
   providers: [
@@ -47,7 +48,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -55,9 +56,19 @@ export const authOptions = {
         token.image = user.image;
         token.role = user.role;
       }
+      // セッションの更新
+      if (trigger === "update") {
+        const user = await getNotThrow(token.id as string);
+        if (user) {
+          token.name = `${user.first_name} ${user.last_name}`.trim();
+          token.image = user.thumbnail_url;
+          token.role = user.role;
+        }
+      }
       return token;
     },
     async session({ session, token }) {
+      // https://next-auth.js.org/getting-started/client#updating-the-session
       if (token) {
         session.user.id = token.id as string;
         session.user.name = token.name as string;
