@@ -14,6 +14,7 @@ export const namespaces = [
   "reset_password",
   "explore",
   "admin",
+  "error",
 ] as const;
 
 export type Language = (typeof availableLanguages)[number];

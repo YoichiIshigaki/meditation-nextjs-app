@@ -6,6 +6,7 @@ import signup from "./signup";
 import forgot_password from "./forgot_password";
 import reset_password from "./reset_password";
 import admin from "./admin";
+import error from "./error";
 
 const translation = {
   app_name: "medimate app",
@@ -17,6 +18,7 @@ const translation = {
   forgot_password,
   reset_password,
   admin,
+  error,
 } as const;
 
 export default translation;
