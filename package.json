@@ -11,6 +11,7 @@
     "start:production": "NODE_ENV=production next start",
     "start:staging": "NODE_ENV=production CUSTOM_ENV=staging next start",
     "lint": "next lint",
+    "hint": "CHROME_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' hint http://localhost:3000",
     "test": "jest",
     "prettier": "prettier -w ./",
     "test:watch": "jest --watch",
@@ -61,6 +62,7 @@
     "zod": "3.25.42"
   },
   "devDependencies": {
+    "@hint/connector-puppeteer": "^2.5.25",
     "@types/jest": "30.0.0",
     "@types/negotiator": "0.6.3",
     "@types/node": "20",
@@ -71,6 +73,7 @@
     "eslint": "8",
     "eslint-config-next": "14.2.15",
     "firebase-tools": "14.26.0",
+    "hint": "^7.1.13",
     "husky": "^9.1.7",
     "jest": "30.2.0",
     "postcss": "8",

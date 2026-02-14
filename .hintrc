@@ -1,0 +1,16 @@
+{
+  "connector": {
+    "name": "puppeteer"
+  },
+  "extends": [
+    "web-recommended"
+  ],
+  "hints": {
+    "axe/name-role-value": [
+      "default",
+      {
+        "button-name": "off"
+      }
+    ]
+  }
+}
