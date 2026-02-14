@@ -3,9 +3,9 @@ name: CD MediMate App
 on:
   push:
     branches:
-      - main
       - staging
       - development
+      - production
 
 env:
   # GCP設定 (GitHub Secretsで管理)
