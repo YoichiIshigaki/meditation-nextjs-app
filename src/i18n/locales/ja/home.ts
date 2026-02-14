@@ -9,6 +9,7 @@ const home = {
     honorific_title: "さん",
     guest_honorific: "さん",
     guest: "ゲスト",
+    logout: "ログアウト",
   },
   mood_check: "ムードチェック",
   main_content: {

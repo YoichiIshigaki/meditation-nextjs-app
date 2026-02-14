@@ -1,7 +1,8 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import { useLanguage, useTranslation } from "@/i18n/client";
+import { useLogout } from "@/hooks/useLogout";
 
 interface HeaderProps {
   toggleSidebar?: () => void;
@@ -11,6 +12,7 @@ interface HeaderProps {
 export default function Header({ toggleSidebar, user }: HeaderProps) {
   const { language } = useLanguage();
   const { t } = useTranslation(language);
+  const { logout } = useLogout();
 
   const greeting = user ? t("home:header.greeting") : t("home:header.guest_greeting");
   const honorificTitle = user ? t("home:header.honorific_title") : t("home:header.guest_honorific");
@@ -50,7 +52,7 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
           />
         ) : (
           <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">
-            {userName.slice(0, 1).toUpperCase() || "G"}
+            {userName.slice(0, 1).toUpperCase()}
           </div>
         )}
         <div>
@@ -60,6 +62,16 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
           </div>
         </div>
       </div>
+
+      {user && (
+        <button
+          onClick={() => logout()}
+          className="flex items-center gap-2 px-3 py-2 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <LogOut className="w-4 h-4" />
+          {t("home:header.logout")}
+        </button>
+      )}
     </div>
   );
 }
