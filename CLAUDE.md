@@ -1,9 +1,11 @@
 # プロジェクトコンテキスト
 
 ## 概要
+
 瞑想アプリ (medimate app) - Next.js 14 App Routerを使用したWebアプリケーション
 
 ## 技術スタック
+
 - **フレームワーク**: Next.js 14 (App Router)
 - **言語**: TypeScript
 - **スタイリング**: Tailwind CSS
@@ -60,14 +62,15 @@ src/
 ## コーディング規約
 
 ### コンポーネント設計（Atomicデザイン）
+
 コンポーネントはAtomicデザインに従って分類・配置する。
 
-| 分類 | 説明 | 例 |
-|------|------|-----|
-| **Atoms** | 最小単位のUI要素。それ以上分解できない | Button, Input, Icon, Label, Badge |
-| **Molecules** | Atomsを組み合わせた機能単位 | FormField (Label + Input), SearchBar, MenuItem |
-| **Organisms** | Moleculesを組み合わせた複雑なUI | Header, LoginForm, Card, Sidebar |
-| **Templates** | ページのレイアウト構造 | DashboardLayout, AuthLayout |
+| 分類          | 説明                                   | 例                                             |
+| ------------- | -------------------------------------- | ---------------------------------------------- |
+| **Atoms**     | 最小単位のUI要素。それ以上分解できない | Button, Input, Icon, Label, Badge              |
+| **Molecules** | Atomsを組み合わせた機能単位            | FormField (Label + Input), SearchBar, MenuItem |
+| **Organisms** | Moleculesを組み合わせた複雑なUI        | Header, LoginForm, Card, Sidebar               |
+| **Templates** | ページのレイアウト構造                 | DashboardLayout, AuthLayout                    |
 
 ```
 src/components/
@@ -89,12 +92,14 @@ src/components/
 ```
 
 ### ファイル命名規則
+
 - コンポーネント: PascalCase（例: `AppIcon.tsx`）
 - フック: camelCaseで`use`プレフィックス（例: `useToast.ts`）
 - ユーティリティ: camelCase（例: `auth.ts`）
 - スキーマ: camelCase（例: `signup.ts`, `resetPassword.ts`）
 
 ### 国際化（i18n）
+
 - 翻訳キーは `namespace:key` 形式で使用（例: `login:title`）
 - 新しいnamespaceを追加する手順:
   1. `src/i18n/locales/{lang}/{namespace}.ts` を各言語分作成
@@ -102,25 +107,30 @@ src/components/
   3. `src/i18n/settings.ts` の `namespaces` 配列に追加
 
 ### Zodスキーマ
+
 - API用とフォーム用でスキーマを分離する
 - フォーム用は翻訳対応のため関数化する（例: `createSignUpFormSchema(t)`）
 - 配置場所: `src/schema/`
 
 ### API呼び出し
+
 - `usePostApi`, `useGetApi` などのカスタムフックを使用
 - レスポンス型: `{ success: boolean; error?: string; ... }`
 
 ### 認証
+
 - 公開ルート（未認証でアクセス可能）: `src/middlewares/authMiddleware.ts` の `publicRoutes` に追加
 - サーバーサイド: Firebase Admin SDKを使用
 - クライアントサイド: Firebase Client SDKを使用
 
 ### メールテンプレート
+
 - HTMLファイル: `src/infra/email/templates/{name}.html`
 - プレースホルダー: `{{key}}` 形式で記述
 - `src/infra/email/templates/index.ts` でファイル読み込みと文字列置換を行う
 
 ## 環境変数
+
 ```
 AUTH_NEXT=                      # NextAuthのシークレットキー
 NEXTAUTH_URL=                   # アプリのベースURL
@@ -131,6 +141,7 @@ EMAIL_FROM=                     # 送信元メールアドレス（デフォル�
 ```
 
 ## よく使うコマンド
+
 ```bash
 npm run dev      # 開発サーバー起動
 npm run build    # 本番ビルド
