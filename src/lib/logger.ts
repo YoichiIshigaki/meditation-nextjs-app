@@ -16,11 +16,11 @@ const level = () => {
 };
 
 type LoggerType = {
-  info: (...message: unknown[]) => void;
-  error: (...message: unknown[]) => void;
-  warn: (...message: unknown[]) => void;
-  http: (...message: unknown[]) => void;
-  debug: (...message: unknown[]) => void;
+  info: (...messages: unknown[]) => void;
+  error: (...messages: unknown[]) => void;
+  warn: (...messages: unknown[]) => void;
+  http: (...messages: unknown[]) => void;
+  debug: (...messages: unknown[]) => void;
 };
 
 let loggerImplementation: LoggerType;
@@ -28,12 +28,13 @@ let loggerImplementation: LoggerType;
 // Edge runtime (Middleware etc.) 
 // cloud flare worker等でデプロイした時に使用される。
 if (process.env.NEXT_RUNTIME === "edge") {
+  const now = new Date().toISOString()
   loggerImplementation = {
-    info: (...m) => console.log('info: ', ...m),
-    error: (...m) => console.error('error: ', ...m),
-    warn: (...m) => console.warn('warn: ', ...m),
-    http: (...m) => console.log('http: ', ...m),
-    debug: (...m) => console.log('debug: ', ...m),
+    debug: (...messages) => console.log(`[${now}] [debug]: `, ...messages),
+    info: (...messages) => console.log(`[${now}] [info]: `, ...messages),
+    warn: (...messages) => console.warn(`[${now}] [warn]: `, ...messages),
+    error: (...messages) => console.error(`[${now}] [error]: `, ...messages),
+    http: (...messages) => console.log(`[${now}] [http]: `, ...messages),
   };
 } else {
   // Node.js runtime
@@ -80,10 +81,3 @@ if (process.env.NEXT_RUNTIME === "edge") {
 
 // ロガーを作成
 export const logger = loggerImplementation;
-
-// デバッグ用のコンソール出力
-export const clientDebugLog = (...arg: unknown[]) => {
-  if (["development", "local"].includes(process.env.NODE_ENV ?? "")) {
-    console.log(...arg);
-  }
-};
