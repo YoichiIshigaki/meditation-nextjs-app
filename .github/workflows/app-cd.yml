@@ -1,17 +1,121 @@
 name: CD MediMate App
+
 on:
   push:
     branches:
       - main
-      - development
       - staging
-      - production
+      - development
 
+env:
+  # GCP設定 (GitHub Secretsで管理)
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  # Artifact Registry のリポジトリ (例: asia-northeast1-docker.pkg.dev/PROJECT/REPO)
+  IMAGE_REGISTRY: asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/medimate
+  IMAGE_NAME: medimate-app
+  CLOUD_RUN_REGION: asia-northeast1
 
 jobs:
-  build:
-    name: Greeting
+  # ブランチに応じてデプロイ先を決定
+  setup:
+    name: Setup deployment target
     runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.set-env.outputs.environment }}
+      service_name: ${{ steps.set-env.outputs.service_name }}
     steps:
-      - run: echo "implement CD"
-      - run: echo "start deploy"
+      - name: Set environment
+        id: set-env
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+            echo "service_name=medimate-app-production" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == "staging" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "service_name=medimate-app-staging" >> $GITHUB_OUTPUT
+          else
+            echo "environment=development" >> $GITHUB_OUTPUT
+            echo "service_name=medimate-app-development" >> $GITHUB_OUTPUT
+          fi
+
+  build-and-deploy:
+    name: Build & Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    needs: setup
+    environment: ${{ needs.setup.outputs.environment }}
+
+    permissions:
+      contents: read
+      id-token: write  # Workload Identity Federation 用
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Google Cloud 認証
+      # 方法1: Workload Identity Federation (推奨・長期credentialなし)
+      # 事前に Workload Identity Pool / Provider の設定が必要
+      # - name: Authenticate to Google Cloud
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+      #     service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      # 方法2: Service Account Key (シンプルだが長期credentialあり)
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # Docker の認証設定
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.CLOUD_RUN_REGION }}-docker.pkg.dev --quiet
+
+      # Docker イメージをビルド・プッシュ
+      - name: Build and push Docker image
+        run: |
+          IMAGE_TAG=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          IMAGE_LATEST=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ needs.setup.outputs.environment }}
+
+          docker build \
+            --tag "$IMAGE_TAG" \
+            --tag "$IMAGE_LATEST" \
+            --cache-from "$IMAGE_LATEST" \
+            .
+
+          docker push "$IMAGE_TAG"
+          docker push "$IMAGE_LATEST"
+
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      # Cloud Run へデプロイ
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ needs.setup.outputs.service_name }} \
+            --image "$IMAGE_TAG" \
+            --region ${{ env.CLOUD_RUN_REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 256Mi \
+            --cpu 1 \
+            --min-instances 0 \
+            --max-instances 3 \
+            --set-env-vars "NODE_ENV=${{ needs.setup.outputs.environment == 'production' && 'production' || needs.setup.outputs.environment }}" \
+            --set-env-vars "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" \
+            --set-env-vars "AUTH_NEXT=${{ secrets.AUTH_NEXT }}" \
+            --set-env-vars "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" \
+            --set-env-vars "EMAIL_FROM=${{ secrets.EMAIL_FROM }}" \
+            --set-secrets "FIREBASE_ADMIN_CREDENTIALS=firebase-admin-credentials:latest" \
+            --set-secrets "FIREBASE_CLIENT_CREDENTIALS=firebase-client-credentials:latest" \
+            --quiet
+
+      - name: Get Cloud Run URL
+        run: |
+          URL=$(gcloud run services describe ${{ needs.setup.outputs.service_name }} \
+            --region ${{ env.CLOUD_RUN_REGION }} \
+            --format 'value(status.url)')
+          echo "Deployed to: $URL"

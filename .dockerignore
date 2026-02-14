@@ -1,0 +1,15 @@
+.git
+.gitignore
+.github
+.husky
+.next
+node_modules
+npm-debug.log*
+.env*.local
+.env
+README.md
+*.md
+Dockerfile
+.dockerignore
+deploy.sh
+scripts/
