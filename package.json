@@ -22,7 +22,8 @@
     "firestore:init": "npx firebase use --add",
     "firestore:list": "npx firebase projects:list",
     "firestore:login": "npx firebase login",
-    "firestore:logout": "npx firebase logout"
+    "firestore:logout": "npx firebase logout",
+    "prepare": "husky"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.699.0",
@@ -72,6 +73,7 @@
     "eslint": "8",
     "eslint-config-next": "14.2.15",
     "firebase-tools": "14.26.0",
+    "husky": "^9.1.7",
     "jest": "30.2.0",
     "postcss": "8",
     "prettier": "3.7.4",
