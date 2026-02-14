@@ -1,4 +1,4 @@
-import NextAuth, { type AuthOptions } from "next-auth";
+import NextAuth, { type AuthOptions, type User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import config from "@/config";
 import { signInWithEmail } from "@/lib/auth";
@@ -13,30 +13,34 @@ export const authOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<User | null> {
         try {
-          if (process.env.IS_TEST === "true") {
+          const email = credentials?.email;
+          const password = credentials?.password;
+          if (!email || !password) return null;
+
+          if (
+            process.env.IS_TEST === "true" &&
+            process.env.NODE_ENV === "development"
+          ) {
             if (
-              credentials?.email === "user@example.com" &&
-              credentials?.password === "password"
+              email === process.env.MOCK_USER_EMAIL &&
+              password === process.env.MOCK_USER_PASSPORD
             ) {
               return {
                 id: "user-uid",
                 name: "test-user",
                 email: "user@example.com",
-                role: "admin",
-              };
+                role: "root",
+              } satisfies User;
             }
             return null;
           } else {
-            if (!credentials?.email || !credentials?.password) {
-              return null;
-            }
             const auth = await getAuth();
             const user = await signInWithEmail(
               auth,
-              credentials.email,
-              credentials.password,
+              email,
+              password,
             );
             return user;
           }
