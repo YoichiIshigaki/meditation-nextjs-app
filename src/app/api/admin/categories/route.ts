@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { list, create } from "@/models/category";
 import { categorySchema } from "@/schema/category";
 import { checkAdminSession } from "@/lib/adminAuth";
+import { parseParams } from "@/lib/query";
 
 // GET: カテゴリー一覧取得
-export async function GET() {
+export async function GET(request: NextRequest) {
   return checkAdminSession(async () => {
     try {
-      const categories = await list({});
+      const query = parseParams(request)
+      const categories = await list(query);
 
       return NextResponse.json({ success: true, data: categories });
     } catch (error) {
