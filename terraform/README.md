@@ -10,6 +10,7 @@
 ### GNU grep のインストール (macOS)
 
 macOS の標準 grep は BSD 版のため、tfenv が動作しません。
+以下のコマンドで `grep` コマンドを再度インストールしてください。
 
 ```bash
 brew install grep
