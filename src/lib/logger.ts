@@ -25,8 +25,9 @@ type LoggerType = {
 
 let loggerImplementation: LoggerType;
 
+// Edge runtime (Middleware etc.) 
+// cloud flare worker等でデプロイした時に使用される。
 if (process.env.NEXT_RUNTIME === "edge") {
-  // Edge runtime (Middleware etc.)
   loggerImplementation = {
     info: (...m) => console.log('info: ', ...m),
     error: (...m) => console.error('error: ', ...m),
@@ -45,12 +46,12 @@ if (process.env.NEXT_RUNTIME === "edge") {
   const format = winston.format.combine(
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     winston.format.printf(
-      (info: any) => `${info.timestamp} ${info.level}: ${info.message}`,
+      (info: { timestamp: string, level: string, message: string }) => `${info.timestamp} ${info.level}: ${info.message}`,
     ),
   );
 
   // ログの出力先を定義
-  const transports: any[] = [
+  const transports: unknown[] = [
     // エラーログファイル
     new winston.transports.File({
       filename: path.join(logDir, "app-error.log"),

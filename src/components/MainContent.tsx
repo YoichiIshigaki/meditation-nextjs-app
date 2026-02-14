@@ -6,7 +6,7 @@ import ContentTabs from "@/components/ContentTabs";
 import ProgramCard from "@/components/ProgramCard";
 import RecommendationCard from "@/components/RecommendationCard";
 import { useSession } from "next-auth/react";
-import { useGetApi } from "@/hooks/useApi";
+// import { useGetApi } from "@/hooks/useApi";
 import { useLanguage, useTranslation } from "@/i18n/client";
 
 interface MainContentProps {
@@ -14,12 +14,10 @@ interface MainContentProps {
 }
 
 const useGetRecommendations = () => {
-  const apiPathPrefix = "recommendations";
-  const { language } = useLanguage();
-  const { t } = useTranslation(language);
   // TODO: APIから取得するように変更する
   const isPending = false;
   const error = null;
+  // const apiPathPrefix = "recommendations";
   // const { data: _, isPending, error } = useGetApi(
   //   `${apiPathPrefix}`,
   //   { type: "recommendations" },

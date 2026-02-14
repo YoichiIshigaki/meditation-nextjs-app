@@ -4,7 +4,7 @@ import { categorySchema } from "@/schema/category";
 import { checkAdminSession } from "@/lib/adminAuth";
 
 // GET: カテゴリー一覧取得
-export async function GET(request: NextRequest) {
+export async function GET() {
   return checkAdminSession(async () => {
     try {
       const categories = await list({});

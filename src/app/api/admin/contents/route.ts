@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminSession, unauthorizedResponse, checkAdminSession } from "@/lib/adminAuth";
+import { checkAdminSession } from "@/lib/adminAuth";
 import { meditationContentSchema } from "@/schema/meditationContent";
 import { FieldValue } from "firebase-admin/firestore";
 import { getAdminFirestore } from "@/lib/firebaseAdmin";

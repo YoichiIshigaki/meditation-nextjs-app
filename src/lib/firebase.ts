@@ -1,12 +1,7 @@
 import { initializeApp } from "firebase/app";
 import type { FirebaseOptions, FirebaseApp } from "firebase/app";
 import type { Firestore } from "firebase/firestore";
-import {
-  getAuth as getAuthFirebase,
-  signInWithEmailAndPassword,
-  type Auth,
-  type UserCredential,
-} from "firebase/auth";
+import { getAuth as getAuthFirebase, type Auth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import config from "@/config";
 

@@ -3,10 +3,11 @@
 import { ChevronDown, LogOut } from "lucide-react";
 import { useLanguage, useTranslation } from "@/i18n/client";
 import { useLogout } from "@/hooks/useLogout";
+import type { User } from "next-auth"
 
 interface HeaderProps {
   toggleSidebar?: () => void;
-  user?: any;
+  user?: User;
 };
 
 export default function Header({ toggleSidebar, user }: HeaderProps) {

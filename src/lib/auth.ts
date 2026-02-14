@@ -1,11 +1,9 @@
 import {
   signInWithEmailAndPassword,
-  signOut as firebaseSignOut,
   sendPasswordResetEmail,
   createUserWithEmailAndPassword as firebaseCreateUserWithEmailAndPassword,
 } from "firebase/auth";
 import type { UserCredential } from "firebase/auth";
-import { getAuth } from "./firebase";
 import { User } from "next-auth";
 import { getNotThrow } from "../models/user";
 import type { Auth } from "firebase/auth";
@@ -50,19 +48,6 @@ export const signInWithEmail = async (
     console.error("Firebase authentication error:");
     console.dir(error, { depth: null });
     return null;
-  }
-};
-
-export const signOut = async (
-  auth: Auth | AdminAuth,
-): Promise<void> => {
-  try {
-    const firebaseAuth = await getAuth();
-    await firebaseSignOut(firebaseAuth);
-  } catch (error) {
-    console.error("Firebase sign out error:");
-    console.dir(error, { depth: null });
-    throw error;
   }
 };
 
