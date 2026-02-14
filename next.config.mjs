@@ -33,6 +33,47 @@ if (customEnv) {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        // 全レスポンスに適用（HSTS・MIMEスニッフィング防止）
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+        ],
+      },
+      {
+        // HTMLページのみに適用（静的ファイルを除外）
+        source:
+          "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:css|js|png|jpg|svg|ico|woff2?|ttf)).*)",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     domains: [
       ...(isDevelopment ? ["i.pinimg.com"] : []),

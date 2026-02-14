@@ -11,6 +11,10 @@
       {
         "button-name": "off"
       }
-    ]
+    ],
+    "strict-transport-security": "off",
+    "x-content-type-options": "off",
+    "validate-set-cookie-header": "off",
+    "compat-api/css": "off"
   }
 }
