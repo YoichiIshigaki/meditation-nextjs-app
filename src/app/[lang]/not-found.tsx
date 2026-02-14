@@ -16,9 +16,7 @@ export default function NotFound() {
         <h1 className="text-2xl font-semibold mb-3">
           {t("error:not_found.heading")}
         </h1>
-        <p className="text-white/70 mb-8">
-          {t("error:not_found.description")}
-        </p>
+        <p className="text-white/70 mb-8">{t("error:not_found.description")}</p>
         <Link
           href={`/${language}`}
           className="inline-block px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl font-medium transition-colors backdrop-blur-sm"
