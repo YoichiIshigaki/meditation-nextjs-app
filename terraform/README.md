@@ -79,12 +79,20 @@ Terraform が GCP を操作するための認証を行います。
 # ブラウザ経由でログイン
 gcloud auth login
 
-# Application Default Credentials を設定 (Terraform が使用)
+# Application Default Credentials を設定 (Terraform が使用) ※必須
 gcloud auth application-default login
 
 # 操作対象のプロジェクトを設定
-gcloud config set project YOUR_PROJECT_ID
+gcloud auth application-default set-quota-project YOUR_PROJECT_ID
 ```
+
+> **注意**: `gcloud auth application-default login` を実行しないと、`terraform plan` / `apply` 時に以下のエラーが発生します。
+>
+> ```
+> Error: Attempted to load application default credentials since neither `credentials`
+> nor `access_token` was set in the provider block. No credentials loaded.
+> To use your gcloud credentials, run 'gcloud auth application-default login'
+> ```
 
 ---
 
