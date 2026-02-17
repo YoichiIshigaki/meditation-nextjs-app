@@ -96,44 +96,51 @@ gcloud auth application-default set-quota-project YOUR_PROJECT_ID
 
 ---
 
-## 4. 変数ファイルの作成
+## 4. 変数ファイルの確認
 
-```bash
-cd terraform
+環境ごとの変数ファイルは `environments/` 配下に用意されています。
+`project_id` を実際の GCP プロジェクト ID に変更してください。
 
-cp terraform.tfvars.example terraform.tfvars
 ```
-
-`terraform.tfvars` を編集：
-
-```hcl
-project_id = "your-gcp-project-id"
-region     = "asia-northeast1"
+terraform/environments/
+├── development/terraform.tfvars
+├── staging/terraform.tfvars
+└── production/terraform.tfvars
 ```
-
-> `terraform.tfvars` は `.gitignore` で除外済みのため、コミットされません。
 
 ---
 
 ## 5. 初回セットアップ
 
-### 5-1. 初期化
+環境ごとに独立したディレクトリで操作します。Workspace は使用しません。
+
+### development 環境
 
 ```bash
-terraform init
-```
+cd terraform/environments/development
 
-### 5-2. 実行計画の確認
-
-```bash
+terraform init -backend-config=backend.tfvars
 terraform plan
+terraform apply
 ```
 
-作成されるリソースが一覧表示されます。問題がなければ次のステップへ進みます。
-
-### 5-3. 適用
+### staging 環境
 
 ```bash
+cd terraform/environments/staging
+
+terraform init -backend-config=backend.tfvars
+terraform plan
+terraform apply
+```
+
+### production 環境
+
+```bash
+cd terraform/environments/production
+
+terraform init -backend-config=backend.tfvars
+terraform plan
 terraform apply
 ```
 
@@ -183,33 +190,44 @@ echo "sa-key.json の中身を GitHub Secrets の GCP_SA_KEY に登録してく�
 
 ---
 
-## 7. GCS バックエンドへの移行 (推奨)
+## 7. GCS バックエンドのセットアップ
 
-デフォルトでは state がローカルに保存されます。チーム開発では GCS に保存することを推奨します。
+GCS バケット自体も Terraform (bootstrap) で管理します。
+`backend/` ディレクトリは GCS バケットが存在しないため、ローカル state で動作します。
 
-### バケットを作成
-
-```bash
-gcloud storage buckets create gs://YOUR_PROJECT_ID-tfstate \
-  --location=asia-northeast1 \
-  --uniform-bucket-level-access
-```
-
-### backend を有効化
-
-`main.tf` のコメントアウトを解除：
-
-```hcl
-backend "gcs" {
-  bucket = "YOUR_PROJECT_ID-tfstate"
-  prefix = "medimate"
-}
-```
-
-### state を移行
+### 7-1. バケットを作成 (bootstrap)
 
 ```bash
+cd terraform/backend
+
+terraform init
+terraform apply
+```
+
+バケット名が出力されます。
+
+```bash
+terraform output tfstate_bucket_name
+# vue3-tutorial-127e1-tfstate
+```
+
+### 7-2. メイン設定の state を GCS に移行
+
+`terraform/main.tf` の backend はすでに設定済みです。
+
+```bash
+cd terraform
 terraform init -migrate-state
+```
+
+`yes` と入力して確定します。移行後の GCS の state ファイル構成：
+
+```
+gs://vue3-tutorial-127e1-tfstate/medimate/
+└── env:/
+    ├── development.tfstate
+    ├── staging.tfstate
+    └── production.tfstate
 ```
 
 ---
@@ -236,13 +254,30 @@ terraform destroy
 
 ```
 terraform/
-├── main.tf                  # provider / backend 設定
-├── variables.tf             # 変数定義
-├── outputs.tf               # 出力値
-├── apis.tf                  # GCP API の有効化
-├── artifact_registry.tf     # Artifact Registry (Docker リポジトリ)
-├── secret_manager.tf        # Secret Manager (シークレット定義)
-├── iam.tf                   # Service Account + IAM 権限
-├── terraform.tfvars         # 変数の値 (.gitignore 対象)
-└── terraform.tfvars.example # 変数ファイルのサンプル
+├── backend/                      # GCS バケット作成用 (bootstrap)
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── terraform.tfvars          # (.gitignore 対象)
+├── modules/
+│   └── app/                      # 共通リソース定義
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+└── environments/
+    ├── development/
+    │   ├── main.tf               # backend + module 呼び出し
+    │   ├── variables.tf
+    │   ├── backend.tfvars        # GCS backend 設定
+    │   └── terraform.tfvars      # (.gitignore 対象)
+    ├── staging/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   ├── backend.tfvars
+    │   └── terraform.tfvars
+    └── production/
+        ├── main.tf
+        ├── variables.tf
+        ├── backend.tfvars
+        └── terraform.tfvars
 ```

@@ -1,5 +1,5 @@
 output "artifact_registry_url" {
-  description = "Artifact Registry の URL (IMAGE_REGISTRY に設定する値)"
+  description = "Artifact Registry の URL"
   value       = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.medimate.repository_id}"
 }
 
