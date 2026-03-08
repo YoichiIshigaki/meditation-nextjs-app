@@ -24,10 +24,13 @@
     "firestore:list": "npx firebase projects:list",
     "firestore:login": "npx firebase login",
     "firestore:logout": "npx firebase logout",
+    "cron:test:weekly-paper-digest": "curl -H \"Authorization: Bearer $CRON_SECRET\" http://localhost:3000/api/cron/weekly-paper-digest",
+    "test:env": "node scripts/testEnv.mjs",
     "prepare": "husky"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.699.0",
+    "fast-xml-parser": "4.4.1",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-icons": "1.3.1",
     "@radix-ui/react-slider": "1.2.1",
