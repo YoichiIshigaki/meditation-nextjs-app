@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import config from "@/config";
-import { passwordResetTemplate } from "./templates";
+import { passwordResetTemplate, weeklyPaperDigestTemplate } from "./templates";
+import type { PaperSummary } from "@/lib/anthropic";
 
 const resend = new Resend(config.RESEND_API_KEY);
 
@@ -31,5 +32,19 @@ export const sendPasswordResetEmail = async (
   resetLink: string,
 ) => {
   const { subject, html } = passwordResetTemplate({ resetLink });
+  return sendEmail({ to: email, subject, html });
+};
+
+export const sendWeeklyPaperDigestEmail = async (
+  email: string,
+  firstName: string,
+  language: string,
+  papers: PaperSummary[],
+) => {
+  const { subject, html } = weeklyPaperDigestTemplate({
+    firstName,
+    language,
+    papers,
+  });
   return sendEmail({ to: email, subject, html });
 };

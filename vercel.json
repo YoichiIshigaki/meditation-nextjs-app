@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/weekly-paper-digest",
+      "schedule": "0 0 * * 1"
+    }
+  ]
+}

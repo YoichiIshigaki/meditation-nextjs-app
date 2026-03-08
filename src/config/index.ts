@@ -8,6 +8,8 @@ type Config = {
   RESEND_API_KEY: string;
   EMAIL_FROM: string;
   ROOT_USER_EMAIL: string;
+  ANTHROPIC_API_KEY: string;
+  CRON_SECRET: string;
 };
 
 const config: Config = {
@@ -18,6 +20,8 @@ const config: Config = {
   RESEND_API_KEY: String(process.env.RESEND_API_KEY),
   EMAIL_FROM: String(process.env.EMAIL_FROM || "onboarding@resend.dev"),
   ROOT_USER_EMAIL: String(process.env.ROOT_USER_EMAIL),
+  ANTHROPIC_API_KEY: String(process.env.ANTHROPIC_API_KEY),
+  CRON_SECRET: String(process.env.CRON_SECRET),
 };
 
 export default config;
