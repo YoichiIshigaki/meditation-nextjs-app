@@ -16,9 +16,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Fetch all active users
-    const users = await list();
-    const activeUsers = users.filter((u) => u.status === "active");
+    // Fetch active users directly from Firestore with server-side filter
+    const activeUsers = await list({ status: "active" });
 
     if (activeUsers.length === 0) {
       return NextResponse.json({ success: true, sent: 0, message: "No active users" });
@@ -40,30 +39,29 @@ export async function GET(request: NextRequest) {
     >((acc, user) => {
       const lang = user.language || "ja";
       if (!acc[lang]) acc[lang] = [];
-      acc[lang].push({
-        id: user.id,
-        firstName: user.first_name,
-        email: "",
-      });
+      acc[lang].push({ id: user.id, firstName: user.first_name, email: "" });
       return acc;
     }, {});
 
-    // Fetch emails from Firebase Auth
-    for (const lang of Object.keys(usersByLanguage)) {
-      for (const userEntry of usersByLanguage[lang]) {
-        try {
-          const authUser = await adminAuth.getUser(userEntry.id);
-          userEntry.email = authUser.email ?? "";
-        } catch (err) {
-          console.error(`Failed to get email for user ${userEntry.id}:`, err);
-        }
+    // Batch fetch emails from Firebase Auth (100 per request)
+    const allUserEntries = Object.values(usersByLanguage).flat();
+    const BATCH_SIZE = 100;
+    for (let i = 0; i < allUserEntries.length; i += BATCH_SIZE) {
+      const batch = allUserEntries.slice(i, i + BATCH_SIZE);
+      const identifiers = batch.map((u) => ({ uid: u.id }));
+      try {
+        const { users: authUsers } = await adminAuth.getUsers(identifiers);
+        const emailMap = new Map(authUsers.map((u) => [u.uid, u.email ?? ""]));
+        batch.forEach((u) => { u.email = emailMap.get(u.id) ?? ""; });
+      } catch (err) {
+        console.error("Failed to batch fetch user emails:", err);
       }
     }
 
     let totalSent = 0;
     const errors: string[] = [];
 
-    // For each language, summarize papers and send emails
+    // For each language, summarize papers and send emails in parallel
     for (const [lang, langUsers] of Object.entries(usersByLanguage)) {
       let summaries;
       try {
@@ -74,21 +72,25 @@ export async function GET(request: NextRequest) {
         continue;
       }
 
-      for (const userEntry of langUsers) {
-        if (!userEntry.email) continue;
-        try {
-          await sendWeeklyPaperDigestEmail(
-            userEntry.email,
-            userEntry.firstName,
-            lang,
-            summaries,
-          );
-          totalSent++;
-        } catch (err) {
-          console.error(`Failed to send email to ${userEntry.email}:`, err);
+      const results = await Promise.allSettled(
+        langUsers
+          .filter((u) => u.email)
+          .map((userEntry) =>
+            sendWeeklyPaperDigestEmail(
+              userEntry.email,
+              userEntry.firstName,
+              lang,
+              summaries,
+            ).then(() => { totalSent++; }),
+          ),
+      );
+      results.forEach((result, idx) => {
+        if (result.status === "rejected") {
+          const userEntry = langUsers.filter((u) => u.email)[idx];
+          console.error(`Failed to send email to ${userEntry.email}:`, result.reason);
           errors.push(`Email failed for user ${userEntry.id}`);
         }
-      }
+      });
     }
 
     return NextResponse.json({

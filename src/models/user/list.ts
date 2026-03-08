@@ -5,10 +5,16 @@ export type ListOptions = {
   limitCount?: number;
   orderByField?: keyof User;
   orderDirection?: "asc" | "desc";
+  status?: string;
 };
 
 export const list = async (options?: ListOptions): Promise<User[]> => {
   let collectionRef: FirebaseFirestore.Query = await userCollection();
+
+  // Filter by status on the server side to avoid in-memory filtering
+  if (options?.status) {
+    collectionRef = collectionRef.where("status", "==", options.status);
+  }
 
   // Sort
   const orderField = options?.orderByField || "created_at";

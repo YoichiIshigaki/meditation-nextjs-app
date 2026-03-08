@@ -12,6 +12,14 @@ type Config = {
   CRON_SECRET: string;
 };
 
+const requireEnv = (name: string): string => {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+};
+
 const config: Config = {
   NEXTAUTH_SECRET: String(process.env.NEXTAUTH_SECRET),
   NEXTAUTH_URL: String(process.env.NEXTAUTH_URL),
@@ -20,8 +28,8 @@ const config: Config = {
   RESEND_API_KEY: String(process.env.RESEND_API_KEY),
   EMAIL_FROM: String(process.env.EMAIL_FROM || "onboarding@resend.dev"),
   ROOT_USER_EMAIL: String(process.env.ROOT_USER_EMAIL),
-  ANTHROPIC_API_KEY: String(process.env.ANTHROPIC_API_KEY),
-  CRON_SECRET: String(process.env.CRON_SECRET),
+  ANTHROPIC_API_KEY: requireEnv("ANTHROPIC_API_KEY"),
+  CRON_SECRET: requireEnv("CRON_SECRET"),
 };
 
 export default config;

@@ -2,6 +2,14 @@ import fs from "fs";
 import path from "path";
 import type { PaperSummary } from "@/lib/anthropic";
 
+const escapeHtml = (str: string): string =>
+  str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+
 // テンプレートファイルを読み込んでプレースホルダーを置換する
 const loadTemplate = (
   templateName: string,
@@ -93,19 +101,19 @@ const buildPapersHtml = (
                 No.${index + 1}
               </p>
               <h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 700; color: #111827; line-height: 1.4;">
-                ${paper.title}
+                ${escapeHtml(paper.title)}
               </h2>
               <p style="margin: 0 0 16px; font-size: 14px; line-height: 1.7; color: #4b5563;">
-                ${paper.summary}
+                ${escapeHtml(paper.summary)}
               </p>
               <table role="presentation" cellspacing="0" cellpadding="0" style="border-top: 1px solid #f3f4f6; padding-top: 12px; width: 100%;">
                 <tr>
                   <td style="font-size: 12px; color: #9ca3af;">
-                    ${paper.authors.length > 0 ? `<span style="font-weight: 600; color: #6b7280;">${labels.authors}:</span> ${paper.authors.join(", ")}` : ""}
+                    ${paper.authors.length > 0 ? `<span style="font-weight: 600; color: #6b7280;">${escapeHtml(labels.authors)}:</span> ${paper.authors.map(escapeHtml).join(", ")}` : ""}
                     ${paper.authors.length > 0 ? " &nbsp;|&nbsp; " : ""}
-                    <span style="font-weight: 600; color: #6b7280;">${labels.journal}:</span> ${paper.journal}
+                    <span style="font-weight: 600; color: #6b7280;">${escapeHtml(labels.journal)}:</span> ${escapeHtml(paper.journal)}
                     &nbsp;|&nbsp;
-                    <span style="font-weight: 600; color: #6b7280;">${labels.published}:</span> ${paper.pubDate}
+                    <span style="font-weight: 600; color: #6b7280;">${escapeHtml(labels.published)}:</span> ${escapeHtml(paper.pubDate)}
                   </td>
                   <td style="text-align: right; white-space: nowrap; padding-left: 12px;">
                     <a href="https://pubmed.ncbi.nlm.nih.gov/${paper.id}/"
@@ -138,7 +146,7 @@ export const weeklyPaperDigestTemplate = ({
     lang,
     headline: labels.headline,
     subheadline: labels.subheadline,
-    greeting: labels.greeting.replace("{{firstName}}", firstName),
+    greeting: labels.greeting.replace("{{firstName}}", escapeHtml(firstName)),
     intro: labels.intro,
     papers: papersHtml,
     footerText: labels.footerText,
