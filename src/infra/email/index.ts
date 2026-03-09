@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import config from "@/config";
 import { passwordResetTemplate, weeklyPaperDigestTemplate } from "./templates";
-import type { PaperSummary } from "@/lib/ai/anthropic";
+import type { PaperSummary } from "@/lib/ai/common";
 
 const resend = new Resend(config.RESEND_API_KEY);
 
