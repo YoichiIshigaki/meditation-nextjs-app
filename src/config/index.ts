@@ -9,6 +9,7 @@ type Config = {
   EMAIL_FROM: string;
   ROOT_USER_EMAIL: string;
   ANTHROPIC_API_KEY: string;
+  GEMINI_API_KEY: string;
   CRON_SECRET: string;
 };
 
@@ -32,6 +33,7 @@ const config: Config = {
   EMAIL_FROM: requireEnv("EMAIL_FROM", "onboarding@resend.dev"),
   ROOT_USER_EMAIL: requireEnv("ROOT_USER_EMAIL", ""),
   ANTHROPIC_API_KEY: requireEnv("ANTHROPIC_API_KEY"),
+  GEMINI_API_KEY: requireEnv("GEMINI_API_KEY"),
   CRON_SECRET: requireEnv("CRON_SECRET"),
 };
 
