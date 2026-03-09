@@ -3,7 +3,7 @@ import config from "@/config";
 import { list } from "@/models/user/list";
 import { getAdminAuth } from "@/lib/firebaseAdmin";
 import { fetchRecentMeditationPapers } from "@/infra/papers";
-import { summarizePapersForLanguage } from "@/lib/anthropic";
+import { summarizePapersForLanguage } from "@/lib/ai/anthropic";
 import { sendWeeklyPaperDigestEmail } from "@/infra/email";
 
 export const maxDuration = 300; // 5 minutes

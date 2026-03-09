@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import type { PaperSummary } from "@/lib/anthropic";
+import type { PaperSummary } from "@/lib/ai/anthropic";
 
 const escapeHtml = (str: string): string =>
   str
