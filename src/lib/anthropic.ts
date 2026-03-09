@@ -1,3 +1,5 @@
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { generateText } from "ai";
 import config from "@/config";
 import type { MeditationPaper } from "@/infra/papers";
 
@@ -10,45 +12,15 @@ export type PaperSummary = {
   summary: string;
 };
 
-type AnthropicMessage = {
-  role: "user" | "assistant";
-  content: string;
-};
-
-type AnthropicRequest = {
-  model: string;
-  max_tokens: number;
-  messages: AnthropicMessage[];
-};
-
-type AnthropicResponse = {
-  content: Array<{ type: string; text: string }>;
-};
+const anthropic = createAnthropic({ apiKey: config.ANTHROPIC_API_KEY });
 
 const callClaude = async (prompt: string): Promise<string> => {
-  const body: AnthropicRequest = {
-    model: "claude-sonnet-4-6",
-    max_tokens: 2048,
-    messages: [{ role: "user", content: prompt }],
-  };
-
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": config.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify(body),
+  const { text } = await generateText({
+    model: anthropic("claude-sonnet-4-6"),
+    maxOutputTokens: 2048,
+    prompt,
   });
-
-  if (!res.ok) {
-    const error = await res.text();
-    throw new Error(`Anthropic API error: ${res.status} ${error}`);
-  }
-
-  const data = (await res.json()) as AnthropicResponse;
-  return data.content[0]?.text ?? "";
+  return text;
 };
 
 const LANGUAGE_LABELS: Record<string, string> = {
