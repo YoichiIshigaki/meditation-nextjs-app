@@ -3,7 +3,7 @@ import config from "@/config";
 import { list } from "@/models/user/list";
 import { getAdminAuth } from "@/lib/firebaseAdmin";
 import { fetchRecentMeditationPapers } from "@/infra/papers";
-import { summarizePapersForLanguage } from "@/lib/ai/anthropic";
+import anthropicService from "@/lib/ai/anthropic";
 import { sendWeeklyPaperDigestEmail } from "@/infra/email";
 
 export const maxDuration = 300; // 5 minutes
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
     for (const [lang, langUsers] of Object.entries(usersByLanguage)) {
       let summaries;
       try {
-        summaries = await summarizePapersForLanguage(papers, lang);
+        summaries = await anthropicService.summarizePapersForLanguage(papers, lang);
       } catch (err) {
         console.error(`Failed to summarize papers for language ${lang}:`, err);
         errors.push(`Summarization failed for ${lang}`);

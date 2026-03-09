@@ -32,8 +32,8 @@ const config: Config = {
   RESEND_API_KEY: requireEnv("RESEND_API_KEY"),
   EMAIL_FROM: requireEnv("EMAIL_FROM", "onboarding@resend.dev"),
   ROOT_USER_EMAIL: requireEnv("ROOT_USER_EMAIL", ""),
-  ANTHROPIC_API_KEY: requireEnv("ANTHROPIC_API_KEY"),
-  GEMINI_API_KEY: requireEnv("GEMINI_API_KEY"),
+  ANTHROPIC_API_KEY: requireEnv("ANTHROPIC_API_KEY", ""),
+  GEMINI_API_KEY: requireEnv("GEMINI_API_KEY", ""),
   CRON_SECRET: requireEnv("CRON_SECRET"),
 };
 

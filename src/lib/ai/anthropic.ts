@@ -3,13 +3,13 @@ import { generateText } from "ai";
 import config from "@/config";
 import type { MeditationPaper } from "@/infra/papers";
 import { LANGUAGE_LABELS, SUMMARY_PROMPTS, sanitizeText } from "./common";
-
 import type { PaperSummary } from "@/lib/ai/common";
-export type ClaudeModel = "claude-sonnet-4-6" | "claude-3-5-sonnet" | "claude-3-opus";
 
 const anthropic = createAnthropic({ apiKey: config.ANTHROPIC_API_KEY });
 
-const callClaude = async (prompt: string, model: ClaudeModel = "claude-sonnet-4-6"): Promise<string> => {
+export type AnthropicModel = Parameters<typeof anthropic>[0];
+
+export const callClaude = async (prompt: string, model: AnthropicModel = "claude-sonnet-4-6"): Promise<string> => {
   const { text } = await generateText({
     model: anthropic(model),
     maxOutputTokens: 2048,
@@ -18,10 +18,10 @@ const callClaude = async (prompt: string, model: ClaudeModel = "claude-sonnet-4-
   return text;
 };
 
-export const summarizePapersForLanguage = async (
+const summarizePapersForLanguage = async (
   papers: MeditationPaper[],
   language: string,
-  model: ClaudeModel = "claude-sonnet-4-6",
+  model: AnthropicModel = "claude-sonnet-4-6",
 ): Promise<PaperSummary[]> => {
   const lang = LANGUAGE_LABELS[language] ? language : "ja";
   const prompt = SUMMARY_PROMPTS[lang];
@@ -43,3 +43,9 @@ export const summarizePapersForLanguage = async (
 
   return results;
 };
+
+const anthropicService = {
+  summarizePapersForLanguage,
+};
+
+export default anthropicService;

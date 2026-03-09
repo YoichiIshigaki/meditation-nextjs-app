@@ -5,11 +5,11 @@ import type { MeditationPaper } from "@/infra/papers";
 import { LANGUAGE_LABELS, SUMMARY_PROMPTS, sanitizeText } from "./common";
 import type { PaperSummary } from "@/lib/ai/common";
 
-export type GeminiModel = "gemini-2.0-flash" | "gemini-2.0-pro" | "gemini-1.5-flash" | "gemini-1.5-pro";
-
 const google = createGoogleGenerativeAI({ apiKey: config.GEMINI_API_KEY });
 
-const callGemini = async (prompt: string, model: GeminiModel = "gemini-2.0-flash"): Promise<string> => {
+export type GeminiModel = Parameters<typeof google>[0];
+
+export const callGemini = async (prompt: string, model: GeminiModel = "gemini-2.0-flash"): Promise<string> => {
   const { text } = await generateText({
     model: google(model),
     maxOutputTokens: 2048,
@@ -18,7 +18,7 @@ const callGemini = async (prompt: string, model: GeminiModel = "gemini-2.0-flash
   return text;
 };
 
-export const summarizePapersForLanguage = async (
+const summarizePapersForLanguage = async (
   papers: MeditationPaper[],
   language: string,
   model: GeminiModel = "gemini-2.0-flash",
@@ -43,3 +43,9 @@ export const summarizePapersForLanguage = async (
 
   return results;
 };
+
+const geminiService = {
+  summarizePapersForLanguage,
+};
+
+export default geminiService;
