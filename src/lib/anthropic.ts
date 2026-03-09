@@ -12,11 +12,13 @@ export type PaperSummary = {
   summary: string;
 };
 
+export type ClaudeModel = "claude-sonnet-4-6" | "claude-3-5-sonnet" | "claude-3-opus";
+
 const anthropic = createAnthropic({ apiKey: config.ANTHROPIC_API_KEY });
 
-const callClaude = async (prompt: string): Promise<string> => {
+const callClaude = async (prompt: string, model: ClaudeModel = "claude-sonnet-4-6"): Promise<string> => {
   const { text } = await generateText({
-    model: anthropic("claude-sonnet-4-6"),
+    model: anthropic(model),
     maxOutputTokens: 2048,
     prompt,
   });

@@ -12,11 +12,13 @@ export type PaperSummary = {
   summary: string;
 };
 
+export type GeminiModel = "gemini-2.0-flash" | "gemini-2.0-pro" | "gemini-1.5-flash" | "gemini-1.5-pro";
+
 const google = createGoogleGenerativeAI({ apiKey: config.GEMINI_API_KEY });
 
-const callGemini = async (prompt: string): Promise<string> => {
+const callGemini = async (prompt: string, model: GeminiModel = "gemini-2.0-flash"): Promise<string> => {
   const { text } = await generateText({
-    model: google("gemini-2.0-flash"),
+    model: google(model),
     maxOutputTokens: 2048,
     prompt,
   });
