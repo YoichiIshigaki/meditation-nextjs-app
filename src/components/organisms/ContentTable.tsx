@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import type { MeditationContent } from "@/models/meditation_content";
@@ -69,10 +70,12 @@ export const ContentTable = ({
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   {content.image_url && (
-                    <img
+                    <Image
                       src={content.image_url}
                       alt={content.title}
-                      className="h-10 w-10 rounded-lg object-cover mr-3"
+                      width={40}
+                      height={40}
+                      className="rounded-lg object-cover mr-3"
                     />
                   )}
                   <div className="text-sm font-medium text-gray-900">
