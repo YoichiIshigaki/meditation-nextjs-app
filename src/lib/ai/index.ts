@@ -75,5 +75,5 @@ export class AIContext {
   }
 }
 
-// デフォルトインスタンス（claude）
-export const ai = new AIContext("claude");
+// デフォルトインスタンス（gemini）
+export const ai = new AIContext("gemini");
