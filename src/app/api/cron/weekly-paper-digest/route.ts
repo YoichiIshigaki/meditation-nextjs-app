@@ -3,7 +3,7 @@ import config from "@/config";
 import { list } from "@/models/user/list";
 import { getAdminAuth } from "@/lib/firebaseAdmin";
 import { fetchRecentMeditationPapers } from "@/infra/papers";
-import anthropicService from "@/lib/ai/anthropic";
+import { ai } from "@/lib/ai";
 import { sendWeeklyPaperDigestEmail } from "@/infra/email";
 
 export const maxDuration = 300; // 5 minutes
@@ -60,42 +60,47 @@ export async function GET(request: NextRequest) {
 
     let totalSent = 0;
     const errors: string[] = [];
+    const summariesByLang: Record<string, unknown> = {};
 
     // For each language, summarize papers and send emails in parallel
     for (const [lang, langUsers] of Object.entries(usersByLanguage)) {
       let summaries;
       try {
-        summaries = await anthropicService.summarizePapersForLanguage(papers, lang);
+        summaries = await ai.summarizePapersForLanguage(papers, lang);
+        summariesByLang[lang] = summaries;
       } catch (err) {
         console.error(`Failed to summarize papers for language ${lang}:`, err);
         errors.push(`Summarization failed for ${lang}`);
         continue;
       }
 
-      const results = await Promise.allSettled(
-        langUsers
-          .filter((u) => u.email)
-          .map((userEntry) =>
-            sendWeeklyPaperDigestEmail(
-              userEntry.email,
-              userEntry.firstName,
-              lang,
-              summaries,
-            ).then(() => { totalSent++; }),
-          ),
-      );
-      results.forEach((result, idx) => {
-        if (result.status === "rejected") {
-          const userEntry = langUsers.filter((u) => u.email)[idx];
-          console.error(`Failed to send email to ${userEntry.email}:`, result.reason);
-          errors.push(`Email failed for user ${userEntry.id}`);
+      const eligibleUsers = langUsers.filter((u) => u.email);
+      for (let i = 0; i < eligibleUsers.length; i++) {
+        if (i > 0) await new Promise((r) => setTimeout(r, 600)); // stay under 2 req/s
+        const userEntry = eligibleUsers[i];
+        try {
+          await sendWeeklyPaperDigestEmail(
+            userEntry.email,
+            userEntry.firstName,
+            lang,
+            summaries,
+          );
+          totalSent++;
+        } catch (err) {
+          console.error(`Failed to send email to ${userEntry.email}:`, err);
+          const reason = err instanceof Error
+            ? err.message
+            : (typeof err === "object" ? JSON.stringify(err) : String(err));
+          errors.push(`Email failed for user ${userEntry.id}: ${reason}`);
         }
-      });
+      }
+
     }
 
     return NextResponse.json({
       success: true,
       sent: totalSent,
+      summaries: summariesByLang,
       errors: errors.length > 0 ? errors : undefined,
     });
   } catch (error) {

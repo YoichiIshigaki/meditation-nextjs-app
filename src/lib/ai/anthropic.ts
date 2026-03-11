@@ -9,7 +9,9 @@ const anthropic = createAnthropic({ apiKey: config.ANTHROPIC_API_KEY });
 
 export type AnthropicModel = Parameters<typeof anthropic>[0];
 
-export const callClaude = async (prompt: string, model: AnthropicModel = "claude-sonnet-4-6"): Promise<string> => {
+export const DEFAULT_MODEL = "claude-haiku-4-5" satisfies AnthropicModel;
+
+export const callClaude = async (prompt: string, model: AnthropicModel = DEFAULT_MODEL): Promise<string> => {
   const { text } = await generateText({
     model: anthropic(model),
     maxOutputTokens: 2048,
@@ -21,7 +23,7 @@ export const callClaude = async (prompt: string, model: AnthropicModel = "claude
 const summarizePapersForLanguage = async (
   papers: MeditationPaper[],
   language: string,
-  model: AnthropicModel = "claude-sonnet-4-6",
+  model: AnthropicModel = DEFAULT_MODEL,
 ): Promise<PaperSummary[]> => {
   const lang = LANGUAGE_LABELS[language] ? language : "ja";
   const prompt = SUMMARY_PROMPTS[lang];

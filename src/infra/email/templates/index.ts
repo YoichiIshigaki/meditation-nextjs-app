@@ -2,13 +2,15 @@ import fs from "fs";
 import path from "path";
 import type { PaperSummary } from "@/lib/ai/common";
 
-const escapeHtml = (str: string): string =>
-  str
+const escapeHtml = (str: unknown): string => {
+  const s = typeof str === "string" ? str : String(str ?? "");
+  return s
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#x27;");
+};
 
 // テンプレートファイルを読み込んでプレースホルダーを置換する
 const loadTemplate = (

@@ -9,7 +9,9 @@ const google = createGoogleGenerativeAI({ apiKey: config.GEMINI_API_KEY });
 
 export type GeminiModel = Parameters<typeof google>[0];
 
-export const callGemini = async (prompt: string, model: GeminiModel = "gemini-2.0-flash"): Promise<string> => {
+export const DEFAULT_MODEL = "gemini-2.5-flash-lite" satisfies GeminiModel;
+
+export const callGemini = async (prompt: string, model: GeminiModel = DEFAULT_MODEL): Promise<string> => {
   const { text } = await generateText({
     model: google(model),
     maxOutputTokens: 2048,
@@ -21,7 +23,7 @@ export const callGemini = async (prompt: string, model: GeminiModel = "gemini-2.
 const summarizePapersForLanguage = async (
   papers: MeditationPaper[],
   language: string,
-  model: GeminiModel = "gemini-2.0-flash",
+  model: GeminiModel = DEFAULT_MODEL,
 ): Promise<PaperSummary[]> => {
   const lang = LANGUAGE_LABELS[language] ? language : "ja";
   const prompt = SUMMARY_PROMPTS[lang];

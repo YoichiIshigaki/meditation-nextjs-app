@@ -52,8 +52,8 @@ export class AIContext {
 
   private validateModelForProvider(model: string, provider: AIProvider): void {
     const validModels: Record<AIProvider, string[]> = {
-      claude: ["claude-sonnet-4-6", "claude-3-5-sonnet", "claude-3-opus"] satisfies AnthropicModel[],
-      gemini: ["gemini-2.0-flash", "gemini-2.0-pro", "gemini-1.5-flash", "gemini-1.5-pro"] satisfies GeminiModel[],
+      claude: ["claude-haiku-4-5", "claude-sonnet-4-5", "claude-sonnet-4-6", "claude-opus-4-6"] satisfies AnthropicModel[],
+      gemini: ["gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.5-pro"] satisfies GeminiModel[],
     };
 
     const modelsForProvider = validModels[provider];
