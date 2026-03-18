@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { forwardRef, type InputHTMLAttributes, useState } from "react";
 import { Upload, X } from "lucide-react";
 import { cn } from "@/lib/styles";
@@ -93,9 +94,12 @@ export const FileUploadInput = forwardRef<
         >
           {preview ? (
             <div className="relative inline-block">
-              <img
+              <Image
                 src={preview}
                 alt="Preview"
+                width={128}
+                height={128}
+                unoptimized
                 className="max-h-32 rounded-lg"
               />
               <button

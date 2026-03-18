@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ChevronDown, LogOut } from "lucide-react";
 import { useLanguage, useTranslation } from "@/i18n/client";
 import { useLogout } from "@/hooks/useLogout";
@@ -50,10 +51,12 @@ export default function Header({ toggleSidebar, user }: HeaderProps) {
           </button>
         )}
         {user?.image ? (
-          <img
+          <Image
             src={user.image}
             alt="User"
-            className="w-10 h-10 rounded-full mr-2.5 object-contain"
+            width={40}
+            height={40}
+            className="rounded-full mr-2.5 object-contain"
           />
         ) : (
           <div className="w-10 h-10 rounded-full bg-[#7273d0] mr-2.5 flex justify-center items-center text-white">
