@@ -24,7 +24,7 @@
     "firestore:list": "npx firebase projects:list",
     "firestore:login": "npx firebase login",
     "firestore:logout": "npx firebase logout",
-    "cron:test:weekly-paper-digest": "curl -H \"Authorization: Bearer $CRON_SECRET\" http://localhost:3000/api/cron/weekly-paper-digest",
+    "cron:test:weekly-paper-digest": "node scripts/cronTest.mjs",
     "test:env": "node scripts/testEnv.mjs",
     "prepare": "husky"
   },
