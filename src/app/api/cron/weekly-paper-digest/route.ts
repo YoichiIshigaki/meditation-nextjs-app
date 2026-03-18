@@ -72,21 +72,20 @@ export async function GET(request: NextRequest) {
         continue;
       }
 
+      const usersWithEmail = langUsers.filter((u) => u.email);
       const results = await Promise.allSettled(
-        langUsers
-          .filter((u) => u.email)
-          .map((userEntry) =>
-            sendWeeklyPaperDigestEmail(
-              userEntry.email,
-              userEntry.firstName,
-              lang,
-              summaries,
-            ).then(() => { totalSent++; }),
-          ),
+        usersWithEmail.map((userEntry) =>
+          sendWeeklyPaperDigestEmail(
+            userEntry.email,
+            userEntry.firstName,
+            lang,
+            summaries,
+          ).then(() => { totalSent++; }),
+        ),
       );
       results.forEach((result, idx) => {
         if (result.status === "rejected") {
-          const userEntry = langUsers.filter((u) => u.email)[idx];
+          const userEntry = usersWithEmail[idx];
           console.error(`Failed to send email to ${userEntry.email}:`, result.reason);
           errors.push(`Email failed for user ${userEntry.id}`);
         }

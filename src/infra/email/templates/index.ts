@@ -10,19 +10,24 @@ const escapeHtml = (str: string): string =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#x27;");
 
-// テンプレートファイルを読み込んでプレースホルダーを置換する
+// テンプレートファイルをメモリにキャッシュ（プロセス起動時に1回だけ読み込む）
+const templateCache = new Map<string, string>();
+
 const loadTemplate = (
   templateName: string,
   replacements: Record<string, string>,
 ): string => {
-  const templatePath = path.join(
-    process.cwd(),
-    "src/infra/email/templates",
-    `${templateName}.html`,
-  );
-  let html = fs.readFileSync(templatePath, "utf-8");
+  if (!templateCache.has(templateName)) {
+    const templatePath = path.join(
+      process.cwd(),
+      "src/infra/email/templates",
+      `${templateName}.html`,
+    );
+    templateCache.set(templateName, fs.readFileSync(templatePath, "utf-8"));
+  }
 
-  // {{key}} 形式のプレースホルダーを置換
+  // キャッシュされた文字列をコピーしてから {{key}} 形式のプレースホルダーを置換
+  let html = templateCache.get(templateName)!;
   Object.entries(replacements).forEach(([key, value]) => {
     html = html.replace(new RegExp(`{{${key}}}`, "g"), value);
   });
