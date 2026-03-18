@@ -3,7 +3,7 @@ import { chunk } from "@/utils/array";
 
 export type UserEntry = { id: string; firstName: string; email: string };
 
-type AdminAuth = Awaited<ReturnType<typeof getAdminAuth>>;
+export type AdminAuth = Awaited<ReturnType<typeof getAdminAuth>>;
 
 // バッチ内のユーザーに Firebase Auth のメールアドレスを補完して返す
 const fetchEmailsForBatch = async (
