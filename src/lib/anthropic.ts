@@ -1,10 +1,6 @@
 import config from "@/config";
 import type { MeditationPaper } from "@/infra/papers";
 
-const CLAUDE_MODEL = "claude-sonnet-4-6";
-const ANTHROPIC_API_VERSION = "2023-06-01";
-const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
-
 export type PaperSummary = {
   id: string;
   title: string;
@@ -31,17 +27,17 @@ type AnthropicResponse = {
 
 const callClaude = async (prompt: string): Promise<string> => {
   const body: AnthropicRequest = {
-    model: CLAUDE_MODEL,
+    model: "claude-sonnet-4-6",
     max_tokens: 2048,
     messages: [{ role: "user", content: prompt }],
   };
 
-  const res = await fetch(ANTHROPIC_API_URL, {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "x-api-key": config.ANTHROPIC_API_KEY,
-      "anthropic-version": ANTHROPIC_API_VERSION,
+      "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify(body),
   });
