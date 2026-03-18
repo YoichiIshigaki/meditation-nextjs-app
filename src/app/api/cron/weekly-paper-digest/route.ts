@@ -1,14 +1,19 @@
+// presentation
 import { NextRequest, NextResponse } from "next/server";
-import type { Auth } from "firebase-admin/auth";
-import config from "@/config";
-import { list } from "@/models/user/list";
-import { getAdminAuth } from "@/lib/firebaseAdmin";
-import { fetchRecentMeditationPapers } from "@/infra/papers";
+// service
 import { ai } from "@/lib/ai";
-import { sendWeeklyPaperDigestEmail } from "@/infra/email";
 import type { PaperSummary } from "@/lib/ai/common";
-import { chunk } from "@/utils/array";
+import { sendWeeklyPaperDigestEmail } from "@/infra/email";
+// repository
+import { list } from "@/models/user/list";
 import type { User } from "@/models/user";
+import { fetchRecentMeditationPapers } from "@/infra/papers";
+// DB / infrastructure
+import { getAdminAuth } from "@/lib/firebaseAdmin";
+import type { Auth } from "firebase-admin/auth";
+// config / utils
+import config from "@/config";
+import { chunk } from "@/utils/array";
 
 export const maxDuration = 300; // 5 minutes
 
